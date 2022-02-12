@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:carousel_slider/carousel_slider.dart';
+
 
 import 'package:doctro/api/Retrofit_Api.dart';
 import 'package:doctro/api/apis.dart';
@@ -16,10 +16,11 @@ import 'package:doctro/localization/localization_constant.dart';
 import 'package:doctro/model/Banner.dart';
 import 'package:doctro/model/DetailSetting.dart';
 import 'package:doctro/model/FavoriteDoctor.dart';
+import 'package:doctro/model/HealthIssue.dart';
 import 'package:doctro/model/Treatments.dart';
 import 'package:doctro/model/UserDetail.dart';
 import 'package:doctro/model/doctors.dart';
-import 'package:dotted_line/dotted_line.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -30,9 +31,9 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../../TreatmentSpecialist.dart';
+import '../appointment/treatment/TreatmentSpecialist.dart';
 import '../../database/form_helper.dart';
-import '../../doctordetail.dart';
+import '../appointment/doctordetail.dart';
 import '../../model/Appointments.dart';
 import '../../model/DisplayOffer.dart';
 
@@ -56,7 +57,7 @@ class _ConsultState extends State<Consult> {
   String user_name = "";
   bool _loadding = false;
 
-  List<doctor> doctorlist = [];
+  List<Doctorslist> doctorlist = [];
   List<Treatmentdata> treatmentList = [];
 
   List<Add> banner = [];
@@ -66,6 +67,7 @@ class _ConsultState extends State<Consult> {
   List<bool> favoriteDoctor = [];
   int? doctorID = 0;
 
+  List<Healthissuedata> healthmentList = [];
   List<offer> offerList = [];
 
   List<UpcomingAppointment> upcomingAppointment = [];
@@ -77,7 +79,7 @@ class _ConsultState extends State<Consult> {
 
   // Search //
   TextEditingController _search = TextEditingController();
-  List<doctor> _searchResult = [];
+  List<Doctorslist> _searchResult = [];
 
   late LocationData _locationData;
   Location location = new Location();
@@ -95,7 +97,24 @@ class _ConsultState extends State<Consult> {
         ? Timer.periodic(Duration(minutes: 10), (Timer t) => callApiAppointment())
         : "";
   }
+  Future<BaseModel<HealthIssue>> callApiHealthIssue() async {
+    HealthIssue response;
 
+    setState(() {
+      _loadding = true;
+    });
+    try {
+      response = (await RestClient(Retro_Api2().Dio_Data2()).HealthIssueRequest()) as HealthIssue;
+      setState(() {
+        _loadding = false;
+        healthmentList.addAll(response.healthissuedata!);
+      });
+    } catch (error, stacktrace) {
+      print("Exception occur: $error stackTrace: $stacktrace");
+      return BaseModel()..setException(ServerError.withError(error: error));
+    }
+    return BaseModel()..data = response;
+  }
   Future<void> getLocation() async {
     await Permission.storage.request();
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -132,6 +151,7 @@ class _ConsultState extends State<Consult> {
         _lang = prefs.getString('lang');
         CallApi_DoctorList();
         callApiTeatment();
+        callApiHealthIssue();
         callApIDisplayOffer();
       },
     );
@@ -191,8 +211,24 @@ class _ConsultState extends State<Consult> {
 
             // Drawer //
 
-            appBar:AppBar(backgroundColor: Colors.white,
-              title:Text('Consult Doctor',style: TextStyle(color:Colors.black),),actions: [IconButton(onPressed: (){}, icon: Icon(Icons.alarm,color: Colors.grey,))],),
+            appBar:AppBar(elevation: 0,
+              backgroundColor: Colors.white,
+              title:Text('Consult Doctor',style: TextStyle(color:Colors.black),),actions: [
+                Container(
+                  //   padding: EdgeInsets.only(right: 5, left: 5),
+                  child: IconButton(
+                    onPressed: () {
+                      // _scaffoldKey.currentState!.openDrawer();
+                    },
+                    icon: SvgPicture.asset(
+                      'assets/icons/notification.svg',
+                      height: 25,
+                      width: 25,
+                    ),
+                  ),
+                ),
+              ],
+            ),
 
             body: GestureDetector(
               onTap: () {
@@ -251,7 +287,7 @@ class _ConsultState extends State<Consult> {
                                         children: [
                                           Text(
                                             getTranslated(context, home_upcomingAppointment).toString(),
-                                            style: TextStyle(fontSize: width * 0.04, color: Palette.dark_blue),
+                                            style: Theme.of(context).textTheme.headline1,
                                           )
                                         ],
                                       ),
@@ -267,7 +303,7 @@ class _ConsultState extends State<Consult> {
                                           children: [
                                             Text(
                                               getTranslated(context, home_viewAll).toString(),
-                                              style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
+                                              style: Theme.of(context).textTheme.headline1,
                                             )
                                           ],
                                         ),
@@ -527,7 +563,7 @@ class _ConsultState extends State<Consult> {
                       //commom health issues
                       Column(
                         children: [
-                       Container(
+                          Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -536,9 +572,12 @@ class _ConsultState extends State<Consult> {
                                   alignment: AlignmentDirectional.topStart,
                                   child: Row(
                                     children: [
-                                      Text(
-                                        getTranslated(context, home_commonhealissue).toString(),
-                                        style: TextStyle(fontSize: width * 0.04, color: Palette.dark_blue),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Text(
+                                          getTranslated(context, home_commonhealissue).toString(),
+                                          style: Theme.of(context).textTheme.headline1,
+                                        ),
                                       )
                                     ],
                                   ),
@@ -548,305 +587,95 @@ class _ConsultState extends State<Consult> {
                             ),
                           ),
                           Container(
-
-                            width: width * 1,
-                            margin: EdgeInsets.symmetric(vertical: width * 0.02, horizontal: width * 0.03),
-                            child: _searchResult.length > 0 || _search.text.isNotEmpty
-                                ?   GridView.builder(
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3, mainAxisSpacing: 5, childAspectRatio: 0.9),
+                            child: GridView.builder( gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:  3),
+                              itemCount: 6 <= healthmentList.length ? 6 : healthmentList.length,
                               physics: NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: _searchResult.length,
-                              scrollDirection: Axis.horizontal,
-                              itemBuilder: (context, index) {
-                                favoriteDoctor.clear();
-                                for (int i = 0; i < _searchResult.length; i++) {
-                                  _searchResult[i].isFaviroute == false ? favoriteDoctor.add(false) : favoriteDoctor.add(true);
-                                }
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Doctordetail(
-                                          _searchResult[index].id,
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                  child: Container(
-                                    width: width * 0.4,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Column(
-                                            children: [
-                                              Stack(
-                                                children: [
-                                                  Container(
-                                                    margin: EdgeInsets.all(width * 0.02),
-                                                    width: width * 0.35,
-                                                    height: height * 0.15,
-                                                    child: ClipRRect(
-                                                      borderRadius: BorderRadius.all(
-                                                        Radius.circular(10),
-                                                      ),
-                                                      child: CachedNetworkImage(
-                                                        alignment: Alignment.center,
-                                                        imageUrl: _searchResult[index].fullImage!,
-                                                        fit: BoxFit.fitHeight,
-                                                        placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
-                                                        errorWidget: (context, url, error) =>
-                                                            Image.asset("assets/images/no_image.jpg"),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    top: 5,
-                                                    right: 0,
-                                                    child: Container(
-                                                      child: SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-                                                          ? IconButton(
-                                                        onPressed: () {
-                                                          setState(
-                                                                () {
-                                                              favoriteDoctor[index] == false
-                                                                  ? favoriteDoctor[index] = true
-                                                                  : favoriteDoctor[index] = false;
-                                                              doctorID = _searchResult[index].id;
-                                                              CallApiFavoriteDoctor();
-                                                            },
-                                                          );
-                                                        },
-                                                        icon: Icon(
-                                                          Icons.favorite_outlined,
-                                                          size: 25,
-                                                          color:
-                                                          favoriteDoctor[index] == false ? Palette.white : Palette.red,
-                                                        ),
-                                                      )
-                                                          : IconButton(
-                                                        onPressed: () {
-                                                          setState(
-                                                                () {
-                                                              Fluttertoast.showToast(
-                                                                msg: getTranslated(context, home_pleaseLogin_toast)
-                                                                    .toString(),
-                                                                toastLength: Toast.LENGTH_SHORT,
-                                                                gravity: ToastGravity.BOTTOM,
-                                                                backgroundColor: Palette.blue,
-                                                                textColor: Palette.white,
-                                                              );
-                                                            },
-                                                          );
-                                                        },
-                                                        icon: Icon(
-                                                          Icons.favorite_outlined,
-                                                          size: 25,
-                                                          color:
-                                                          favoriteDoctor[index] == false ? Palette.white : Palette.red,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          Container(
-                                            width: width * 0.4,
-                                            margin: EdgeInsets.only(top: width * 0.02),
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  _searchResult[index].name!,
-                                                  style: TextStyle(
-                                                      fontSize: width * 0.04,
-                                                      color: Palette.dark_blue,
-                                                      fontWeight: FontWeight.bold),
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            width: width * 0.4,
-                                            child: Column(
-                                              children: [
-                                                _searchResult[index].treatment != null
-                                                    ? Text(
-                                                  _searchResult[index].treatment!.name.toString(),
-                                                  style: TextStyle(fontSize: width * 0.035, color: Palette.grey),
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                )
-                                                    : Text(
-                                                  getTranslated(context, home_notAvailable).toString(),
-                                                  style: TextStyle(fontSize: width * 0.035, color: Palette.grey),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              },
-                            )
-                                : doctorlist.length > 0
-                                ?   GridView.builder(
-                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3, mainAxisSpacing: 5, childAspectRatio: 0.9),
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: 3 <= doctorlist.length ? 3 : doctorlist.length,
                               scrollDirection: Axis.vertical,
                               itemBuilder: (context, index) {
-                                favoriteDoctor.clear();
-                                for (int i = 0; i < doctorlist.length; i++) {
-                                  doctorlist[i].isFaviroute == false ? favoriteDoctor.add(false) : favoriteDoctor.add(true);
-                                }
-
                                 return GestureDetector(
                                   onTap: () {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => Doctordetail(
-                                          doctorlist[index].id,
+                                        builder: (context) => TreatmentSpecialist(
+                                          treatmentList[index].id,
                                         ),
                                       ),
                                     );
                                   },
                                   child: Container(
-                                    width: width * 0.7,
-                                    child: Card(
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
-                                      ),
-                                      child:  Column(
-                                        children: [
-                                          Stack(
-                                            children: [
-                                              Container(
-                                                margin: EdgeInsets.all(width * 0.00),
-                                                width: width * 0.55,
-                                                height: height * 0.16,
-                                                child: ClipRRect(
-                                                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                                                  child: CachedNetworkImage(
-                                                    alignment: Alignment.center,
-                                                    imageUrl: doctorlist[index].fullImage!,
-                                                    fit: BoxFit.fitHeight,
-                                                    placeholder: (context, url) =>
-                                                        SpinKitFadingCircle(color: Palette.blue),
-                                                    errorWidget: (context, url, error) =>
-                                                        Image.asset("assets/images/no_image.jpg"),
+                                    margin: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(3.0),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10) ,
+                                        border: Border.all(color: Colors.grey)
+                                    ),
+                                    // color: Colors.teal,
+                                    child: Stack(
+                                      //  mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 125,
+                                          alignment: AlignmentDirectional.center,
+                                          //  margin: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+                                          child:
+                                          healthmentList[index].primaryImage!=null?CachedNetworkImage(height: 125,
+                                            alignment: Alignment.center,
+                                            imageUrl: '${Apis.baseUrlImages}${healthmentList[index].primaryImage!}',
+                                            fit: BoxFit.fitWidth,
+                                            placeholder: (context, url) =>
+                                            // CircularProgressIndicator(),
+                                            SpinKitFadingCircle(
+                                              color: Palette.blue,
+                                            ),
+                                            errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",fit: BoxFit.fill,),
+                                          ):Image.asset("assets/images/no_image.jpg",fit: BoxFit.fill,),
+
+                                        ),
+                                        Align(alignment: Alignment.bottomCenter,
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(top: 8.0),
+                                            child: Container(decoration: BoxDecoration(
+                                              gradient: LinearGradient(
+                                                begin: Alignment.topCenter,
+                                                end: Alignment.bottomCenter,
+                                                stops: [0.1, 0.5, 0.7, 0.9],
+                                                colors: [
+                                                  Colors.black12,
+                                                  Colors.black38,
+                                                  Colors.black54,
+                                                  Colors.black87,
+                                                ],
+                                              ),),
+                                              width: width,
+                                              height: 50,
+                                              //  margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                              child: Padding(
+                                                padding: const EdgeInsets.only(top: 18.0),
+                                                child: Text(
+                                                  healthmentList[index].name!,
+                                                  style: TextStyle(
+                                                    fontSize: 15,fontWeight: FontWeight.bold,
+                                                    color: Palette.white,
                                                   ),
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  textAlign: TextAlign.center,
                                                 ),
                                               ),
-                                              Positioned(
-                                                top: 5,
-                                                right: 0,
-                                                child: Container(
-                                                  child:
-                                                  SharedPreferenceHelper.getBoolean(Preferences.is_logged_in) == true
-                                                      ? IconButton(
-                                                    onPressed: () {
-                                                      setState(
-                                                            () {
-                                                          favoriteDoctor[index] == false
-                                                              ? favoriteDoctor[index] = true
-                                                              : favoriteDoctor[index] = false;
-                                                          doctorID = doctorlist[index].id;
-                                                          CallApiFavoriteDoctor();
-                                                        },
-                                                      );
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.favorite_outlined,
-                                                      size: 25,
-                                                      color: favoriteDoctor[index] == false
-                                                          ? Palette.white
-                                                          : Palette.red,
-                                                    ),
-                                                  )
-                                                      : IconButton(
-                                                    onPressed: () {
-                                                      setState(
-                                                            () {
-                                                          Fluttertoast.showToast(
-                                                            msg: getTranslated(context, home_pleaseLogin_toast)
-                                                                .toString(),
-                                                            toastLength: Toast.LENGTH_SHORT,
-                                                            gravity: ToastGravity.BOTTOM,
-                                                            backgroundColor: Palette.blue,
-                                                            textColor: Palette.white,
-                                                          );
-                                                        },
-                                                      );
-                                                    },
-                                                    icon: Icon(
-                                                      Icons.favorite_outlined,
-                                                      size: 25,
-                                                      color: favoriteDoctor[index] == false
-                                                          ? Palette.white
-                                                          : Palette.red,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                              Positioned(
-                                                top: 100,
-                                                left: 10,
-                                                right: 0,
-                                                child:  Container(
-                                                  width: width * 0.4,
-                                                  child: Column(
-                                                    children: [
-                                                      doctorlist[index].treatment != null
-                                                          ? Text(
-                                                        doctorlist[index].treatment!.name.toString(),
-                                                        style: TextStyle(fontSize: width * 0.030, color: Palette.black),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
-                                                      )
-                                                          : Text(
-                                                        getTranslated(context, home_notAvailable).toString(),
-                                                        style: TextStyle(fontSize: width * 0.035, color: Palette.grey),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ],
-                                      ),
+                                        )
+                                      ],
                                     ),
                                   ),
                                 );
                               },
-                            )
-                                : Center(
-                              child: Container(
-                                child: Text(
-                                  getTranslated(context, home_notAvailable).toString(),
-                                  style: TextStyle(fontSize: width * 0.05, color: Palette.grey, fontWeight: FontWeight.bold),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ),
                             ),
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, 'Specialist');
+                              Navigator.pushNamed(context, 'Healthisse');
                             },
                             child: Container(decoration: BoxDecoration(
                               border: Border.all(color: Palette.green,
@@ -856,20 +685,21 @@ class _ConsultState extends State<Consult> {
                                   Radius.circular(5.0) //         <--- border radius here
                               ),
                             ),
-                              margin: EdgeInsets.only(right: width * 0.05, left: width * 0.05),
-                              child:   Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text(
-                                    getTranslated(context, home_viewAll).toString(),
-                                    style: TextStyle(fontSize: width * 0.035, color: Palette.green,fontStyle: FontStyle.italic),
+                                margin: EdgeInsets.only(right: width * 0.05, left: width * 0.05),
+                                child:   Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      getTranslated(context, home_viewAll).toString(),
+                                      style: TextStyle(fontSize: width * 0.035, color: Palette.green,fontStyle: FontStyle.italic),
+                                    ),
                                   ),
-                                ),
-                              )
+                                )
                             ),
                           ),
                         ],
                       ),
+
                       // Doctor Specialist List //
                   /*    Column(
                         children: [
@@ -1238,41 +1068,6 @@ class _ConsultState extends State<Consult> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Container(
-                                  margin: EdgeInsets.only(left: width * 0.05, right: width * 0.05),
-                                  alignment: AlignmentDirectional.topStart,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        getTranslated(context, home_specialist).toString(),
-                                        style: TextStyle(fontSize: width * 0.04, color: Palette.dark_blue),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                               /* GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, 'Specialist');
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.only(right: width * 0.05, left: width * 0.05),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          getTranslated(context, home_viewAll).toString(),
-                                          style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),*/
-                              ],
-                            ),
-                          ),
-                        /*  Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
                                   margin: EdgeInsets.only(
                                     left: width * 0.05,
                                     top: width * 0.05,
@@ -1282,124 +1077,117 @@ class _ConsultState extends State<Consult> {
                                   child: Row(
                                     children: [
                                       Text(
-                                        getTranslated(context, home_treatments).toString(),
+                                        getTranslated(context, home_specialist).toString(),
                                         style: TextStyle(
-                                          fontSize: width * 0.04,
+                                          fontSize: width * 0.037,fontWeight: FontWeight.bold,
                                           color: Palette.dark_blue,
                                         ),
                                       )
                                     ],
                                   ),
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, 'Treatment');
-                                  },
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                      right: width * 0.05,
-                                      top: width * 0.06,
-                                      left: width * 0.05,
-                                    ),
-                                    alignment: AlignmentDirectional.topEnd,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          getTranslated(context, home_viewAll).toString(),
-                                          style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
+
                               ],
                             ),
-                          ),*/
+                          ),
                           Container(
-                            height: 125,
+                            //     height: 125,
                             width: width,
-                            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                ListView.builder(
-                                  itemCount: 4 <= treatmentList.length ? 4 : treatmentList.length,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => TreatmentSpecialist(
-                                              treatmentList[index].id,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                      child: Container(
-                                        // color: Colors.teal,
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              height: 80,
-                                              alignment: AlignmentDirectional.center,
-                                              margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                                              child:  treatmentList[index].primaryImage!=null?CachedNetworkImage(
-                                                alignment: Alignment.center,
-                                                imageUrl: '${Apis.baseUrlImages}${treatmentList[index].primaryImage!}',
-                                                fit: BoxFit.fill,
-                                                placeholder: (context, url) =>
-                                                // CircularProgressIndicator(),
-                                                SpinKitFadingCircle(
-                                                  color: Palette.blue,
-                                                ),
-                                                errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg"),
-                                              ):Image.asset("assets/images/no_image.jpg"),
-
-
-                                             /* CachedNetworkImage(
-                                                alignment: Alignment.center,
-                                                imageUrl: treatmentList[index].primaryImage!,
-                                                fit: BoxFit.fill,
-                                                placeholder: (context, url) =>
-                                                    // CircularProgressIndicator(),
-                                                    SpinKitFadingCircle(
-                                                  color: Palette.blue,
-                                                ),
-                                                errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg"),
-                                              ),*/
-                                            ),
-                                            Container(
-                                              width: 70,
-                                              height: 35,
-                                              margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-                                              child: Text(
-                                                treatmentList[index].name!,
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Palette.dark_blue,
-                                                ),
-                                                overflow: TextOverflow.ellipsis,
-                                                maxLines: 2,
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            )
-                                          ],
+                            margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                            child:     GridView.builder( gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:  3),
+                              //  itemCount: 6 <= healthmentList.length ? 6 : healthmentList.length,
+                              itemCount: 6 <= treatmentList.length ? 6 : treatmentList.length,
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => TreatmentSpecialist(
+                                          treatmentList[index].id,
                                         ),
                                       ),
                                     );
                                   },
-                                ),
-                              ],
+                                  child: Container(  margin: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(3.0),
+                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10) ,
+                                        border: Border.all(color: Colors.grey)
+                                    ),
+                                    // color: Colors.teal,
+                                    child: Stack(
+                                      //  mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          height: 120,
+                                          alignment: AlignmentDirectional.center,
+                                          //   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                                          child:
+                                          treatmentList[index].primaryImage!=null?CachedNetworkImage(height: 140,
+                                            alignment: Alignment.center,
+                                            imageUrl: '${Apis.baseUrlImages}${treatmentList[index].primaryImage!}',
+                                            fit: BoxFit.fitHeight,
+                                            placeholder: (context, url) =>
+                                            // CircularProgressIndicator(),
+                                            SpinKitFadingCircle(
+                                              color: Palette.blue,
+                                            ),
+                                            errorWidget: (context, url, error) => Image.asset("assets/images/treatment_dmy.png", fit: BoxFit.fill,),
+                                          ):Image.asset("assets/images/treatment_dmy.png", fit: BoxFit.fill,),
+
+                                        ),
+                                        Align(alignment: Alignment.bottomCenter,
+                                            child: Padding(
+                                                padding: const EdgeInsets.only(top: 18.0),
+                                                child: Container(decoration: BoxDecoration(
+                                                  gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    stops: [0.1,0.5 , 0.7, 0.9],
+                                                    colors: [
+                                                      Colors.black12,
+                                                      Colors.black38,
+                                                      Colors.black54,
+                                                      Colors.black87,
+                                                      //    Color(0xff979797),
+                                                      // Color(0xff979797),
+                                                      //   Color(0xff000000),
+                                                    ],
+                                                  ),),
+                                                    width: width,
+                                                    height: 40,
+                                                    //  margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                                    child: Padding(
+                                                        padding: const EdgeInsets.only(top: 8.0),
+                                                        child:
+                                                        Container(
+                                                          width: 70,
+                                                          height: 35,
+                                                          margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+                                                          child: Text(
+                                                            treatmentList[index].name!,
+                                                            style: TextStyle(
+                                                              fontSize: 15,fontWeight: FontWeight.bold,
+                                                              color: Palette.white,
+                                                            ),
+                                                            overflow: TextOverflow.ellipsis,
+                                                            maxLines: 1,
+                                                            textAlign: TextAlign.center,
+                                                          ),
+                                                        )))))
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                           GestureDetector(
                             onTap: () {
-                              Navigator.pushNamed(context, 'Specialist');
+                              Navigator.pushNamed(context, 'Treatment');
                             },
                             child: Container(decoration: BoxDecoration(
                               border: Border.all(color: Palette.green,
@@ -1599,7 +1387,7 @@ class _ConsultState extends State<Consult> {
           : response = await RestClient(Retro_Api2().Dio_Data2()).doctorlist(body);
       setState(() {
         _loadding = false;
-        doctorlist.addAll(response.data!);
+        doctorlist.addAll(response.doctorslist!);
       });
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
@@ -1627,7 +1415,7 @@ class _ConsultState extends State<Consult> {
       _loadding = true;
     });
     try {
-      response = await RestClient(Retro_Api().Dio_Data()).userdetailRequest(51);
+      response = await RestClient(Retro_Api().Dio_Data()).userdetailRequest(SharedPreferenceHelper.getInt(Preferences.userid).toString());
       setState(() {
         _loadding = false;
         name = response.data!.profileDetail!.name;
@@ -1753,7 +1541,6 @@ class _ConsultState extends State<Consult> {
       response = await RestClient(Retro_Api2().Dio_Data2()).detailsettingRequest();
       setState(() {
         SharedPreferenceHelper.setString(Preferences.currency_symbol, response.data!.currencySymbol!);
-
         SharedPreferenceHelper.setString(Preferences.patientAppId, response.data!.patientAppId!);
         SharedPreferenceHelper.setString(Preferences.currency_code, response.data!.currencyCode!);
         SharedPreferenceHelper.setString(Preferences.cod, response.data!.cod.toString());

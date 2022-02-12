@@ -1,99 +1,157 @@
 class Doctors {
-  bool? success;
-  List<doctor>? data;
-  String? msg;
+  List<Doctorslist>? doctorslist;
+  String? message;
+  int? status;
 
-  Doctors({this.success, this.data, this.msg});
+  Doctors({this.doctorslist, this.message, this.status});
 
   Doctors.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    if (json['data'] != null) {
-      data = [];
-      json['data'].forEach((v) {
-        data!.add(new doctor.fromJson(v));
+    if (json['doctorslist'] != null) {
+      doctorslist = <Doctorslist>[];
+      json['doctorslist'].forEach((v) {
+        doctorslist!.add(new Doctorslist.fromJson(v));
       });
     }
-    msg = json['msg'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    data['msg'] = this.msg;
-    return data;
-  }
-}
-
-class doctor {
-  int? id;
-  int? status;
-  String? image;
-  String? name;
-  int? treatmentId;
-  bool? isFaviroute;
-  String? fullImage;
-  Treatment? treatment;
-
-  doctor(
-      {this.id,
-        this.status,
-        this.image,
-        this.name,
-        this.treatmentId,
-        this.isFaviroute,
-        this.fullImage,
-        this.treatment});
-
-  doctor.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
+    message = json['message'];
     status = json['status'];
-    image = json['image'];
-    name = json['name'];
-    treatmentId = json['treatment_id'];
-    isFaviroute = json['is_faviroute'];
-    fullImage = json['fullImage'];
-    treatment = json['treatment'] != null
-        ? new Treatment.fromJson(json['treatment'])
-        : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['status'] = this.status;
-    data['image'] = this.image;
-    data['name'] = this.name;
-    data['treatment_id'] = this.treatmentId;
-    data['is_faviroute'] = this.isFaviroute;
-    data['fullImage'] = this.fullImage;
-    if (this.treatment != null) {
-      data['treatment'] = this.treatment!.toJson();
+    if (this.doctorslist != null) {
+      data['doctorslist'] = this.doctorslist!.map((v) => v.toJson()).toList();
     }
+    data['message'] = this.message;
+    data['status'] = this.status;
     return data;
   }
 }
 
-class Treatment {
+class Doctorslist {
   int? id;
   String? name;
-  String? fullImage;
+  String? mobile;
+  String? email;
+  String? photo;
+  String? sex;
+  String? dob;
+  String? occupation;
+  String? about;
+  Null? workExperience;
+  String? description;
+  String? specialties;
+  int? specialtyId;
+  String? language;
+  String? bloodGroup;
+  String? locality;
+  String? address;
+  String? address2;
+  String? city;
+  String? state;
+  String? country;
+  Null? pincode;
+  String? latitudeCoordinate;
+  String? longitudeCoordinate;
+  int? verification;
+  String? verificationText;
+  Null? createdBy;
+  String? createdAt;
+  bool? status;
 
-  Treatment({this.id, this.name, this.fullImage});
+  Doctorslist(
+      {this.id,
+        this.name,
+        this.mobile,
+        this.email,
+        this.photo,
+        this.sex,
+        this.dob,
+        this.occupation,
+        this.about,
+        this.workExperience,
+        this.description,
+        this.specialties,
+        this.specialtyId,
+        this.language,
+        this.bloodGroup,
+        this.locality,
+        this.address,
+        this.address2,
+        this.city,
+        this.state,
+        this.country,
+        this.pincode,
+        this.latitudeCoordinate,
+        this.longitudeCoordinate,
+        this.verification,
+        this.verificationText,
+        this.createdBy,
+        this.createdAt,
+        this.status});
 
-  Treatment.fromJson(Map<String, dynamic> json) {
+  Doctorslist.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
-    fullImage = json['fullImage'];
+    mobile = json['mobile'];
+    email = json['email'];
+    photo = json['photo'];
+    sex = json['sex'];
+    dob = json['dob'];
+    occupation = json['occupation'];
+    about = json['about'];
+    workExperience = json['work_experience'];
+    description = json['description'];
+    specialties = json['specialties'];
+    specialtyId = json['specialty_id'];
+    language = json['language'];
+    bloodGroup = json['blood_group'];
+    locality = json['locality'];
+    address = json['address'];
+    address2 = json['address2'];
+    city = json['city'];
+    state = json['state'];
+    country = json['country'];
+    pincode = json['pincode'];
+    latitudeCoordinate = json['latitude_coordinate'];
+    longitudeCoordinate = json['longitude_coordinate'];
+    verification = json['verification'];
+    verificationText = json['verification_text'];
+    createdBy = json['created_by'];
+    createdAt = json['created_at'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['name'] = this.name;
-    data['fullImage'] = this.fullImage;
+    data['mobile'] = this.mobile;
+    data['email'] = this.email;
+    data['photo'] = this.photo;
+    data['sex'] = this.sex;
+    data['dob'] = this.dob;
+    data['occupation'] = this.occupation;
+    data['about'] = this.about;
+    data['work_experience'] = this.workExperience;
+    data['description'] = this.description;
+    data['specialties'] = this.specialties;
+    data['specialty_id'] = this.specialtyId;
+    data['language'] = this.language;
+    data['blood_group'] = this.bloodGroup;
+    data['locality'] = this.locality;
+    data['address'] = this.address;
+    data['address2'] = this.address2;
+    data['city'] = this.city;
+    data['state'] = this.state;
+    data['country'] = this.country;
+    data['pincode'] = this.pincode;
+    data['latitude_coordinate'] = this.latitudeCoordinate;
+    data['longitude_coordinate'] = this.longitudeCoordinate;
+    data['verification'] = this.verification;
+    data['verification_text'] = this.verificationText;
+    data['created_by'] = this.createdBy;
+    data['created_at'] = this.createdAt;
+    data['status'] = this.status;
     return data;
   }
 }

@@ -5,12 +5,12 @@ import 'package:doctro/const/prefConstatnt.dart';
 import 'package:doctro/model/Profile_update.dart';
 import 'package:doctro/model/UpdateProfile.dart';
 import 'package:doctro/model/UpdateUserImage.dart';
-import 'package:doctro/phoneverification.dart';
+import 'package:doctro/view/productsell/phoneverification.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
-import '../../Bookappointment.dart';
+import '../appointment/Bookappointment.dart';
 import '../../api/base_model.dart';
 import '../../api/server_error.dart';
 import '../../const/Palette.dart';
@@ -31,11 +31,8 @@ class _signupState extends State<signup> {
   TextEditingController _dob = TextEditingController();
   TextEditingController _gender = TextEditingController();
   TextEditingController _password = TextEditingController();
-
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-
   bool _isHidden = true;
-
   DateTime? _selectedDate;
   List<String> gender = [];
   String? _selectGender;

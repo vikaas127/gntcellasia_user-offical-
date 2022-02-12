@@ -16,7 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../TreatmentSpecialist.dart';
+import '../appointment/treatment/TreatmentSpecialist.dart';
 
 
 class HealthIssue extends StatefulWidget {

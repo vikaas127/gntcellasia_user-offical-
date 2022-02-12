@@ -10,11 +10,12 @@ import 'package:doctro/const/prefConstatnt.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
-import '../../Bookappointment.dart';
+import '../appointment/Bookappointment.dart';
 import '../../../const/preference.dart';
 import '../../api/base_model.dart';
 import '../../api/server_error.dart';
@@ -34,7 +35,7 @@ class _profileState extends State<profile> {
   bool _loadding = false;
 
   List<String> gender = ['MALE', 'FEMALE'];
-  String? _selectGender;
+  String? _selectGender= 'MALE';
   String? selectDate;
   String name = "";
   String? image = "";
@@ -42,7 +43,7 @@ class _profileState extends State<profile> {
   String? msg = "";
 
   String newDateApiPass = "";
-  String newDateUser = "";
+  String newDateUser = "10-3-2022";
 
   DateTime? _selectedDate;
 
@@ -63,14 +64,16 @@ class _profileState extends State<profile> {
   TextEditingController _name = TextEditingController();
   TextEditingController _phoneCode = TextEditingController();
   TextEditingController _phoneNo = TextEditingController();
-  TextEditingController _dateOfBirth = TextEditingController();
-  TextEditingController _email = TextEditingController();
+  TextEditingController _dateOfBirth = TextEditingController(text: '10-02-2022');
+  TextEditingController _email = TextEditingController(text:'email@gmail.com');
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    callApiUserProfile();
+    print("/////USER ID //////");
+    print(SharedPreferenceHelper.getInt(Preferences.userid));
+    callApiUserProfile( SharedPreferenceHelper.getInt(Preferences.userid));
   }
 
   @override
@@ -82,14 +85,7 @@ class _profileState extends State<profile> {
     Size size = MediaQuery.of(context).size;
     return Stack(
       children: [
-        Positioned(top: size.height*0,
-          child: Image.asset(
-            "assets/images/intro_header.png",
-            height: size.height * 0.25,
-            width: width * 1,
-            fit: BoxFit.fitWidth,
-          ),
-        ),
+
         ModalProgressHUD(
           inAsyncCall: _loadding,
           opacity: 0.5,
@@ -122,9 +118,17 @@ class _profileState extends State<profile> {
                 child: Center(
                   child: Column(
                     children: [
+                      Positioned(top: size.height*0.10,
+                        child: Image.asset(
+                          "assets/images/intro_header.png",
+                          height: size.height * 0.10,
+                          width: width * 1,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
                     Container(
                     width: width * 1.57,
-                    height: height * 0.08,),
+                    height: height * 0.05,),
                       Container(
                         decoration: new BoxDecoration(
                           shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
@@ -156,10 +160,10 @@ class _profileState extends State<profile> {
                                           alignment: Alignment.center,
                                           imageUrl: '${Apis.baseUrlImages}${image}',
                                           imageBuilder: (context, imageProvider) => CircleAvatar(
-                                            radius: 50,
+                                            radius: 60,
                                             backgroundColor: Palette.white,
                                             child: CircleAvatar(
-                                              radius: 35,
+                                              radius: 40,
                                               backgroundImage: imageProvider,
                                             ),
                                           ),
@@ -168,8 +172,8 @@ class _profileState extends State<profile> {
                                             borderRadius: BorderRadius.circular(50),
                                             child: Image.asset("assets/images/no_image.jpg"),
                                           ),
-                                          height: 85,
-                                          width: 85,
+                                          height: 95,
+                                          width: 95,
                                           fit: BoxFit.fitHeight,
                                         ),
                                   Positioned(
@@ -181,10 +185,10 @@ class _profileState extends State<profile> {
                                       },
                                       child: CircleAvatar(
                                         backgroundColor: Palette.dark_grey,
-                                        radius: 12,
-                                        child: Icon(
-                                          Icons.add,
-                                          color: Palette.white,
+                                        radius: 18,
+                                        child: SvgPicture.asset(
+                                          'assets/icons/camera.svg',
+
                                         ),
                                       ),
                                     ),
@@ -367,7 +371,7 @@ class _profileState extends State<profile> {
                               Container(
                                 margin: EdgeInsets.only(
                                     top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                                 decoration: BoxDecoration(
                                     color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
                                 child:  Row(
@@ -427,7 +431,7 @@ class _profileState extends State<profile> {
                                       child: TextFormField(
                                         keyboardType: TextInputType.phone,
                                         textAlignVertical: TextAlignVertical.bottom,
-                                        inputFormatters: [FilteringTextInputFormatter.allow(RegExp('[a-zA-Z0-9]'))],
+
                                         style: TextStyle(fontSize: 16, color: Palette.dark_blue, letterSpacing: 0.5, fontWeight: FontWeight.bold),
                                         controller: _phoneNo,
                                         decoration: InputDecoration(border: InputBorder.none,suffixIcon: Icon(Icons.phone,color: Palette.light_blue,),
@@ -437,7 +441,7 @@ class _profileState extends State<profile> {
                                             color: Palette.dark_grey1,
                                           ),
                                         ),
-                                        validator: (String? value) {
+                                       /* validator: (String? value) {
                                           if (value!.isEmpty) {
                                             return getTranslated(context, profile_phoneNo_validation1).toString();
                                           }
@@ -445,7 +449,7 @@ class _profileState extends State<profile> {
                                             return getTranslated(context, profile_phoneNo_validation2).toString();
                                           }
                                           return null;
-                                        },
+                                        },*/
                                       ),
                                     ),
                                   ],
@@ -499,24 +503,28 @@ class _profileState extends State<profile> {
     );
   }
 
-  Future<BaseModel<UserDetail>> callApiUserProfile() async {
+  Future<BaseModel<UserDetail>> callApiUserProfile(int id) async {
     UserDetail response;
     setState(() {
       _loadding = true;
+
     });
     try {
-      response = await RestClient(Retro_Api().Dio_Data()).userdetailRequest(51);
-      print(response.data!.profileDetail.toString());
+
+      response = await RestClient(Retro_Api().Dio_Data()).userdetailRequest(id.toString());
+      print(response.data!.profileDetail!.mobile.toString());
       setState(() {
         _loadding = false;
         _name.text = response.data!.profileDetail!.name!;
         _phoneCode.text = response.data!.profileDetail!.mobile_code!.toString();
         _phoneNo.text =response.data!.profileDetail!.mobile!;
+        print("mobile data");
+        print( _phoneNo.text);
         _email.text =response.data!.profileDetail!.email!;
         selectDate = response.data!.profileDetail!.dob;
         _selectGender = response.data!.profileDetail!.sex!.toUpperCase();
         image = response.data!.profileDetail!.photo;
-        email = response.data!.profileDetail!.email;
+       // email = response.data!.profileDetail!.email;
 
         // Date Formate Display user
        newDateUser = DateUtil().formattedDate(DateTime.parse(selectDate!));
@@ -570,7 +578,7 @@ class _profileState extends State<profile> {
     newDateApiPass = DateUtilforpass().formattedDate(DateTime.parse(temp));
     Map<String, dynamic> body = {
 
-        "user_id":51,
+        "user_id": SharedPreferenceHelper.getInt(Preferences.userid),
         "name": _name.text,
        // "mobile": "8233081931",
         "email": _email.text,

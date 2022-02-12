@@ -1,47 +1,47 @@
 class Timeslot {
-  bool? success;
-  List<Datas>? data;
-  String? msg;
+  List<Slots>? slots;
+  String? message;
+  int? status;
 
-  Timeslot({this.success, this.data, this.msg});
+  Timeslot({this.slots, this.message, this.status});
 
   Timeslot.fromJson(Map<String, dynamic> json) {
-    success = json['success'];
-    if (json['data'] != null) {
-      data = [];
-      json['data'].forEach((v) {
-        data!.add(new Datas.fromJson(v));
+    if (json['slots'] != null) {
+      slots = <Slots>[];
+      json['slots'].forEach((v) {
+        slots!.add(new Slots.fromJson(v));
       });
     }
-    msg = json['msg'];
+    message = json['message'];
+    status = json['status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['success'] = this.success;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    if (this.slots != null) {
+      data['slots'] = this.slots!.map((v) => v.toJson()).toList();
     }
-    data['msg'] = this.msg;
+    data['message'] = this.message;
+    data['status'] = this.status;
     return data;
   }
 }
 
-class Datas {
-  String? startTime;
-  String? endTime;
+class Slots {
+  String? startAt;
+  String? endAt;
 
-  Datas({this.startTime, this.endTime});
+  Slots({this.startAt, this.endAt});
 
-  Datas.fromJson(Map<String, dynamic> json) {
-    startTime = json['start_time'];
-    endTime = json['end_time'];
+  Slots.fromJson(Map<String, dynamic> json) {
+    startAt = json['start_at'];
+    endAt = json['end_at'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['start_time'] = this.startTime;
-    data['end_time'] = this.endTime;
+    data['start_at'] = this.startAt;
+    data['end_at'] = this.endAt;
     return data;
   }
 }

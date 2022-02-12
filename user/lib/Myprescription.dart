@@ -14,7 +14,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'Review_Appointment.dart';
+import 'view/appointment/Review_Appointment.dart';
 import 'api/base_model.dart';
 import 'api/server_error.dart';
 import 'const/Palette.dart';

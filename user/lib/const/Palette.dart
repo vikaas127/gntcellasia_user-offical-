@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 class Palette {
+  static const Color primary = Color(0xff2C9085);
   static const Color white = Color(0xFFFFFFFF);
 
   static const Color dark_white = Color(0xFFE8F3FD);

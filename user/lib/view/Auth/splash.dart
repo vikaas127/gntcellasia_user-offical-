@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:doctro/const/prefConstatnt.dart';
+import 'package:doctro/const/preference.dart';
 import 'package:doctro/view/Dashboard/Dashboard.dart';
 import 'package:doctro/view/Auth/intro.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,13 +18,20 @@ class Splash_state extends State<Splash>{
   @override
   void initState() {
     super.initState();
+
     Timer(Duration(seconds: 3),
-            ()=>Navigator.pushReplacement(context,
+            ()=> SharedPreferenceHelper.getBoolean(Preferences.is_logged_in)!= true?
+                Navigator.pushReplacement(context,
             MaterialPageRoute(builder:
                 (context) =>
                     Intro()
             )
-        )
+        ): Navigator.pushReplacement(context,
+                MaterialPageRoute(builder:
+                    (context) =>
+                        DashBoard()
+                )
+            )
     );
   }
   @override

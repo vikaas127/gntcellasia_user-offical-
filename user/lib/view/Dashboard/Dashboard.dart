@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:doctro/AboutUs.dart';
+import 'package:doctro/view/Companypolices/AboutUs.dart';
 
 import 'package:doctro/Home/home.dart';
 import 'package:doctro/api/Retrofit_Api.dart';
@@ -35,14 +35,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../Auth/profile.dart';
-
-
-
 class DashBoard extends StatefulWidget {
   @override
   _DashBoardState createState() => _DashBoardState();
 }
-
 class _DashBoardState extends State<DashBoard> {
   String? _Address = "";
   String? _lat = "";
@@ -55,7 +51,7 @@ class _DashBoardState extends State<DashBoard> {
   String user_email = "";
   String user_name = "";
   bool _loadding = false;
-  List<doctor> doctorlist = [];
+  List<Doctorslist> doctorlist = [];
   List<Treatmentdata> treatmentList = [];
   List<Add> banner = [];
   int treatmentId = 0;
@@ -71,16 +67,13 @@ class _DashBoardState extends State<DashBoard> {
 
   int _current = 0;
   List<String?> imgList = [];
-
   // Search //
   TextEditingController _search = TextEditingController();
-  List<doctor> _searchResult = [];
-
+  List<Doctorslist> _searchResult = [];
   late LocationData _locationData;
   Location location = new Location();
   PageController _pageController = PageController();
   int _pageIndex = 0;
-
   late List<Widget> _screens ;
   @override
   void initState() {
@@ -104,7 +97,6 @@ class _DashBoardState extends State<DashBoard> {
         ? Timer.periodic(Duration(minutes: 10), (Timer t) => callApiAppointment())
         : "";
   }
-
   Future<void> getLocation() async {
     await Permission.storage.request();
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -123,7 +115,6 @@ class _DashBoardState extends State<DashBoard> {
       _getAddress();
     }
   }
-
   getLiveLocation() async {
     _locationData = await location.getLocation();
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -138,7 +129,7 @@ class _DashBoardState extends State<DashBoard> {
         _Address = prefs.getString('Address');
         _lat = prefs.getString('lat');
         _lang = prefs.getString('lang');
-        CallApi_DoctorList();
+       // CallApi_DoctorList();
         callApiTeatment();
         callApIDisplayOffer();
       },
@@ -171,7 +162,6 @@ class _DashBoardState extends State<DashBoard> {
     }
     return Future.value(true);
   }
-
   @override
   Widget build(BuildContext context) {
     double width;
@@ -195,9 +185,10 @@ class _DashBoardState extends State<DashBoard> {
           },
           child: Scaffold(
             bottomNavigationBar: BottomNavigationBar(
-              unselectedItemColor: Colors.grey,
+              unselectedItemColor: Color(0xff677B8A),
              // currentIndex: _index,
-              selectedIconTheme: IconThemeData(color:Colors.purple),
+              selectedIconTheme: IconThemeData(color:Color(0xff2C9085)),
+              selectedLabelStyle: TextStyle(color:Color(0xff2C9085)),
               currentIndex:_pageIndex ,
               onTap: (int index) {
                 setState(() {
@@ -214,26 +205,25 @@ class _DashBoardState extends State<DashBoard> {
 
                 BottomNavigationBarItem(
 
-                  icon: Icon(Icons.home),
+                  icon:   ImageIcon( AssetImage("assets/images/home_icon.png")),
                   label: 'Home',
                 ),
+
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.shop),
+                  icon: ImageIcon( AssetImage("assets/images/consult_icon.png")),
                   label: 'Consultation',
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.account_circle_outlined),
+                  icon: ImageIcon( AssetImage("assets/images/account_icon.png")),
                   label: 'Account',
                 ),
               ],
             ),
-
             key: _scaffoldKey,
 
             // Drawer //
 
-
-           body: PageView.builder(
+            body: PageView.builder(
              controller: _pageController,
              itemCount: _screens.length,
              physics: NeverScrollableScrollPhysics(),
@@ -1295,7 +1285,6 @@ class _DashBoardState extends State<DashBoard> {
       ),
     );
   }
-
   Future<BaseModel<Treatments>> callApiTeatment() async {
     Treatments response;
 
@@ -1314,7 +1303,7 @@ class _DashBoardState extends State<DashBoard> {
     }
     return BaseModel()..data = response;
   }
-  Future<BaseModel<Doctors>> CallApi_DoctorList() async {
+ /* Future<BaseModel<Doctors>> CallApi_DoctorList() async {
     Doctors response;
 
     Map<String, dynamic> body = {
@@ -1330,15 +1319,14 @@ class _DashBoardState extends State<DashBoard> {
           : response = await RestClient(Retro_Api2().Dio_Data2()).doctorlist(body);
       setState(() {
         _loadding = false;
-        doctorlist.addAll(response.data!);
+        doctorlist.addAll(response.doctorslist!);
       });
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
-  }
-
+  }*/
   // Logout Api //
   Future logoutUser() async {
     setState(() {
@@ -1357,7 +1345,7 @@ class _DashBoardState extends State<DashBoard> {
       _loadding = true;
     });
     try {
-      response = await RestClient(Retro_Api().Dio_Data()).userdetailRequest(51);
+      response = await RestClient(Retro_Api().Dio_Data()).userdetailRequest(SharedPreferenceHelper.getInt(Preferences.userid).toString());
       setState(() {
         _loadding = false;
         name = response.data!.profileDetail!.name;
@@ -1413,7 +1401,7 @@ class _DashBoardState extends State<DashBoard> {
           textColor: Palette.white,
         );
         doctorlist.clear();
-        CallApi_DoctorList();
+      //  CallApi_DoctorList();
       });
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
@@ -1421,7 +1409,6 @@ class _DashBoardState extends State<DashBoard> {
     }
     return BaseModel()..data = response;
   }
-
   Future<BaseModel<DisplayOffer>> callApIDisplayOffer() async {
     DisplayOffer response;
 
@@ -1440,7 +1427,6 @@ class _DashBoardState extends State<DashBoard> {
     }
     return BaseModel()..data = response;
   }
-
   Future<BaseModel<Appointments>> callApiAppointment() async {
     Appointments response;
 
@@ -1459,7 +1445,6 @@ class _DashBoardState extends State<DashBoard> {
     }
     return BaseModel()..data = response;
   }
-
   onSearchTextChanged(String text) async {
     _searchResult.clear();
     if (text.isEmpty) {
@@ -1473,7 +1458,6 @@ class _DashBoardState extends State<DashBoard> {
 
     setState(() {});
   }
-
   Future<BaseModel<DetailSetting>> appAllDetail() async {
     DetailSetting response;
 
@@ -1512,4 +1496,6 @@ class _DashBoardState extends State<DashBoard> {
     }
     return BaseModel()..data = response;
   }
+
+
 }

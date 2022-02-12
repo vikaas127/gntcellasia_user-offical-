@@ -1,7 +1,5 @@
 /// success : true
 /// msg : "Booking is successfully waiting for doctor confirmation"
-
-
 class Bookappointments {
   bool? success;
   String? data;

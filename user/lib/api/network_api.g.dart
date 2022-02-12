@@ -38,7 +38,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<verifyphone> verifyRequest(body) async {
+  Future<verifyphone> verifyRequest(phnno,body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -94,8 +94,8 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Doctors>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'doctors',
-                    queryParameters: queryParameters, data: _data)
+                .compose(_dio.options, 'api/doctors-list',
+                    queryParameters: queryParameters, )
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Doctors.fromJson(_result.data!);
     return value;
@@ -111,7 +111,7 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Doctordetails>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'doctor_details/${id}',
+                .compose(_dio.options, 'api/doctors/31',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Doctordetails.fromJson(_result.data!);
@@ -249,7 +249,7 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Timeslot>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'timeslot',
+                .compose(_dio.options, 'api/get-doctor-slots',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Timeslot.fromJson(_result.data!);
@@ -271,7 +271,7 @@ class _RestClient implements RestClient {
     return value;
   }
   @override
-  Future<ShowAddress> showaddressRequest() async {
+  Future<ShowAddress> showaddressRequest(id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -279,10 +279,25 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ShowAddress>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'api/get-address/51',
+                .compose(_dio.options, 'api/get-address/${id}',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ShowAddress.fromJson(_result.data!);
+    return value;
+  }
+  @override
+  Future<Plans> showPlans() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<Plans>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'api/get-plans',
+                queryParameters: queryParameters, )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = Plans.fromJson(_result.data!);
     return value;
   }
   @override
@@ -410,7 +425,6 @@ class _RestClient implements RestClient {
     final value = CancelAppointment.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<MedicineOrderModel> medicineOrderRequest() async {
     const _extra = <String, dynamic>{};
@@ -426,7 +440,6 @@ class _RestClient implements RestClient {
     final value = MedicineOrderModel.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<UpdateProfile> updateProfileRequest(body) async {
     const _extra = <String, dynamic>{};
@@ -442,7 +455,6 @@ class _RestClient implements RestClient {
     final value = UpdateProfile.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<MedicineOrderDetails> medicineOrderDetailRequest(id) async {
     const _extra = <String, dynamic>{};
@@ -459,7 +471,6 @@ class _RestClient implements RestClient {
     final value = MedicineOrderDetails.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<DisplayOffer> displayOfferRequest() async {
     const _extra = <String, dynamic>{};
@@ -475,7 +486,6 @@ class _RestClient implements RestClient {
     final value = DisplayOffer.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<TreatmentWishDoctor> treatmentWishDoctorRequest(id, body) async {
     const _extra = <String, dynamic>{};
@@ -486,13 +496,12 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<TreatmentWishDoctor>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'treatment_wise_doctor/${id}',
+                .compose(_dio.options, 'api/treatment-wise-doctor',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TreatmentWishDoctor.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<UpdateUserImage> updateUserImageRequest(body) async {
     const _extra = <String, dynamic>{};
@@ -508,7 +517,6 @@ class _RestClient implements RestClient {
     final value = UpdateUserImage.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<UserNotification> notificationRequest() async {
     const _extra = <String, dynamic>{};
@@ -524,7 +532,6 @@ class _RestClient implements RestClient {
     final value = UserNotification.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<Banners> bannerRequest() async {
     const _extra = <String, dynamic>{};
@@ -534,13 +541,12 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Banners>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'banner',
+                .compose(_dio.options, 'api/get-banner',
                     queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Banners.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<FavoriteDoctor> favoriteDoctorRequest(id) async {
     const _extra = <String, dynamic>{};
@@ -557,7 +563,6 @@ class _RestClient implements RestClient {
     final value = FavoriteDoctor.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<ShowFavoriteDoctor> showFavoriteDoctorRequest() async {
     const _extra = <String, dynamic>{};
@@ -573,7 +578,6 @@ class _RestClient implements RestClient {
     final value = ShowFavoriteDoctor.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<ForgotPassword> forgotPasswordRequest(body) async {
     const _extra = <String, dynamic>{};
@@ -589,7 +593,6 @@ class _RestClient implements RestClient {
     final value = ForgotPassword.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<ApplyOffer> applyOfferRequest(body) async {
     const _extra = <String, dynamic>{};
@@ -605,7 +608,6 @@ class _RestClient implements RestClient {
     final value = ApplyOffer.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<ChangePasswords> changePasswordRequest(body) async {
     const _extra = <String, dynamic>{};
@@ -638,7 +640,6 @@ class _RestClient implements RestClient {
     final value = ResendOtp.fromJson(_result.data!);
     return value;
   }
-
   @override
   Future<prescription> prescriptionRequest(id) async {
     const _extra = <String, dynamic>{};
@@ -655,7 +656,6 @@ class _RestClient implements RestClient {
     final value = prescription.fromJson(_result.data!);
     return value;
   }
-
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||
@@ -667,5 +667,53 @@ class _RestClient implements RestClient {
       }
     }
     return requestOptions;
+  }
+
+  @override
+  Future<M_familymember> familymemberRequest(int? id, body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<M_familymember>(
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'api/get-familymember/${id}',
+                queryParameters: queryParameters, )
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = M_familymember.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<M_addmmember> addmembersRequest(body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<M_addmmember>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'api/post-familymember',
+                queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = M_addmmember.fromJson(_result.data!);
+    return value;
+  }
+  @override
+  Future<M_addmmember> UpdatemembersRequest(body) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = body;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<M_addmmember>(
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'api/update-familymember',
+                queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = M_addmmember.fromJson(_result.data!);
+    return value;
   }
 }

@@ -34,6 +34,10 @@ import 'package:doctro/model/prescription.dart';
 import 'package:doctro/model/register.dart';
 import 'package:doctro/model/submitOTP.dart';
 import 'package:doctro/model/verifyphone.dart';
+import 'package:doctro/models/Plans.dart';
+import 'package:doctro/models/Plans.dart';
+import 'package:doctro/view/appointment/family/models/M_addmmember.dart';
+import 'package:doctro/view/appointment/family/models/m_familymember.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:doctro/model/login.dart';
 import 'package:dio/dio.dart';
@@ -56,7 +60,7 @@ abstract class RestClient {
   Future<log_in> loginRequest(@Body() body);
 
   @GET(Apis.verify)
-  Future<verifyphone> verifyRequest(@Body() body);
+  Future<verifyphone> verifyRequest(@Body() body,String int);
   @POST(Apis.verify)
   Future<Submitotp> SubmitOTpRequest(@Body() body,String Phn);
 //updateProfile
@@ -100,13 +104,15 @@ abstract class RestClient {
   Future<AddAddress> addaddressRequest(@Body() body);
 
   @GET(Apis.show_address)
-  Future<ShowAddress> showaddressRequest();
+  Future<ShowAddress> showaddressRequest(int ?id);
+  @GET(Apis.Plans)
+  Future<Plans> showPlans();
 
   @GET(Apis.delete_address)
   Future<DeleteAddress> deleteaddressRequest(@Path() int? id);
 
   @GET(Apis.user_detail)
-  Future<UserDetail> userdetailRequest(int p);
+  Future<UserDetail> userdetailRequest(String p);
 
   @GET(Apis.setting)
   Future<DetailSetting> detailsettingRequest();
@@ -132,6 +138,10 @@ abstract class RestClient {
   @POST(Apis.update_profile)
   Future<UpdateProfile> updateProfileRequest(@Body() body);
 
+  @POST(Apis.addmembers)
+  Future<M_addmmember> addmembersRequest(@Body() body);
+  @POST(Apis.addmembers)
+  Future<M_addmmember> UpdatemembersRequest(@Body() body);
   @GET(Apis.medicine_order_detail)
   Future<MedicineOrderDetails>  medicineOrderDetailRequest(@Path() int? id);
 
@@ -140,6 +150,9 @@ abstract class RestClient {
 
   @POST(Apis.treatmentWise_doctor)
   Future<TreatmentWishDoctor> treatmentWishDoctorRequest(@Path() int? id,@Body() body);
+
+  @POST(Apis.familymember)
+  Future<M_familymember> familymemberRequest(@Path() int? id,@Body() body);
 
   @POST(Apis.update_image)
   Future<UpdateUserImage> updateUserImageRequest(@Body() body);
