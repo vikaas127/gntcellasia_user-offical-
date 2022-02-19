@@ -122,7 +122,7 @@ class RecomendedSpecialistState extends State<RecomendedSpecialist> {
                               Row(crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
                                     child: Column(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
@@ -280,7 +280,7 @@ class RecomendedSpecialistState extends State<RecomendedSpecialist> {
             _loadding = false;
             treatmentSpecialistList.addAll(response.doctorslist!);
             for (int i = 0; i < treatmentSpecialistList.length; i++) {
-              treatmentSpecialist = treatmentSpecialistList[i].treatmentdata![0].name;
+          //    treatmentSpecialist = treatmentSpecialistList[i].treatmentdata![0].name;
             }
           });
         }

@@ -1635,8 +1635,6 @@ List<plans.Data> _plist=[];
       print('User canceled the picker');
     }
   }
-
-
   Future<BaseModel<Bookappointments>> CallApiBook() async {
     Bookappointments response;
     Map<String, dynamic> body = {
@@ -1685,7 +1683,6 @@ List<plans.Data> _plist=[];
     }
     return BaseModel()..data = response;
   }
-
   // RazorPay Code //
   void openCheckout_razorpay() async {
     var map = {
@@ -1711,7 +1708,6 @@ List<plans.Data> _plist=[];
       debugPrint('Error: e');
     }
   }
-
   // RazorPay Success Method //
   void _handlePaymentSuccess(PaymentSuccessResponse response) {
     // Fluttertoast.showToast(msg: "SUCCESS: " + response.paymentId, toastLength: Toast.LENGTH_SHORT);
@@ -1721,20 +1717,17 @@ List<plans.Data> _plist=[];
         ? CallApiBook()
         : Fluttertoast.showToast(msg: getTranslated(context, bookAppointment_paymentNotComplete_toast).toString(), toastLength: Toast.LENGTH_SHORT);
   }
-
   // RazorPay Error Method //
   void _handlePaymentError(PaymentFailureResponse response) {
     // Fluttertoast.showToast(
     //     msg: "ERROR: " + response.code.toString() + " - " + response.message,
     //     toastLength: Toast.LENGTH_SHORT);
   }
-
   // RazorPay Wallet Method //
   void _handleExternalWallet(ExternalWalletResponse response) {
     // Fluttertoast.showToast(
     //     msg: "EXTERNAL_WALLET: " + response.walletName, toastLength: Toast.LENGTH_SHORT);
   }
-
   // FlutterWave Code //
   beginPayment() async {
     final Flutterwave flutterwave = Flutterwave.forUIPayment(
@@ -1789,7 +1782,6 @@ List<plans.Data> _plist=[];
         response.data!.amount == this.amount &&
         response.data!.txRef == this.txref;
   }
-
   // PayStack //
   payStackFunction() async {
     var amountToPaystack = "$newAppointmentFees" != "0.0"
@@ -1858,8 +1850,6 @@ List<plans.Data> _plist=[];
   }
 
   // Call Doctor Detail Api //
-
-
   Future<BaseModel<ds.Doctordetails>> _doctordetail() async {
     ds.Doctordetails response;
     setState(() {
@@ -1870,15 +1860,14 @@ List<plans.Data> _plist=[];
       if (response.status == 200) {
         setState(() {
           _loadding = false;
-          name = response.data!.name;
-          rate = response.data!.amount;
-          experience = response.data!.workExperience;
-          appointmentFees = response.data!.amount;
-          desc = response.data!.description;
-          expertise = response.data!.expertise!.name;
-          fullImage = response.data!.photo;
+          name = response.data!.doctor![0].name;
+          rate = response.data!.doctor![0].title;
+          experience = response.data!.doctor![0].workExperience;
+          appointmentFees = response.data!.doctor![0].title;
+          desc = response.data!.doctor![0].description;
+         // expertise = response.data!.doctor![0].expertise!.name;
+          fullImage = response.data!.doctor![0].photo;
           treatmentname = response.data!.treatmentdata!.name;
-
           hosiptal.addAll(response.data!.hosiptal!);
          /* for (int i = 0; i < hosiptal.length; i++) {
             hospitalName = response.data!.hosiptal![i].name;
@@ -1893,9 +1882,6 @@ List<plans.Data> _plist=[];
     }
     return BaseModel()..data = response;
   }
-
-
-
   Future<BaseModel<DetailSetting>> _detailsetting() async {
     DetailSetting response;
 
@@ -1926,7 +1912,6 @@ List<plans.Data> _plist=[];
   continued() {
     _currentStep < 2 ? setState(() => _currentStep += 1) : null;
   }
-
   cancel() {
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }

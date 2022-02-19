@@ -49,7 +49,7 @@ class Doctorslist {
   String? city;
   String? state;
   String? country;
-  Null? pincode;
+  int? pincode;
   String? latitudeCoordinate;
   String? longitudeCoordinate;
   int? verification;

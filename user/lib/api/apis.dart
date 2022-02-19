@@ -1,8 +1,10 @@
 // Class for api tags
 class Apis {
-  static const String  baseUrl                = "http://brtechgeeks.pythonanywhere.com/";
+  static const String  baseUrl                = "http://178.128.106.131:8000/";
+    //  "http://brtechgeeks.pythonanywhere.com/";
   //Please don't remove "/public/api/".
-  static const String  baseUrlImages                = "http://brtechgeeks.pythonanywhere.com/";
+  static const String  baseUrlImagesprofile                = "http://178.128.106.131:8000/media/";
+  static const String  baseUrlImages                = "http://178.128.106.131:8000";
   static const String  login                  = "login";
   static const String  verify                 = "verify/";
   static const String  updateProfile              = "profile-update";

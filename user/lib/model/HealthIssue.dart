@@ -31,16 +31,23 @@ class HealthIssue {
 class Healthissuedata {
   int? id;
   String? name;
-  Null? description;
+  String? description;
   String? primaryImage;
+  int? treatmentId;
 
-  Healthissuedata({this.id, this.name, this.description, this.primaryImage});
+  Healthissuedata(
+      {this.id,
+        this.name,
+        this.description,
+        this.primaryImage,
+        this.treatmentId});
 
   Healthissuedata.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];
     primaryImage = json['primary_image'];
+    treatmentId = json['treatment_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -49,6 +56,7 @@ class Healthissuedata {
     data['name'] = this.name;
     data['description'] = this.description;
     data['primary_image'] = this.primaryImage;
+    data['treatment_id'] = this.treatmentId;
     return data;
   }
 }

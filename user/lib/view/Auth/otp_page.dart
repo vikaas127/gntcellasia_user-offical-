@@ -17,8 +17,9 @@ import 'package:numeric_keyboard/numeric_keyboard.dart';
 
 class OtpPage extends StatefulWidget {
   String Phone;
+  String phonecode;
   String Otp;
-   OtpPage({Key? key,required this.Phone,required this.Otp}) : super(key: key);
+   OtpPage({Key? key,required this.Phone,required this.Otp,required this.phonecode}) : super(key: key);
   @override
   _OtpPageState createState() => _OtpPageState();
 }
@@ -38,9 +39,9 @@ class _OtpPageState extends State<OtpPage> {
       Preferences.onLoading(context);
     });
     try {
-      response = await RestClient(Retro_Api2().Dio_Data2()).verifyRequest(widget.Phone,body);
+      response = await RestClient(Retro_Api2().Dio_Data2()).verifyRequest(widget.Phone,);
       print('OTP');
-      print('${response.oTP}');
+      print('${response.otp}');
       {
         setState(() {
           Preferences.hideDialog(context);
@@ -48,7 +49,7 @@ class _OtpPageState extends State<OtpPage> {
 
 
           Fluttertoast.showToast(
-            msg: '${response.oTP}',
+            msg: '${response.otp}',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Palette.blue,
@@ -84,8 +85,10 @@ late String Phone;
   Future<BaseModel<Submitotp>> SubmitotpLogin() async {
     Submitotp response;
     Map<String, dynamic>  body = {
+
      "otp":text,
-      "phone_code":"+92",
+      "phone_code":"91",
+      "phone_number":widget.Phone.toString()
     // "password": password.text.toString(),
     //  "device_token": deviceToken,
     };
@@ -94,16 +97,16 @@ late String Phone;
       Preferences.onLoading(context);
     });
     try {
-      response = await RestClient(Retro_Api2().Dio_Data2()).SubmitOTpRequest(body,widget.Phone);
-      print('OTP');
-      print('${response.userId}');
+      response = await RestClient(Retro_Api2().Dio_Data2()).SubmitOTpRequest(body);
+
       if (response.status == 200) {
         setState(() {
+          print(response.data!.user!.userId.toString());
           Preferences.hideDialog(context);
           SharedPreferenceHelper.setBoolean(Preferences.is_logged_in, true);
-          SharedPreferenceHelper.setString(Preferences.auth_token, response.token!);
-          SharedPreferenceHelper.setInt(Preferences.userid, response.userId!);
-          response.message=="user already registered!"?Navigator.pushNamed(context, '/'):Navigator.pushNamed(context, 'profile');
+          SharedPreferenceHelper.setString(Preferences.auth_token, response.data!.token!);
+          SharedPreferenceHelper.setInt(Preferences.userid, response.data!.user!.userId!);
+          response.data!.isProfile== true?Navigator.pushNamed(context, '/'):Navigator.pushNamed(context, 'profile');
 
 
          /* verify != 0 ? Navigator.pushReplacementNamed(context, "/")
@@ -113,13 +116,13 @@ late String Phone;
               builder: (context) => phoneverification(id),
             ),
           );*/
-          msg = response.message;
+          msg = response.msg;
 
           SharedPreferenceHelper.setBoolean(Preferences.is_logged_in, true);
           //SharedPreferenceHelper.setString(Preferences.auth_token, response.data!.token!);
 
           Fluttertoast.showToast(
-            msg: '${response.message}',
+            msg: '${response.msg}',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Palette.blue,
@@ -131,7 +134,7 @@ late String Phone;
 
           Preferences.hideDialog(context);
           Fluttertoast.showToast(
-            msg: '${response.message}',
+            msg: '${response.msg}',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Palette.blue,
@@ -244,7 +247,7 @@ late String Phone;
                                             otpNumberWidget(2),
                                             otpNumberWidget(3),
                                             otpNumberWidget(4),
-                                            otpNumberWidget(5),
+
                                             //otpNumberWidget(5),
                                           ],
                                         ),

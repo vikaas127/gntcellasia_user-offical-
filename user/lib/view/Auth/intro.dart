@@ -19,10 +19,10 @@ class _IntroState extends State<Intro> {
   Widget _buildPageIndicator(bool isCurrentPage){
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 2.0),
-      height: isCurrentPage ? 10.0 : 6.0,
-      width: isCurrentPage ? 10.0 : 6.0,
+      height: isCurrentPage ? 10.0 : 8.0,
+      width: isCurrentPage ? 16.0 : 8.0,
       decoration: BoxDecoration(
-        color: isCurrentPage ? Colors.grey : Colors.grey[300],
+        color: isCurrentPage ? Colors.orange : Colors.grey[300],
         borderRadius: BorderRadius.circular(12),
       ),
     );
@@ -48,7 +48,7 @@ class _IntroState extends State<Intro> {
         backgroundColor: Colors.white,
         body: Container(width: w,
           height: MediaQuery.of(context).size.height - 100,
-          child: PageView(
+          child:   PageView(
             controller: controller,
             onPageChanged: (index) {
               setState(() {
@@ -74,46 +74,81 @@ class _IntroState extends State<Intro> {
             ],
           ),
         ),
-        bottomSheet: slideIndex != 2 ? Container(
+        bottomSheet: slideIndex != 2 ? Container(height: h*0.22,
           margin: EdgeInsets.symmetric(vertical: 16),
-          child: Container( decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage("assets/images/introbottom.png"),
-              fit: BoxFit.fitWidth,
+          child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(decoration: BoxDecoration(
+              gradient: LinearGradient(colors:[Color(0xff2C9085),Color(0xff38AF8D)] ),),
+                width: 303,
+                height: 48,
+
+                child: Stack(
+                    children: <Widget>[
+                      Positioned(
+                          top: 5,
+                          left: 125,
+                          child: Container(
+                            decoration: BoxDecoration(
+
+                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+
+                              children: <Widget>[
+                                Text('Next', textAlign: TextAlign.center, style: TextStyle(
+                                    color: Color.fromRGBO(255, 255, 255, 1),
+                                    fontFamily: 'Open Sans',
+                                    fontSize: 16,
+                                    letterSpacing: 0,
+                                    fontWeight: FontWeight.normal,
+                                    height: 1
+                                ),),
+
+                              ],
+                            ),
+                          )
+                      ),
+                    ]
+                )
             ),
-          ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                FlatButton(
-                  onPressed: (){
-                    controller.animateToPage(2, duration: Duration(milliseconds: 400), curve: Curves.linear);
-                  },
-                  splashColor: Colors.blue[50],
-                  child: Text(
-                    "SKIP",
-                    style: TextStyle(fontSize:18,color: Color(0xFF2C9085), fontWeight: FontWeight.w600),
+              SizedBox(height:h*0.05 ,),
+              Center(
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 148.0,vertical: 5),
+                    child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        for (int i = 0; i < 3 ; i++) i == slideIndex ? _buildPageIndicator(true): _buildPageIndicator(false),
+                      ],),
                   ),
                 ),
-                Container(
-                  child: Row(
-                    children: [
-                      for (int i = 0; i < 3 ; i++) i == slideIndex ? _buildPageIndicator(true): _buildPageIndicator(false),
-                    ],),
+              ),
+              Container( decoration: BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage("assets/images/introbottom.png"),
+                  fit: BoxFit.fitWidth,
                 ),
-                FlatButton(
-                  onPressed: (){
-                    print("this is slideIndex: $slideIndex");
-                    controller.animateToPage(slideIndex + 1, duration: Duration(milliseconds: 500), curve: Curves.linear);
-                  },
-                  splashColor: Colors.blue[50],
-                  child: Text(
-                    "NEXT",
-                    style: TextStyle(fontSize:18,color: Color(0xFF2C9085), fontWeight: FontWeight.w600),
-                  ),
+              ),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    FlatButton(
+                      onPressed: (){
+                        controller.animateToPage(2, duration: Duration(milliseconds: 400), curve: Curves.linear);
+                      },
+                      splashColor: Colors.blue[50],
+                      child: Text(
+                        "SKIP",
+                        style: TextStyle(fontSize:12,color: Color(0xFF2C9085), fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                    SizedBox(height:h*0.01 ,),
+
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ): InkWell(
           onTap: (){
@@ -156,19 +191,32 @@ class SlideTile extends StatelessWidget {
               child: Image.asset(
                 'assets/images/intro_header.png',height: 120 ,width: w,fit:BoxFit.fitWidth ,)),
           Image.asset(imagePath),
+
           SizedBox(
             height: 40,
           ),
-          Text(title, textAlign: TextAlign.center,style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 20
+          Text(title, textAlign: TextAlign.center,style: TextStyle( color: Color.fromRGBO(9, 44, 76, 1),
+              fontFamily: 'Open Sans',
+              fontSize: 20,
+              letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+              fontWeight: FontWeight.normal,
+              height: 1
+
           ),),
           SizedBox(
             height: 20,
           ),
           Text(desc, textAlign: TextAlign.center,style: TextStyle(
-              fontWeight: FontWeight.w500,
-              fontSize: 14))
+              color: Color.fromRGBO(103, 123, 138, 1),
+              fontFamily: 'Open Sans',
+              fontSize: 13,
+              letterSpacing: 0,
+              fontWeight: FontWeight.normal,
+              height: 1.5384615384615385
+
+          )),
+          // Figma Flutter Generator ButtonWidget - INSTANCE
+
         ],
       ),
     );

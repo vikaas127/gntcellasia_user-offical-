@@ -148,36 +148,43 @@ class _TreatmentSpecialistState extends State<TreatmentSpecialist> {
                       EdgeInsets.only(left: width * 0.05, right: width * 0.05, top: height * 0.005),
                   child: Column(
                     children: [
-                      Card(
-                        color: Palette.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                        child: Container(
-                          height: height * 0.06,
-                          width: width * 1,
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
-                          child: TextField(
-                            textCapitalization: TextCapitalization.words,
-                            controller: _search,
-                            onChanged: onSearchTextChanged,
-                            decoration: InputDecoration(filled: true,fillColor: Colors.grey,
-                              hintText:
-                                  getTranslated(context, treatmentSpecialist_searchDoctor_hint)
-                                      .toString(),
-                              hintStyle:
-                                  TextStyle(fontSize: width * 0.04, color: Palette.dark_blue),
-                              suffixIcon: Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: SvgPicture.asset(
-                                  'assets/icons/SearchIcon.svg',
-                                ),
-                              ),
-                              border: InputBorder.none,
+                      Container(height: 50,
+                        width: width * 1,
+                        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                        child: TextField(
+                          textCapitalization: TextCapitalization.words,
+                          onChanged: onSearchTextChanged,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
+                            filled: true,
+
+                            //  fillColor: Color(0xFFACE5EE),
+                            fillColor: Colors.grey[300],
+                            hintText:   getTranslated(context, treatmentSpecialist_searchDoctor_hint)
+                                .toString(),
+                            hintStyle:  TextStyle(
+                                color: Color.fromRGBO(103, 123, 138, 1),
+                                fontFamily: 'Open Sans',
+                                fontSize: 14,
+                                letterSpacing: 0,
+                                fontWeight: FontWeight.normal,
+                                height: 1
+                            ),
+                            prefixIcon: Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: SvgPicture.asset(
+                                'assets/icons/SearchIcon.svg',
+                                height: 14,
+                                width: 14,
+                              ),
+                            ),
+
                           ),
                         ),
                       ),
+
                     ],
                   ),
                 ),
@@ -366,8 +373,8 @@ class _TreatmentSpecialistState extends State<TreatmentSpecialist> {
                                                                   ),
                                                                 ),
                                                                 _searchResult[index]
-                                                                    .treatmentdata !=
-                                                                    null
+                                                                    .treatmentdata !.isNotEmpty==true
+
                                                                     ? Text(
                                                                   _searchResult[index]
                                                                       .treatmentdata![0].name
@@ -385,8 +392,8 @@ class _TreatmentSpecialistState extends State<TreatmentSpecialist> {
                                                                       color: Palette.grey),
                                                                 ),
                                                                 _searchResult[index]
-                                                                    .treatmentdata !=
-                                                                    null
+                                                                    .treatmentdata !.isNotEmpty==true
+
                                                                     ? Text(
                                                                   _searchResult[index]
                                                                       .treatmentdata![0].name
@@ -713,7 +720,7 @@ class _TreatmentSpecialistState extends State<TreatmentSpecialist> {
                                                 );
                                               },
                                               child: Container(
-                                                height: width * 0.55,
+                                                height: width * 0.49,
                                                 width: width * 0.92,
                                                 child: Card(
                                                   shape: RoundedRectangleBorder(
@@ -827,49 +834,84 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                                 Center(
                                                                   child: Text(
                                                                     treatmentSpecialistList[index].name!.toString().toUpperCase(),
-                                                                    style: TextStyle(
-                                                                        fontSize: width * 0.04,
-                                                                        fontWeight: FontWeight.bold,
-                                                                        color: Palette.dark_blue),
+                                  textAlign: TextAlign.left, style: TextStyle(
+                                  color: Color.fromRGBO(9, 44, 76, 1),
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 17,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.bold,
+                                  height: 1),
                                                                   ),
                                                                 ),
                                                                 treatmentSpecialistList[index]
-                                                                    .treatmentdata !=
-                                                                    null
-                                                                    ? Text(
+                                                                    .treatmentdata!.isNotEmpty==true
+                                                                    ? Row(
+                                                                      children: [
+                                                                        Text('${
                                                                   treatmentSpecialistList[index]
-                                                                      .treatmentdata![0].name
-                                                                      .toString(),
-                                                                  style: TextStyle(
-                                                                      fontSize: width * 0.035,
-                                                                      color: Palette.grey),
-                                                                )
+                                                                          .treatmentdata![0].name
+                                                                          .toString()} ||',
+                                                                   textAlign: TextAlign.left, style: TextStyle(
+                                                                  color: Color.fromRGBO(103, 123, 138, 1),
+                                                                  fontFamily: 'Open Sans',
+                                                                  fontSize: 12,
+                                                                  letterSpacing: 0,
+                                                                  fontWeight: FontWeight.normal,
+                                                                )),
+                                                                        Text(
+                                                                            treatmentSpecialistList[index]
+                                                                                .treatmentdata![0].name
+                                                                                .toString(),
+                                                                            textAlign: TextAlign.left, style: TextStyle(
+                                                                          color: Color.fromRGBO(103, 123, 138, 1),
+                                                                          fontFamily: 'Open Sans',
+                                                                          fontSize: 12,
+                                                                          letterSpacing: 0,
+                                                                          fontWeight: FontWeight.normal,
+                                                                        )),
+                                                                      ],
+                                                                    )
                                                                     : Text(
                                                                   getTranslated(context,
                                                                       treatmentSpecialist_notAvailable)
                                                                       .toString(),
-                                                                  style: TextStyle(
-                                                                      fontSize: width * 0.035,
-                                                                      color: Palette.grey),
+                                                                  textAlign: TextAlign.left, style: TextStyle(
+                                                                    color: Color.fromRGBO(9, 44, 76, 1),
+                                                                    fontFamily: 'Open Sans',
+                                                                    fontSize: 12,
+                                                                    letterSpacing: 0,
+                                                                    fontWeight: FontWeight.normal,
+                                                                    height: 1
                                                                 ),
+
+                                            ),
                                                                 treatmentSpecialistList[index]
-                                                                    .treatmentdata !=
-                                                                    null
+                                                                    .treatmentdata !.isNotEmpty==true
                                                                     ? Text(
                                                                   treatmentSpecialistList[index]
                                                                       .treatmentdata![0].name
                                                                       .toString(),
                                                                   style: TextStyle(
-                                                                      fontSize: width * 0.035,
-                                                                      color: Palette.grey),
+                                  color: Color.fromRGBO(9, 44, 76, 1),
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 12,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1
+                                  ),
                                                                 )
                                                                     : Text(
                                                                   getTranslated(context,
                                                                       treatmentSpecialist_notAvailable)
                                                                       .toString(),
                                                                   style: TextStyle(
-                                                                      fontSize: width * 0.035,
-                                                                      color: Palette.grey),
+                                                                      color: Color.fromRGBO(9, 44, 76, 1),
+                                                                      fontFamily: 'Open Sans',
+                                                                      fontSize: 12,
+                                                                      letterSpacing: 0,
+                                                                      fontWeight: FontWeight.normal,
+                                                                      height: 1
+                                                                  ),
                                                                 ),
                                                                 Container(
                                                                   // height: 150,
@@ -886,23 +928,29 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                                               child: Text(
                                                                                 getTranslated(context, doctorDetail_doctorExperience)
                                                                                     .toString(),
-                                                                                style: TextStyle(
-                                                                                    fontSize: width * 0.035,
-                                                                                    color: Palette.dark_blue,
-                                                                                    fontWeight: FontWeight.bold),
-                                                                              ),
+                                                                                 textAlign: TextAlign.left, style: TextStyle(
+                                                                                  color: Color.fromRGBO(103, 123, 138, 1),
+                                                                                  fontFamily: 'Open Sans',
+                                                                                  fontSize: 12,
+                                                                                  letterSpacing: 0,
+                                                                                  fontWeight: FontWeight.normal,
+                                                                                  height: 1
+                                                                              ),),
                                                                             ),
                                                                             Container(
                                                                               child: Text(
                                                                                 '8  ' +
                                                                                     getTranslated(context, doctorDetail_year).toString(),
-                                                                                style: TextStyle(
-                                                                                  fontSize: width * 0.035,
-                                                                                  color: Palette.dark_blue,
-                                                                                ),
+                                                                                 textAlign: TextAlign.left, style: TextStyle(
+                                                                                  color: Color.fromRGBO(103, 123, 138, 1),
+                                                                                  fontFamily: 'Open Sans',
+                                                                                  fontSize: 14,
+                                                                                  letterSpacing: 0,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  height: 1
                                                                               ),
                                                                             ),
-                                                                          ],
+                                                                            ),],
                                                                         ),
                                                                       ),
                                                                       Padding(
@@ -913,20 +961,25 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                                               margin: EdgeInsets.symmetric(vertical: width * 0.005),
                                                                               child: Text(
                                                                                 getTranslated(context, doctorDetail_appointmentFees).toString(),
-                                                                                style: TextStyle(
-                                                                                    fontSize: width * 0.035,
-                                                                                    color: Palette.dark_blue,
-                                                                                    fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.left, style: TextStyle(
+                                  color: Color.fromRGBO(103, 123, 138, 1),
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 12,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1),
                                                                               ),
                                                                             ),
                                                                             Container(
                                                                               child: Text(
                                                                                 SharedPreferenceHelper.getString(Preferences.currency_symbol).toString() + 'Fees',
-                                                                                style: TextStyle(
-                                                                                    fontSize: width * 0.035,
-                                                                                    color: Palette.dark_blue,
-                                                                                    fontWeight: FontWeight.bold
-                                                                                ),
+                                                                                textAlign: TextAlign.left, style: TextStyle(
+                                                                                  color: Color.fromRGBO(103, 123, 138, 1),
+                                                                                  fontFamily: 'Open Sans',
+                                                                                  fontSize: 14,
+                                                                                  letterSpacing: 0,
+                                                                                  fontWeight: FontWeight.bold,
+                                                                                  height: 1),
                                                                               ),
                                                                             ),
                                                                           ],
@@ -940,21 +993,26 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                                               margin: EdgeInsets.symmetric(vertical: width * 0.005),
                                                                               child: Text(
                                                                                 getTranslated(context, doctorDetail_appoipatient).toString(),
-                                                                                style: TextStyle(
-                                                                                    fontSize: width * 0.035,
-                                                                                    color: Palette.dark_blue,
-                                                                                    fontWeight: FontWeight.bold
+                                                                                textAlign: TextAlign.left, style: TextStyle(
+                                                                                  color: Color.fromRGBO(103, 123, 138, 1),
+                                                                                  fontFamily: 'Open Sans',
+                                                                                  fontSize: 12,
+                                                                                  letterSpacing: 0,
+                                                                                  fontWeight: FontWeight.normal,
+                                                                                  height: 1
                                                                                 ),
                                                                               ),
                                                                             ),
                                                                             Container(
                                                                               child: Text('Fees',
-                                                                                style: TextStyle(
-                                                                                  fontSize: width * 0.035,
-                                                                                  color: Palette.dark_blue,
+                                                                                textAlign: TextAlign.left, style: TextStyle(
+                                                                                    color: Color.fromRGBO(103, 123, 138, 1),
+                                                                                    fontFamily: 'Open Sans',
+                                                                                    fontSize: 12,
 
-
-                                                                                ),
+                                                                                    letterSpacing: 0,
+                                                                                    fontWeight: FontWeight.bold,
+                                                                                    height: 1),
                                                                               ),
                                                                             ),
                                                                           ],
@@ -972,7 +1030,7 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                         ],
                                                       ),
                                                       Padding(
-                                                        padding: const EdgeInsets.all(8.0),
+                                                        padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 2),
                                                         child: Row(
                                                           children: [
                                                             Expanded(flex: 1,
@@ -988,10 +1046,10 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                                   });
                                                                 },
                                                                 child: Padding(
-                                                                  padding: const EdgeInsets.all(8.0),
+                                                                  padding: const EdgeInsets.all(2.0),
                                                                   child: Container(
                                                                     //   width: width*0.40,
-                                                                    height: 40,
+                                                                    height: 34,
                                                                     decoration: BoxDecoration(
                                                                       gradient: LinearGradient(
                                                                         colors: [
@@ -1001,7 +1059,7 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                                         begin: Alignment.topLeft,
                                                                         end: Alignment.bottomRight,
                                                                       ),
-                                                                      borderRadius: BorderRadius.circular(10),
+                                                                      borderRadius: BorderRadius.circular(8),
                                                                       boxShadow: [
                                                                         BoxShadow(
                                                                           color: Colors.black12,
@@ -1012,14 +1070,16 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                                     ),
                                                                     child: Center(
                                                                       child:  Padding(
-                                                                        padding: const EdgeInsets.all(8.0),
+                                                                        padding: const EdgeInsets.all(2.0),
                                                                         child: Text(
                                                                           'Online Consult',
-                                                                          style: TextStyle(
-                                                                            color: Colors.white,
-                                                                            fontSize: 13,
-                                                                            fontWeight: FontWeight.w500,
-                                                                          ),
+                                                                          textAlign: TextAlign.center, style: TextStyle(
+                                                                            color: Color.fromRGBO(255, 255, 255, 1),
+                                                                            fontFamily: 'Open Sans',
+                                                                            fontSize: 14,
+                                                                            letterSpacing: 0,
+                                                                            fontWeight: FontWeight.normal,
+                                                                            height: 1),
                                                                         ),
                                                                       ),
                                                                     /*  Row(
@@ -1063,10 +1123,10 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                                       });
                                                                     },
                                                                     child: Padding(
-                                                                      padding: const EdgeInsets.all(8.0),
+                                                                      padding: const EdgeInsets.all(2.0),
                                                                       child: Container(
                                                                         // width: width*0.40,
-                                                                        height: 40,
+                                                                        height: 34,
                                                                         decoration: BoxDecoration(
                                                                           gradient: LinearGradient(
                                                                             colors: [
@@ -1128,6 +1188,40 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                           ],
                                                         ),
                                                       ),
+                                                      Row(
+                                                        children: [
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 2),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  '8.30 AM Today ',
+                                                                  style: TextStyle(
+                                                                    color: Colors.grey,
+                                                                    fontSize: 10,
+                                                                    fontWeight: FontWeight.bold,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Expanded(
+                                                            child: Padding(
+                                                              padding: const EdgeInsets.symmetric(horizontal: 18.0,vertical: 2),
+                                                              child: Center(
+                                                                child: Text(
+                                                                  '12.30 Tomorrow',
+                                                                  style: TextStyle(
+                                                                    color: Colors.grey,
+                                                                    fontSize: 10,
+                                                                    fontWeight: FontWeight.bold
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -1183,7 +1277,7 @@ crossAxisAlignment: CrossAxisAlignment.center,
             _loadding = false;
             treatmentSpecialistList.addAll(response.doctorslist!);
             for (int i = 0; i < treatmentSpecialistList.length; i++) {
-              treatmentSpecialist = treatmentSpecialistList[i].treatmentdata![0].name;
+            //  treatmentSpecialist = treatmentSpecialistList[i].treatmentdata![0].name;
             }
           });
         }

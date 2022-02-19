@@ -83,7 +83,7 @@ class _SignInState extends State<SignIn> {
                   Positioned(top: size.height*0,
                     child: Image.asset(
                       "assets/images/intro_header.png",
-                      height: size.height * 0.25,
+                      height: size.height * 0.28,
                       width: width * 1,
                       fit: BoxFit.fitWidth,
                     ),
@@ -137,7 +137,7 @@ class _SignInState extends State<SignIn> {
                                         color: Palette.dark_blue,
                                       ),
                                       controller: _phoneCode,
-                                      decoration: InputDecoration(
+                                      decoration: InputDecoration(fillColor: Colors.orange,
                                         hintText: '+91',
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(
@@ -199,15 +199,9 @@ class _SignInState extends State<SignIn> {
                                   });
                                 },
                                       onEditingComplete: (){
-                                      setState(() {
-    if (formkey.currentState!.validate()) {
-    callForLogin();
+                                   setState(() {
 
-    } else {
-    print('Not Login');
-    }
-
-                                      });
+                                   });
                                     },
                                       controller: _phone,
                                       keyboardType: TextInputType.number,
@@ -219,6 +213,7 @@ class _SignInState extends State<SignIn> {
                                         fontSize: 16,
                                         color: Palette.dark_blue,
                                       ),
+
                                       decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: getTranslated(context, signUp_phoneNo_hint).toString(),
@@ -252,7 +247,7 @@ class _SignInState extends State<SignIn> {
                               width: 15,
                             ),
                           ),
-                          SizedBox(height: height*0.030,),
+                          SizedBox(height: height*0.080,),
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: Image.asset(
@@ -261,7 +256,7 @@ class _SignInState extends State<SignIn> {
                               width: width*0.89,
                             ),
                           ),
-                          SizedBox(height: height*0.080,),
+                          SizedBox(height: height*0.050,),
                           Padding(
                             padding: const EdgeInsets.all(12),
                             child: SvgPicture.asset('assets/icons/cta.svg',
@@ -310,11 +305,10 @@ class _SignInState extends State<SignIn> {
   Future<BaseModel<verifyphone>> callForLogin() async {
     verifyphone response;
     var  phoneno =  _phone.text.toString();
+    print(_phoneCode.text.toString());
 Map<String, String> body={
-
-    "phone_code":_phoneCode.text,
-
-
+"phone_number":_phone.text,
+    "phone_code":"91",
 
 };
 
@@ -322,35 +316,28 @@ Map<String, String> body={
       Preferences.onLoading(context);
     });
     try {
-      response = await RestClient(Retro_Api2().Dio_Data2()).verifyRequest(body,phoneno);
+      response = await RestClient(Retro_Api2().Dio_Data2()).verifyRequest(body);
       print('OTP');
-      print('${response.oTP}');
+      print('${response.otp}');
        {
         setState(() {
           Preferences.hideDialog(context);
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => OtpPage(Phone: phoneno, Otp: '${response.oTP}',),
+              builder: (context) => OtpPage(Phone: phoneno, Otp: '${response.otp}',phonecode: _phoneCode.text,),
             ),
           );
-          verify ;
-           id ;
 
-          verify != 0 ? Navigator.pushReplacementNamed(context, "/")
-              : Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => OtpPage(Phone: phoneno, Otp: '${response.oTP}',),
-                  ),
-                );
-          msg = response.oTP;
+
+
+          msg = response.otp;
       //   email.clear();
        //  password.clear();
 
 
           Fluttertoast.showToast(
-            msg: '${response.oTP}',
+            msg: '${response.otp}',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
             backgroundColor: Palette.blue,

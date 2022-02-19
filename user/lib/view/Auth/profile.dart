@@ -83,6 +83,7 @@ class _profileState extends State<profile> {
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     Size size = MediaQuery.of(context).size;
+    print('${Apis.baseUrlImagesprofile}${image}');
     return Stack(
       children: [
 
@@ -94,22 +95,7 @@ class _profileState extends State<profile> {
             size: 50.0,
           ),
           child: Scaffold(
-            appBar: PreferredSize(
-              preferredSize: Size(width * 0.3, height * 0.05),
-              child: SafeArea(
-                top: true,
-                child: Container(
-                  alignment: Alignment.topRight,
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                  child: GestureDetector(
-                    child: Icon(Icons.arrow_back_ios),
-                    onTap: () {
-                      Navigator.pushNamed(context, 'Home');
-                    },
-                  ),
-                ),
-              ),
-            ),
+
             body: GestureDetector(
               onTap: () {
                 FocusScope.of(context).requestFocus(new FocusNode());
@@ -117,8 +103,8 @@ class _profileState extends State<profile> {
               child: SingleChildScrollView(
                 child: Center(
                   child: Column(
-                    children: [
-                      Positioned(top: size.height*0.10,
+                    children: [//image
+                      Positioned(top: size.height*0.05,
                         child: Image.asset(
                           "assets/images/intro_header.png",
                           height: size.height * 0.10,
@@ -128,7 +114,7 @@ class _profileState extends State<profile> {
                       ),
                     Container(
                     width: width * 1.57,
-                    height: height * 0.05,),
+                    height: height * 0.03,),
                       Container(
                         decoration: new BoxDecoration(
                           shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
@@ -142,8 +128,8 @@ class _profileState extends State<profile> {
                         child: Column(
                           children: [
                             SizedBox(
-                              height: 85,
-                              width: 85,
+                              height: 105,
+                              width: 105,
                               child: Stack(
                                 clipBehavior: Clip.none,
                                 fit: StackFit.expand,
@@ -158,7 +144,7 @@ class _profileState extends State<profile> {
                                         )
                                       : CachedNetworkImage(
                                           alignment: Alignment.center,
-                                          imageUrl: '${Apis.baseUrlImages}${image}',
+                                          imageUrl: '${Apis.baseUrlImagesprofile}${image}',
                                           imageBuilder: (context, imageProvider) => CircleAvatar(
                                             radius: 60,
                                             backgroundColor: Palette.white,
@@ -172,13 +158,13 @@ class _profileState extends State<profile> {
                                             borderRadius: BorderRadius.circular(50),
                                             child: Image.asset("assets/images/no_image.jpg"),
                                           ),
-                                          height: 95,
-                                          width: 95,
+                                          height: 105,
+                                          width: 105,
                                           fit: BoxFit.fitHeight,
                                         ),
                                   Positioned(
-                                    top: 50,
-                                    left: 65,
+                                    top: 70,
+                                    left: 75,
                                     child: GestureDetector(
                                       onTap: () {
                                         _ChooseProfileImage();
@@ -202,195 +188,252 @@ class _profileState extends State<profile> {
                       Form(
                         key: formkey,
                         child: Container(
-                          margin: EdgeInsets.only(top: size.height * 0.03),
+                          margin: EdgeInsets.only(top: size.height * 0.02),
                           width: width * 0.9,
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
-
-                              Container(
-                                margin: EdgeInsets.only(
-                                    top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                                decoration: BoxDecoration(
-                                    color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
-                                child: TextFormField(
-                                  controller: _name,
-                                  keyboardType: TextInputType.text,
-                                  inputFormatters: [
-                                    FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]'))
-                                  ],
-                                  textCapitalization: TextCapitalization.words,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Palette.dark_blue,
-                                  ),
-                                  decoration: InputDecoration(suffixIcon: Icon(Icons.person,color: Palette.light_blue,),
-                                    border: InputBorder.none,
-                                    hintText: getTranslated(context, signUp_userName_hint).toString(),
-                                    hintStyle: TextStyle(
-                                      fontSize: width * 0.04,
-                                      color: Palette.dark_grey,
-                                      fontWeight: FontWeight.bold,
+// full name
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(height: 55,
+                                  margin: EdgeInsets.only(
+                                      top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
+                                 // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                                  decoration: BoxDecoration(
+                                      color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
+                                  child: TextFormField(
+                                    controller: _name,
+                                    keyboardType: TextInputType.text,
+                                    inputFormatters: [
+                                      FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]'))
+                                    ],
+                                    textCapitalization: TextCapitalization.words,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Palette.dark_blue,
                                     ),
-                                  ),
-                                  validator: (String? value) {
-                                    value!.trim();
-                                    if (value.isEmpty) {
-                                      return getTranslated(context, signUp_userName_validator1).toString();
-                                    } else if (value.trim().length < 1) {
-                                      return getTranslated(context, signUp_userName_validator2).toString();
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (String? name) {},
-                                ),
-                              ),
+                                    decoration: InputDecoration(suffixIcon:
+                                       Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: SvgPicture.asset(
+                                          'assets/icons/profile.svg',height: 10,width: 10,
 
-                              Container(
-                                margin: EdgeInsets.only(
-                                    top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                                decoration: BoxDecoration(
-                                    color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
-                                child: DropdownButtonFormField(
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Palette.dark_blue,
-                                  ),
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: getTranslated(context, signUp_selectGender_hint).toString(),
-                                    hintStyle: TextStyle(
+                                        ),
+                                      ),
+
+                                      label: Text("Full Name"),
+                                      border: new OutlineInputBorder(
+                                        borderRadius: new BorderRadius.circular(15.0),
+                                        borderSide: new BorderSide(),
+                                      ),
+                                      hintText: getTranslated(context, signUp_userName_hint).toString(),
+                                      hintStyle: TextStyle(
                                         fontSize: width * 0.04,
                                         color: Palette.dark_grey,
-                                        fontWeight: FontWeight.bold),
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    validator: (String? value) {
+                                      value!.trim();
+                                      if (value.isEmpty) {
+                                        return getTranslated(context, signUp_userName_validator1).toString();
+                                      } else if (value.trim().length < 1) {
+                                        return getTranslated(context, signUp_userName_validator2).toString();
+                                      }
+                                      return null;
+                                    },
+                                    onSaved: (String? name) {},
                                   ),
-                                  value: _selectGender,
-                                  isExpanded: true,
-                                  iconSize: 25,
-                                  onSaved: (dynamic value) {
-                                    setState(
-                                          () {
-                                        _selectGender = value;
-                                      },
-                                    );
-                                  },
-                                  onChanged: (dynamic newValue) {
-                                    setState(
-                                          () {
-                                        _selectGender = newValue;
-                                      },
-                                    );
-                                  },
-                                  validator: (dynamic value) => value == null ? getTranslated(context, signUp_selectGender_validator).toString() : null,
-                                  items: gender.map(
-                                        (location) {
-                                      return DropdownMenuItem<String>(
-                                        child: new Text(
-                                          location,
-                                          style: TextStyle(
-                                            fontSize: width * 0.04,
-                                            color: Palette.dark_blue,
-                                          ),
-                                        ),
-                                        value: location,
+                                ),
+                              ),
+//gender
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 4),
+                                child: Container(height: 55,
+                                  margin: EdgeInsets.only(
+                                      top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
+                                 // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                                  decoration: BoxDecoration(
+                                      color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
+                                  child: DropdownButtonFormField(
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      color: Palette.dark_blue,
+                                    ),
+                                    decoration: InputDecoration(
+                                      label: Text("Gender"),
+                                      border: new OutlineInputBorder(
+                                        borderRadius: new BorderRadius.circular(15.0),
+                                        borderSide: new BorderSide(),
+                                      ),
+                                      hintText: getTranslated(context, signUp_selectGender_hint).toString(),
+                                      hintStyle: TextStyle(
+                                          fontSize: 15,
+                                          color: Palette.dark_grey,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    value: _selectGender,
+                                    isExpanded: true,
+                                    iconSize: 25,
+                                    onSaved: (dynamic value) {
+                                      setState(
+                                            () {
+                                          _selectGender = value;
+                                        },
                                       );
                                     },
-                                  ).toList(),
+                                    onChanged: (dynamic newValue) {
+                                      setState(
+                                            () {
+                                          _selectGender = newValue;
+                                        },
+                                      );
+                                    },
+                                    validator: (dynamic value) => value == null ? getTranslated(context, signUp_selectGender_validator).toString() : null,
+                                    items: gender.map(
+                                          (location) {
+                                        return DropdownMenuItem<String>(
+                                          child: new Text(
+                                            location,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Palette.dark_blue,
+                                            ),
+                                          ),
+                                          value: location,
+                                        );
+                                      },
+                                    ).toList(),
+                                  ),
                                 ),
                               ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                                decoration: BoxDecoration(
-                                    color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
-                                child: TextFormField(
-                                  textCapitalization: TextCapitalization.words,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Palette.dark_blue,
-                                  ),
-                                  controller: _dateOfBirth,
-                                  decoration: InputDecoration(suffixIcon: Icon(Icons.date_range,color: Palette.light_blue,),
-                                    hintText: getTranslated(context, signUp_birthDate_hint).toString(),
-                                    border: InputBorder.none,
-                                    hintStyle: TextStyle(
-                                        fontSize: width * 0.04,
-                                        color: Palette.dark_grey,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  validator: (String? value) {
-                                    if (value!.isEmpty) {
-                                      return getTranslated(context, signUp_birthDate_validator1).toString();
-                                    }
-                                    return null;
-                                  },
-                                  onTap: () {
-                                    _selectDate(context);
-                                  },
-                                ),
-                              ),
-                              Container(
-                                margin: EdgeInsets.only(
-                                    top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                                decoration: BoxDecoration(
-                                    color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
-                                child: TextFormField(
-                                 controller: _email,
-                                  keyboardType: TextInputType.text,
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    color: Palette.dark_blue,
-                                  ),
-                                  decoration: InputDecoration(suffixIcon: Icon(Icons.email,color: Palette.light_blue,),
-                                    border: InputBorder.none,
-                                    hintText: getTranslated(context, signUp_email_hint).toString(),
-                                    hintStyle: TextStyle(
-                                        fontSize: width * 0.04,
-                                        color: Palette.dark_grey,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  validator: (String? value) {
-                                    if (value!.isEmpty) {
-                                      return getTranslated(context, signUp_email_validator1).toString();
-                                    }
-                                    if (!RegExp(
-                                        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                        .hasMatch(value)) {
-                                      return getTranslated(context, signUp_email_validator1).toString();
-                                    }
-                                    return null;
-                                  },
-                                  onSaved: (String? name) {},
-                                ),
-                              ),
+                              //calender
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Container(height: 55,
+                                  margin: EdgeInsets.only(
+                                      top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
+                                  //padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                                  decoration: BoxDecoration(
+                                      color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
+                                  child: TextFormField(
+                                    textCapitalization: TextCapitalization.words,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Palette.dark_blue,
+                                    ),
+                                    controller: _dateOfBirth,
+                                    decoration: InputDecoration(suffixIcon:    Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: SvgPicture.asset(
+                                        'assets/icons/calender.svg',height: 10,width: 10,
 
+                                      ),
+                                    ),
+                                      label: Text("Date of Birth"),
+                                      border: new OutlineInputBorder(
+                                        borderRadius: new BorderRadius.circular(15.0),
+                                        borderSide: new BorderSide(),
+                                      ),
+                                      hintText: getTranslated(context, signUp_birthDate_hint).toString(),
+
+                                      hintStyle: TextStyle(
+                                          fontSize: width * 0.04,
+                                          color: Palette.dark_grey,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    validator: (String? value) {
+                                      if (value!.isEmpty) {
+                                        return getTranslated(context, signUp_birthDate_validator1).toString();
+                                      }
+                                      return null;
+                                    },
+                                    onTap: () {
+                                      _selectDate(context);
+                                    },
+                                  ),
+                                ),
+                              ),
+                              //email
+                              Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 4.0,horizontal: 4),
+                                child: Container(height: 55,
+                                  margin: EdgeInsets.only(
+                                      top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
+                                 // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                                  decoration: BoxDecoration(
+                                      color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
+                                  child: TextFormField(
+                                   controller: _email,
+                                    keyboardType: TextInputType.text,
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      color: Palette.dark_blue,
+                                    ),
+                                    decoration: InputDecoration(suffixIcon:  Padding(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: SvgPicture.asset(
+                                        'assets/icons/email.svg',height: 10,width: 10,
+
+                                      ),
+                                    ),
+                                      label: Text("Email"),
+                                      border: new OutlineInputBorder(
+                                        borderRadius: new BorderRadius.circular(15.0),
+                                        borderSide: new BorderSide(),
+                                      ),
+                                      hintText: getTranslated(context, signUp_email_hint).toString(),
+                                      hintStyle: TextStyle(
+                                          fontSize: 14,
+                                          color: Palette.dark_grey,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                    validator: (String? value) {
+                                      if (value!.isEmpty) {
+                                        return getTranslated(context, signUp_email_validator1).toString();
+                                      }
+                                      if (!RegExp(
+                                          r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                          .hasMatch(value)) {
+                                        return getTranslated(context, signUp_email_validator1).toString();
+                                      }
+                                      return null;
+                                    },
+                                    onSaved: (String? name) {},
+                                  ),
+                                ),
+                              ),
+//phone code
                               Container(
                                 margin: EdgeInsets.only(
                                     top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                               // padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
                                 decoration: BoxDecoration(
                                     color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
                                 child:  Row(
                                   children: [
                                     Container(
-                                      width: width * 0.1,
-                                      height: height * 0.05,
-                                      margin: EdgeInsets.symmetric(horizontal: 9),
+                                      width: width * 0.23,
+                                      height: 55,
+                                     // margin: EdgeInsets.symmetric(horizontal: 9),
                                       child: TextFormField(
-                                        keyboardType: TextInputType.phone,
+
                                         textAlign: TextAlign.center,
                                         textAlignVertical: TextAlignVertical.bottom,
                                         readOnly: true,
                                         style: TextStyle(fontSize: 16, color: Palette.dark_blue, fontWeight: FontWeight.bold),
                                         controller: _phoneCode,
-                                        decoration: InputDecoration(   border: InputBorder.none,
+                                        decoration: InputDecoration(
+
                                           hintText: '+91',
+                                          label: Text("india"),
+                                          border: new OutlineInputBorder(
+                                            borderRadius: new BorderRadius.circular(15.0),
+                                            borderSide: new BorderSide(),
+                                          ),
                                           hintStyle: TextStyle(
-                                            fontSize: width * 0.04,
+                                            fontSize: 12,
                                             color: Palette.dark_grey1,
                                           ),
                                         ),
@@ -427,18 +470,23 @@ class _profileState extends State<profile> {
                                     ),
                                     Container(
                                       width: width * 0.57,
-                                      height: height * 0.05,
+                                      height: 55,
                                       child: TextFormField(
-                                        keyboardType: TextInputType.phone,
+                                       readOnly: true,
                                         textAlignVertical: TextAlignVertical.bottom,
 
                                         style: TextStyle(fontSize: 16, color: Palette.dark_blue, letterSpacing: 0.5, fontWeight: FontWeight.bold),
                                         controller: _phoneNo,
-                                        decoration: InputDecoration(border: InputBorder.none,suffixIcon: Icon(Icons.phone,color: Palette.light_blue,),
+                                        decoration: InputDecoration(suffixIcon: Icon(Icons.phone,color: Palette.light_blue,),
                                           hintText: getTranslated(context, profile_phoneNo_hint).toString(),
                                           hintStyle: TextStyle(
-                                            fontSize: width * 0.04,
+                                            fontSize: 14,
                                             color: Palette.dark_grey1,
+                                          ),
+                                          label: Text("Phone no"),
+                                          border: new OutlineInputBorder(
+                                            borderRadius: new BorderRadius.circular(15.0),
+                                            borderSide: new BorderSide(),
                                           ),
                                         ),
                                        /* validator: (String? value) {
@@ -479,22 +527,30 @@ class _profileState extends State<profile> {
               ),
             ),
             bottomNavigationBar: Container(
-              height: height * 0.05,
-              child: ElevatedButton(
-                child: Text(
-                  getTranslated(context, profile_save_button).toString(),
-                  style: TextStyle(
-                    fontSize: width * 0.04,
-                    color: Palette.white,
+              height: height * 0.10,
+              child: Column(
+                children: [
+
+                  Container( height: height * 0.05,width: width*0.75,
+                    child: ElevatedButton(
+                      child: Text(
+                        getTranslated(context, profile_save_button).toString(),
+                        style: TextStyle(
+                          fontSize: width * 0.04,
+                          color: Palette.white,
+                        ),
+                      ),
+                      onPressed: () {
+                        if (formkey.currentState!.validate()) {
+                          callApiUpdateProfile();
+                        } else {
+                          print('Not update');
+                        }
+                      },
+                    ),
                   ),
-                ),
-                onPressed: () {
-                  if (formkey.currentState!.validate()) {
-                    callApiUpdateProfile();
-                  } else {
-                    print('Not update');
-                  }
-                },
+                  SizedBox(height:height * 0.05 ,),
+                ],
               ),
             ),
           ),
@@ -513,21 +569,24 @@ class _profileState extends State<profile> {
 
       response = await RestClient(Retro_Api().Dio_Data()).userdetailRequest(id.toString());
       print(response.data!.profileDetail!.mobile.toString());
+      print(response.data!.profileDetail!.name.toString());
       setState(() {
         _loadding = false;
-        _name.text = response.data!.profileDetail!.name!;
+
+        _name.text = response.data!.profileDetail!.name!=null?response.data!.profileDetail!.name!:"";
         _phoneCode.text = response.data!.profileDetail!.mobile_code!.toString();
-        _phoneNo.text =response.data!.profileDetail!.mobile!;
+        _phoneNo.text =response.data!.profileDetail!.mobile!=null?response.data!.profileDetail!.mobile!:"";
         print("mobile data");
         print( _phoneNo.text);
-        _email.text =response.data!.profileDetail!.email!;
+        _email.text =response.data!.profileDetail!.email!=null?response.data!.profileDetail!.email!:"";
         selectDate = response.data!.profileDetail!.dob;
         _selectGender = response.data!.profileDetail!.sex!.toUpperCase();
-        image = response.data!.profileDetail!.photo;
-       // email = response.data!.profileDetail!.email;
+       image = response.data!.profileDetail!.photo;
+       print(image);
+        email = response.data!.profileDetail!.email;
 
         // Date Formate Display user
-       newDateUser = DateUtil().formattedDate(DateTime.parse(selectDate!));
+       newDateUser = selectDate!=null?DateUtil().formattedDate(DateTime.parse(selectDate!)):"";
         _dateOfBirth.text = newDateUser;
       });
     } catch (error, stacktrace) {
@@ -619,58 +678,8 @@ class _profileState extends State<profile> {
   Future<BaseModel<UpdateUserImage>> callApiUpdateImage() async {
     UpdateUserImage response;
     Map<String, dynamic> body = {
-      "user_id":51,
-      "photo": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADMAAAAz"
-          "CAIAAAC1w6d9AAAAh3pUWHRSYXcgcHJvZmlsZSB0eXBlIGV4aWYAAHjadY"
-          "7LDcQwCETvVJESMOAByllFiZQOtvzFcqzksu8AoxGfoeN7nbQNGgtZ90ACXF"
-          "hayqdE8ESZm3Abverk7tpKyWOTyhTIcLZn0G5/0RWB080dHTt2qetyqGhUrT0aV3n"
-          "EyNc3XYn++CvFD0K+LCGFVYifAAAKAmlUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPD9"
-          "4cGFja2V0IGJlZ2luPSLvu78iIGlkPSJXNU0wTXBDZWhpSHpyZVN6TlRjemtjOWQiPz4KPH"
-          "g6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNC40L"
-          "jAtRXhpdjIiPgogPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLz"
-          "IyLXJkZi1zeW50YXgtbnMjIj4KICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgeG1sbn"
-          "M6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iCiAgICB4bWxuczp0aWZmPSJodHRwOi8vb"
-          "nMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgZXhpZjpQaXhlbFhEaW1lbnNpb249IjUxIgogICBleGlmOlBpe"
-          "GVsWURpbWVuc2lvbj0iNTEiCiAgIHRpZmY6SW1hZ2VXaWR0aD0iNTEiCiAgIHRpZmY6SW1hZ2VIZWlnaHQ9Ij"
-          "UxIgogICB0aWZmOk9yaWVudGF0aW9uPSIxIi8+CiA8L3JkZjpSREY+CjwveDp4bXBtZXRhPgogICAgICAgICAgI"
-          "CAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI"
-          "CAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC"
-          "AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAg"
-          "ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC"
-          "AgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI"
-          "CAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgI"
-          "CAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg"
-          "ICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA"
-          "gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgIC"
-          "AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg"
-          "ICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC"
-          "AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAg"
-          "ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC"
-          "AgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg"
-          "ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI"
-          "CAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC"
-          "AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA"
-          "gICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg"
-          "ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg"
-          "ICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA"
-          "gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg"
-          "ICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI"
-          "CAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA"
-          "gICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgICAgICAg"
-          "ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI"
-          "CAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICA"
-          "gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI"
-          "CAgICAgICAgICAgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICA"
-          "gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC"
-          "AgICAgICAgICAgICAgICAgICAgICAgICAgICAKICAgICAgICAgICAgICAgICAgICAgIC"
-          "AgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA"
-          "gICAgICAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgICAgICAgICAgICAgICA"
-          "gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIC"
-          "AgICAgICAgICAgICAgICAgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgI"
-          "CAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA"
-          "KICAgICAgICAgICAgICAgICAgICAgICAgICAgCjw/eHBhY2tldCBlbmQ9InciPz5pZgYrAAAAA3NCSVQICAjb"
-          "4U/gAAAAR0lEQVRYw+3OsREAEBAAQfT+ORHdviJeINgr4GZ7ZranxVmxZ/0z2q+RkZGRkZGRkZGRkZGRkZGR"
-          "kZGRkZGRkZGRkZGRkVW7puAGvSEr+egAAAAASUVORK5CYII=",
+      "user_id":SharedPreferenceHelper.getInt(Preferences.userid).toString(),
+      "photo": "data:image/png;base64,${image}",
     };
     setState(() {
       _loadding = true;
@@ -709,7 +718,7 @@ class _profileState extends State<profile> {
           List<int> imageBytes = _Proimage!.readAsBytesSync();
           print(imageBytes);
           String base64Image = base64Encode(imageBytes);
-        //  List<int> imageBytes = _Proimage!.readAsBytesSync();
+
           image = base64Encode(imageBytes);
    //       String   image2 = base64Encode(imageBytes);
           print('vikaas');

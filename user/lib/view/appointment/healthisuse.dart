@@ -135,7 +135,42 @@ class HealthisseState extends State<Healthisse> {
                         left: width * 0.05, right: width * 0.05, top: height * 0.005),
                     child: Column(
                       children: [
-                        Card(
+                        Container(height: 50,
+                          width: width * 1,
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                          child: TextField(
+                            textCapitalization: TextCapitalization.words,
+                            onChanged: onSearchTextChanged,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              filled: true,
+
+                              //  fillColor: Color(0xFFACE5EE),
+                              fillColor: Colors.grey[300],
+                              hintText: "Search Health Issues",
+                              hintStyle:  TextStyle(
+                                  color: Color.fromRGBO(103, 123, 138, 1),
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 14,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: SvgPicture.asset(
+                                  'assets/icons/SearchIcon.svg',
+                                  height: 14,
+                                  width: 14,
+                                ),
+                              ),
+
+                            ),
+                          ),
+                        ),
+                    /*    Card(
                           color: Palette.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(50),
@@ -162,7 +197,7 @@ class HealthisseState extends State<Healthisse> {
                               ),
                             ),
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
@@ -204,18 +239,18 @@ class HealthisseState extends State<Healthisse> {
                               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child:Container( color: Colors.grey,
-                                  width: 50,
-                                  height: 40,
+                                  width: 60,
+                                  height: 60,
                                   alignment: AlignmentDirectional.center,
-                                  child: CachedNetworkImage(
+                                  child: CachedNetworkImage(height: 60,width: 60,
                                     alignment: Alignment.center,
-                                    imageUrl: _searchResult[index].primaryImage!,
-                                    fit: BoxFit.fill,
+                                    imageUrl: '${Apis.baseUrlImages}${_searchResult[index].primaryImage!}',
+                                    fit: BoxFit.fitHeight,
                                     placeholder: (context, url) => SpinKitFadingCircle(
                                       color: Palette.blue,
                                     ),
                                     errorWidget: (context, url, error) =>
-                                        Image.asset("assets/images/no_image.jpg"),
+                                        Image.asset("assets/images/no_image.jpg",   fit: BoxFit.fitHeight,),
                                   ),
                                 ),
                               ),
@@ -223,8 +258,8 @@ class HealthisseState extends State<Healthisse> {
                                 margin: EdgeInsets.symmetric(horizontal: width * 0.05),
                                 child: Text(
                                   _searchResult[index].name!,
-                                  style: TextStyle(
-                                    fontSize: width * 0.045,
+                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: width * 0.055,
                                     color: Palette.dark_grey,
                                   ),
                                 ),
@@ -288,30 +323,32 @@ class HealthisseState extends State<Healthisse> {
                         },
                         child: ListTile(
                           title: Row(
-                            children: [
+                            children: [ ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child:
                               Container(
-                                width: 50,
-                                height: 40,
+                                width: 60,
+                                height: 60,
                                 alignment: AlignmentDirectional.center,
-                                child:  healthissuelist[index].primaryImage!=null?CachedNetworkImage(
+                                child:  healthissuelist[index].primaryImage!=null?CachedNetworkImage(height: 60,width: 60,
                                   alignment: Alignment.center,
                                   imageUrl: '${Apis.baseUrlImages}${healthissuelist[index].primaryImage!}',
-                                  fit: BoxFit.fill,
+                                  fit: BoxFit.fitHeight,
                                   placeholder: (context, url) =>
                                   // CircularProgressIndicator(),
                                   SpinKitFadingCircle(
                                     color: Palette.blue,
                                   ),
-                                  errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg"),
-                                ):Image.asset("assets/images/no_image.jpg"),
+                                  errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",fit: BoxFit.fitHeight),
+                                ):Image.asset("assets/images/no_image.jpg",fit: BoxFit.fitHeight,),
 
-                              ),
+                              ),),
                               Container(
                                 margin: EdgeInsets.symmetric(horizontal: width * 0.05),
                                 child: Text(
-                                  healthissuelist[index].name!,
-                                  style: TextStyle(
-                                    fontSize: width * 0.045,
+                                  healthissuelist[index].name!,textAlign: TextAlign.center,
+                                  style: TextStyle(fontWeight: FontWeight.bold,
+                                    fontSize: width * 0.055,
                                     color: Palette.dark_grey,
                                   ),
                                 ),

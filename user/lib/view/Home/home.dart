@@ -5,14 +5,26 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:doctro/api/Retrofit_Api.dart';
 import 'package:doctro/api/apis.dart';
+import 'package:doctro/api/base_model.dart';
 import 'package:doctro/api/network_api.dart';
+import 'package:doctro/api/server_error.dart';
+import 'package:doctro/const/Palette.dart';
+import 'package:doctro/const/app_string.dart';
 import 'package:doctro/const/prefConstatnt.dart';
 import 'package:doctro/const/preference.dart';
+import 'package:doctro/database/form_helper.dart';
+import 'package:doctro/localization/localization_constant.dart';
+import 'package:doctro/model/Appointments.dart';
 import 'package:doctro/model/Banner.dart';
+import 'package:doctro/model/DetailSetting.dart';
+import 'package:doctro/model/DisplayOffer.dart';
+import 'package:doctro/model/FavoriteDoctor.dart';
 import 'package:doctro/model/HealthIssue.dart';
 import 'package:doctro/model/Treatments.dart';
+import 'package:doctro/model/UserDetail.dart';
 import 'package:doctro/model/doctors.dart';
 import 'package:doctro/view/Consult/widget/CustomIndicator.dart';
+import 'package:doctro/view/appointment/treatment/TreatmentSpecialist.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,19 +36,7 @@ import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
-import '../view/appointment/treatment/TreatmentSpecialist.dart';
-import '../../database/form_helper.dart';
-import '../view/appointment/doctordetail.dart';
-import '../../model/Appointments.dart';
-import '../../model/DisplayOffer.dart';
-import '../api/base_model.dart';
-import '../api/server_error.dart';
-import '../const/Palette.dart';
-import '../const/app_string.dart';
-import '../localization/localization_constant.dart';
-import '../model/DetailSetting.dart';
-import '../model/FavoriteDoctor.dart';
-import '../model/UserDetail.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -764,7 +764,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             appBar: PreferredSize(
-              preferredSize: Size(width, height*0.20),
+              preferredSize: Size(width, height*0.17),
               child: SafeArea(
                 top: true,
                 child: Container(
@@ -892,30 +892,38 @@ class _HomeState extends State<Home> {
                       ),
                       Container(
                         margin: EdgeInsets.only(left: width * 0.05, right: width * 0.05, top: height * 0.01),
-                          child: Container(
+                          child: Container(height: 50,
                             width: width * 1,
                             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                             child: TextField(
                               textCapitalization: TextCapitalization.words,
                               onChanged: onSearchTextChanged,
                               decoration: InputDecoration(
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
                                 filled: true,
+
                                 //  fillColor: Color(0xFFACE5EE),
                                 fillColor: Colors.grey[300],
                                 hintText: getTranslated(context, home_searchDoctor).toString(),
-                                hintStyle: TextStyle(
-                                  fontSize: width * 0.04,
-                                  color: Palette.dark_blue,
-                                ),
+                                hintStyle:  TextStyle(
+                                  color: Color.fromRGBO(103, 123, 138, 1),
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 14,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1
+                              ),
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.all(12),
                                   child: SvgPicture.asset(
                                     'assets/icons/SearchIcon.svg',
-                                    height: 15,
-                                    width: 15,
+                                    height: 14,
+                                    width: 14,
                                   ),
                                 ),
-                                border: InputBorder.none,
+
                               ),
                             ),
                           ),
@@ -1272,39 +1280,71 @@ class _HomeState extends State<Home> {
                         children: [
                           Container(
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Container(
-                                  margin: EdgeInsets.only(left: width * 0.05, right: width * 0.05),
-                                  alignment: AlignmentDirectional.topStart,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        getTranslated(context, home_commonhealissue).toString(),
-                                        style: Theme.of(context).textTheme.headline1,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, 'Healthisse');
-                                  },
+                                Expanded(flex: 3,
                                   child: Container(
-                                    margin: EdgeInsets.only(right: width * 0.05, left: width * 0.05),
+                                    margin: EdgeInsets.only(
+                                      left: width * 0.02,
+                                      top: width * 0.05,
+                                      right: width * 0.02,
+                                    ),
+                                    alignment: AlignmentDirectional.topStart,
                                     child: Row(
                                       children: [
                                         Text(
-                                          getTranslated(context, home_viewAll).toString(),
-                                          style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
+                                          getTranslated(context, home_commonhealissue).toString(),
+                                          textAlign: TextAlign.left, style: TextStyle(
+                                            color: Color.fromRGBO(9, 44, 76, 1),
+                                            fontFamily: 'Open Sans',
+
+                                            fontSize: 15,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.bold,
+                                            height: 1
+                                        ),
                                         )
                                       ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(flex: 1,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, 'Healthisse');
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                        right: width * 0.0,
+                                        top: width * 0.06,
+                                        left: width * 0.04,
+                                      ),
+                                      alignment: AlignmentDirectional.topEnd,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            getTranslated(context, home_viewAll).toString(),
+                                            textAlign: TextAlign.right, style: TextStyle(
+                                              color: Color.fromRGBO(44, 144, 133, 1),
+                                              fontFamily: 'Open Sans',
+                                              fontSize: 13,
+                                              letterSpacing: 0,
+                                              fontWeight: FontWeight.bold,
+                                              height: 1
+                                          ),
+                                          ),
+                                          SizedBox(width: 5,),
+                                          SvgPicture.asset("assets/icons/Vector.svg",height: 15,width: 15,)
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(height: 10,),
+
                           Container(
                             child: GridView.builder( gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:  3),
                               itemCount: 6 <= healthmentList.length ? 6 : healthmentList.length,
@@ -1324,20 +1364,21 @@ class _HomeState extends State<Home> {
                                     );
                                   },
                                   child: Container(
-                                    margin: const EdgeInsets.all(10.0),
-                                    padding: const EdgeInsets.all(3.0),
+                                    margin: const EdgeInsets.all(6.0),
+                                    padding: const EdgeInsets.all(0.0),
                                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10) ,
                                         border: Border.all(color: Colors.grey)
                                     ),
                                     // color: Colors.teal,
                                     child: Stack(
-                                    //  mainAxisAlignment: MainAxisAlignment.center,
+
                                       children: [
                                         Container(
                                           height: 125,
                                           alignment: AlignmentDirectional.center,
-                                        //  margin: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-                                          child:
+
+                                          child:ClipRRect(
+                                            borderRadius: BorderRadius.circular(18.0),child:
                                           healthmentList[index].primaryImage!=null?CachedNetworkImage(height: 125,
                                             alignment: Alignment.center,
                                             imageUrl: '${Apis.baseUrlImages}${healthmentList[index].primaryImage!}',
@@ -1347,24 +1388,19 @@ class _HomeState extends State<Home> {
                                             SpinKitFadingCircle(
                                               color: Palette.blue,
                                             ),
-                                            errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",fit: BoxFit.fill,),
-                                          ):Image.asset("assets/images/no_image.jpg",fit: BoxFit.fill,),
+                                            errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",fit: BoxFit.fitHeight,height: 140,),
+                                          ):Image.asset("assets/images/no_image.jpg",
+                                            fit: BoxFit.fitHeight,height: 140,),
 
-                                        ),
+                                        ),),
                                         Align(alignment: Alignment.bottomCenter,
                                           child: Padding(
                                             padding: const EdgeInsets.only(top: 8.0),
                                             child: Container(decoration: BoxDecoration(
                                               gradient: LinearGradient(
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                stops: [0.1, 0.5, 0.7, 0.9],
-                                                colors: [
-                                                  Colors.black12,
-                                                  Colors.black38,
-                                                  Colors.black54,
-                                                  Colors.black87,
-                                                ],
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter,
+                                                  colors: [Color.fromRGBO(8, 43, 76, 0),Color.fromRGBO(9, 44, 76, 0.8999999761581421)]
                                               ),),
                                               width: width,
                                               height: 50,
@@ -1373,13 +1409,18 @@ class _HomeState extends State<Home> {
                                                 padding: const EdgeInsets.only(top: 18.0),
                                                 child: Text(
                                                   healthmentList[index].name!,
-                                                  style: TextStyle(
-                                                    fontSize: 15,fontWeight: FontWeight.bold,
-                                                    color: Palette.white,
-                                                  ),
+                                                  textAlign: TextAlign.center, style: TextStyle(
+                                                    color: Color.fromRGBO(255, 255, 255, 1),
+                                                    fontFamily: 'Open Sans',
+                                                    fontSize: 13,
+                                                    letterSpacing: 0,
+                                                    fontWeight: FontWeight.bold,
+                                                    height: 1
+
+                                                ),
                                                   overflow: TextOverflow.ellipsis,
                                                   maxLines: 1,
-                                                  textAlign: TextAlign.center,
+
                                                 ),
                                               ),
                                             ),
@@ -1404,46 +1445,67 @@ class _HomeState extends State<Home> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Container(
-                                  margin: EdgeInsets.only(
-                                    left: width * 0.02,
-                                    top: width * 0.05,
-                                    right: width * 0.02,
-                                  ),
-                                  alignment: AlignmentDirectional.topStart,
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        getTranslated(context, home_specialist).toString(),
-                                        style:Theme.of(context).textTheme.headline1
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.pushNamed(context, 'Treatment');
-                                  },
+                                Expanded(flex: 3,
                                   child: Container(
                                     margin: EdgeInsets.only(
-                                      right: width * 0.05,
-                                      top: width * 0.06,
-                                      left: width * 0.05,
+                                      left: width * 0.02,
+                                      top: width * 0.05,
+                                      right: width * 0.02,
                                     ),
-                                    alignment: AlignmentDirectional.topEnd,
+                                    alignment: AlignmentDirectional.topStart,
                                     child: Row(
                                       children: [
                                         Text(
-                                          getTranslated(context, home_viewAll).toString(),
-                                          style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
+                                          getTranslated(context, home_specialist).toString(),
+                                          textAlign: TextAlign.left, style: TextStyle(
+                                            color: Color.fromRGBO(9, 44, 76, 1),
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 15,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.bold,
+                                            height: 1
+                                        ),
                                         )
                                       ],
+                                    ),
+                                  ),
+                                ),
+                                Expanded(flex: 1,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Navigator.pushNamed(context, 'Treatment');
+                                    },
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                        right: width * 0.0,
+                                        top: width * 0.06,
+                                        left: width * 0.04,
+                                      ),
+                                      alignment: AlignmentDirectional.topEnd,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            getTranslated(context, home_viewAll).toString(),
+                                             textAlign: TextAlign.right, style: TextStyle(
+                                        color: Color.fromRGBO(44, 144, 133, 1),
+                                        fontFamily: 'Open Sans',
+                                        fontSize: 13,
+                                        letterSpacing: 0,
+                                              fontWeight: FontWeight.bold,
+                                        height: 1
+                                    ),
+                                          ),
+                                          SizedBox(width: 5,),
+                                          SvgPicture.asset("assets/icons/Vector.svg",height: 15,width: 15,)
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+                          SizedBox(height: 10,),
                           Container(
                        //     height: 125,
                             width: width,
@@ -1466,21 +1528,25 @@ class _HomeState extends State<Home> {
                                       ),
                                     );
                                   },
-                                  child: Container(  margin: const EdgeInsets.all(10.0),
-                                    padding: const EdgeInsets.all(3.0),
+                                  child:       // Figma Flutter Generator NotfeelingwellWidget - INSTANCE
+
+                                  Container(  margin: const EdgeInsets.all(6.0),
+                                    padding: const EdgeInsets.all(0.0),
+
                                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10) ,
-                                        border: Border.all(color: Colors.grey)
-                                    ),
+                                      border: Border.all(color: Colors.grey)),
                                     // color: Colors.teal,
                                     child: Stack(
                                     //  mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Container(
-                                          height: 120,
+                                          height: 140,
                                           alignment: AlignmentDirectional.center,
                                        //   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                                          child:
-                                          treatmentList[index].primaryImage!=null?CachedNetworkImage(height: 140,
+                                          child:ClipRRect(
+                                            borderRadius: BorderRadius.circular(10.0),
+                                            child:
+                                            treatmentList[index].primaryImage!=null?CachedNetworkImage(height: 140,
                                             alignment: Alignment.center,
                                             imageUrl: '${Apis.baseUrlImages}${treatmentList[index].primaryImage!}',
                                             fit: BoxFit.fitHeight,
@@ -1489,28 +1555,20 @@ class _HomeState extends State<Home> {
                                             SpinKitFadingCircle(
                                               color: Palette.blue,
                                             ),
-                                            errorWidget: (context, url, error) => Image.asset("assets/images/treatment_dmy.png", fit: BoxFit.fill,),
-                                          ):Image.asset("assets/images/treatment_dmy.png", fit: BoxFit.fill,),
+                                            errorWidget: (context, url, error) => Image.asset(
+                                              "assets/images/treatment_dmy.png", fit: BoxFit.fitHeight,height: 140,),
+                                          ):Image.asset("assets/images/treatment_dmy.png", fit: BoxFit.fitHeight,height: 140,),
 
-                                        ),
+                                        ),),
                                 Align(alignment: Alignment.bottomCenter,
                                 child: Padding(
                                 padding: const EdgeInsets.only(top: 18.0),
                                 child: Container(decoration: BoxDecoration(
                                 gradient: LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                stops: [0.1,0.5 , 0.7, 0.9],
-                                colors: [
-                                Colors.black12,
-                                  Colors.black38,
-                                  Colors.black54,
-                                  Colors.black87,
-                            //    Color(0xff979797),
-                               // Color(0xff979797),
-                             //   Color(0xff000000),
-                                ],
-                                ),),
+                                                          begin: Alignment.topCenter,
+                                                          end: Alignment.bottomCenter,
+                                                          colors: [Color.fromRGBO(8, 43, 76, 0),Color.fromRGBO(9, 44, 76, 0.8999999761581421)]
+                                                      ),),
                                 width: width,
                                 height: 40,
                                 //  margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
@@ -1523,13 +1581,18 @@ class _HomeState extends State<Home> {
                                           margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
                                           child: Text(
                                             treatmentList[index].name!,
-                                            style: TextStyle(
-                                              fontSize: 15,fontWeight: FontWeight.bold,
-                                              color: Palette.white,
+                                            textAlign: TextAlign.center, style: TextStyle(
+                                              color: Color.fromRGBO(255, 255, 255, 1),
+                                              fontFamily: 'Open Sans',
+                                              fontSize: 13,
+                                              letterSpacing: 0,
+                                              fontWeight: FontWeight.bold,
+                                              height: 1
+
                                             ),
                                             overflow: TextOverflow.ellipsis,
                                             maxLines: 1,
-                                            textAlign: TextAlign.center,
+
                                           ),
                                         )))))
                                       ],

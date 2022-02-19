@@ -64,7 +64,7 @@ class _DoctordetailState extends State<Doctordetail> with
   List<String?> award = [];
   List<String?> ce_year = [];
   List<Hosiptal> hosiptaldetail = [];
-  List<Hospitalgallery> hosiptalGallery = [];
+ // List<Hospitalgallery> hosiptalGallery = [];
   List<Reviews> reviews = [];
   _DoctordetailState(int? id) {
     this.id = id;
@@ -226,7 +226,7 @@ void initState() {
                     child: Container(
                       child: Column(
                         children: [
-                          SizedBox(height: height*0.075,),
+                          SizedBox(height: height*0.045,),
                           Container(
                             margin: EdgeInsets.only(top: height * 0.0170),
                             child: Row(
@@ -789,7 +789,7 @@ void initState() {
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: DatePicker(
                             DateTime.now(),
-                            height:54,width:90,
+                            height:58,width:90,
                             dayTextStyle:TextStyle(fontSize: 0) ,
                             dateTextStyle: TextStyle(fontSize: 10),
                             initialSelectedDate: DateTime.now(),
@@ -916,7 +916,7 @@ void initState() {
                           ),
                         ),
                         Divider(thickness: 1.5,),
-                        Container(height: 80,width: width,
+                   /*     Container(height: 80,width: width,
                             child:hosiptaldetail.length!=0? ListView.builder(shrinkWrap: true,
                                 scrollDirection: Axis.horizontal,
                                 itemCount: hosiptaldetail[0].hospitalgallery!.length,
@@ -927,7 +927,7 @@ void initState() {
                                   borderRadius: BorderRadius.circular(8.0),
                                   child:Image.network("${Apis.baseUrl}${hosiptaldetail[0].hospitalgallery![index].fullImage}",fit:BoxFit.fitHeight ,),),
                               ));
-                            }):Container(),),
+                            }):Container(),),*/
                         Divider(thickness: 1.5,),
                         Container(height: height*0.26,width: width,
                             child: Column(crossAxisAlignment: CrossAxisAlignment.start,
@@ -989,7 +989,7 @@ void initState() {
                                       Container(
                                         alignment: AlignmentDirectional.topStart,
                                         child: Text(
-                                          educationaldetail[index].univercity!,
+                                          educationaldetail[index].id.toString(),
                                           style: TextStyle(
                                               fontSize: width * 0.03, color: Palette.grey),
                                         ),
@@ -997,7 +997,7 @@ void initState() {
                                       Container(
                                         alignment: AlignmentDirectional.topStart,
                                         child: Text(
-                                          educationaldetail[index].passingYear!,
+                                          educationaldetail[index].id.toString(),
                                           style: TextStyle(
                                             fontSize: width * 0.03,
                                             color: Palette.grey,
@@ -1325,14 +1325,14 @@ void initState() {
         setState(
           () {
             _loadding = false;
-            id = response.data!.id;
-            name = response.data!.name;
+            id = response.data!.doctor![0].id;
+            name = response.data!.doctor![0].name;
          //   rate = response.data!.amount!.toDouble();
-            experience = response.data!.workExperience;
-            appointmentFees = response.data!.amount;
-            desc = response.data!.description;
+            experience = response.data!.doctor![0].workExperience;
+            appointmentFees = response.data!.doctor![0].city;
+            desc = response.data!.doctor![0].description;
             expertise = response.data!.expertise!.name;
-            fullImage = response.data!.photo;
+            fullImage = response.data!.doctor![0].photo;
             treatmentname = response.data!.treatmentdata!.name;
             reviews.addAll(response.data!.reviews!);
 
@@ -1344,8 +1344,8 @@ void initState() {
             award.clear();
             ce_year.clear();
 
-              award.add(convert_certificate.description);
-              ce_year.add(convert_certificate.amount);
+           /*   award.add(convert_certificate.description);
+              ce_year.add(convert_certificate.amount);*/
 
           },
         );

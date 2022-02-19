@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:doctro/view/Companypolices/AboutUs.dart';
 
-import 'package:doctro/Home/home.dart';
+
 import 'package:doctro/api/Retrofit_Api.dart';
 import 'package:doctro/api/base_model.dart';
 import 'package:doctro/api/network_api.dart';
@@ -23,6 +23,7 @@ import 'package:doctro/model/Treatments.dart';
 import 'package:doctro/model/UserDetail.dart';
 import 'package:doctro/model/doctors.dart';
 import 'package:doctro/view/Consult/Consult.dart';
+import 'package:doctro/view/Home/home.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

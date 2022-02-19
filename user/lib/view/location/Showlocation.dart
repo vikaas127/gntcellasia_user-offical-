@@ -85,67 +85,43 @@ class _ShowLocationState extends State<ShowLocation> {
 
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size(width * 0.3, height * 0.06),
-        child: SafeArea(
-          top: true,
+    return Scaffold(floatingActionButton: FloatingActionButton(onPressed: (){
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AddLocation(currentLong: currentLong, currentLat: currentLat),
+        ),
+      );
+    },child:  Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        child: Icon(Icons.add)
+
+      ),
+    ),
+    ),
+      appBar:AppBar(backgroundColor: Colors.white,
+        elevation: 0,
+        title: Container(
+        child: Text(
+          getTranslated(context, showLocation_title).toString(),
+          style: TextStyle(fontSize: width * 0.038, fontWeight: FontWeight.bold, color: Palette.dark_blue),
+        ),
+      ) ,leading:Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 5),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
           child: Container(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 5),
-                        child: GestureDetector(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Container(
-                            child: Icon(
-                              Icons.arrow_back_ios,
-                              size: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        child: Text(
-                          getTranslated(context, showLocation_title).toString(),
-                          style: TextStyle(fontSize: width * 0.045, fontWeight: FontWeight.bold, color: Palette.dark_blue),
-                        ),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AddLocation(currentLong: currentLong, currentLat: currentLat),
-                            ),
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            child: Text(
-                              '+ ' + getTranslated(context, showLocation_addAddress).toString(),
-                              style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ],
+            child: Icon(
+              Icons.arrow_back_ios,color: Colors.black,
+              size: 20,
             ),
           ),
         ),
-      ),
+      ) ,),
+
       body: ModalProgressHUD(
         inAsyncCall: _loadding,
         opacity: 0.5,
@@ -155,7 +131,7 @@ class _ShowLocationState extends State<ShowLocation> {
         ),
         child: Container(
           height: height * 1,
-          color: Palette.dark_white,
+
           child: Show_Address.length != 0
               ? ListView(
                   scrollDirection: Axis.vertical,
@@ -172,7 +148,7 @@ class _ShowLocationState extends State<ShowLocation> {
                               () {
                                 if (isWhere == "Home") {
                                   _passAddress(Show_Address[index].address, Show_Address[index].longitudeCoordinate, Show_Address[index].longitudeCoordinate);
-                                  Navigator.pushReplacementNamed(context, "Home");
+                                  Navigator.pushReplacementNamed(context, "Dashboard");
                                 } else if (isWhere == "MadicinePayment") {
                                   _passAddress(Show_Address[index].address, Show_Address[index].latitudeCoordinate, Show_Address[index].latitudeCoordinate);
                                   Navigator.pushReplacementNamed(context, "MadicinePayment");
@@ -181,7 +157,7 @@ class _ShowLocationState extends State<ShowLocation> {
                             );
                           },
                           child: Container(
-                            margin: EdgeInsets.only(top: 10),
+                            margin: EdgeInsets.only(top: 0),
                             child: Column(
                               children: [
                                 Container(
@@ -189,11 +165,11 @@ class _ShowLocationState extends State<ShowLocation> {
                                   alignment: AlignmentDirectional.topStart,
                                   child: Show_Address[index].address != null
                                       ? Text(
-                                          Show_Address[index].address!,
+                                          Show_Address[index].city!.toUpperCase(),
                                           style: TextStyle(
-                                            fontSize: 16,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.bold,
-                                            color: Palette.blue,
+                                            color: Palette.black,
                                           ),
                                         )
                                       : Text(
@@ -213,11 +189,11 @@ class _ShowLocationState extends State<ShowLocation> {
                                         child: Icon(
                                           Icons.location_on_outlined,
                                           size: 25,
-                                          color: Palette.blue,
+                                          color: Palette.primary,
                                         ),
                                       ),
                                       Padding(
-                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                                        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
                                         child: Container(
                                           width: width * 0.8,
                                           child: Text(

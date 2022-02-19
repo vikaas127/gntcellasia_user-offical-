@@ -65,7 +65,7 @@ class ProfileDetail {
   String? city;
   String? state;
   String? country;
-  String? pincode;
+  int? pincode;
   String? latitudeCoordinate;
   String? longitudeCoordinate;
   int? verification;

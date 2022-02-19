@@ -47,7 +47,22 @@ class Splash_state extends State<Splash>{
           ),
         ),
 
-        child:Center(child: Image.asset("assets/images/splash.png",width:w*0.60 ,height: 70,))
+        child:Column(crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(height: h*0.50,),
+            Center(child: Image.asset("assets/images/splash.png",width:w*0.60 ,height: 70,)),
+            SizedBox(height: h*0.30,),
+            Text('© 2021 GiantCell Asia.com. All rights reserved.', textAlign: TextAlign.center, style: TextStyle(
+                color: Color.fromRGBO(103, 123, 138, 1),
+                fontFamily: 'Open Sans',
+                fontSize: 11,
+                letterSpacing: 0 /*percentages not used in flutter. defaulting to zero*/,
+                fontWeight: FontWeight.normal,
+                height: 1
+            ),)
+            ,
+          ],
+        )
       //  FlutterLogo(size:MediaQuery.of(context).size.height)
     );
   }

@@ -10,16 +10,12 @@ part of 'network_api.dart';
 
 class _RestClient implements RestClient {
   _RestClient(this._dio, {this.baseUrl}) {
-    baseUrl ??= 'http://brtechgeeks.pythonanywhere.com/';
+    baseUrl ??= 'http://178.128.106.131:8000/';
   }
 
   final Dio _dio;
 
   String? baseUrl;
-
-
-
-
 
   @override
   Future<log_in> loginRequest(body) async {
@@ -31,30 +27,34 @@ class _RestClient implements RestClient {
         _setStreamType<log_in>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'login',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = log_in.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<verifyphone> verifyRequest(phnno,body) async {
+  Future<verifyphone> verifyRequest(body,) async {
+
+   print(body.toString());
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = body;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<verifyphone>(
-            Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'verify/${body}',
+            Options(method: 'POST', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'v1/api/login/?tag=set-otp',
                 queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = verifyphone.fromJson(_result.data!);
+    print("verify api output");
+    print(_result.data.toString());
     return value;
   }
 
   @override
-  Future<Submitotp> SubmitOTpRequest(body,phoneno) async {
+  Future<Submitotp> SubmitOTpRequest(body) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
@@ -62,7 +62,7 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Submitotp>(
             Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'verify/${phoneno}',
+                .compose(_dio.options, 'v1/api/login/',
                 queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Submitotp.fromJson(_result.data!);
@@ -79,7 +79,7 @@ class _RestClient implements RestClient {
         _setStreamType<register>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'register',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = register.fromJson(_result.data!);
     return value;
@@ -95,7 +95,7 @@ class _RestClient implements RestClient {
         _setStreamType<Doctors>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/doctors-list',
-                    queryParameters: queryParameters, )
+              queryParameters: queryParameters, )
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Doctors.fromJson(_result.data!);
     return value;
@@ -111,8 +111,8 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Doctordetails>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'api/doctors/31',
-                    queryParameters: queryParameters, data: _data)
+                .compose(_dio.options, 'v1/api/doctors/{$id}',
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Doctordetails.fromJson(_result.data!);
     return value;
@@ -128,7 +128,7 @@ class _RestClient implements RestClient {
         _setStreamType<HealthTip>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'blogs',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = HealthTip.fromJson(_result.data!);
     return value;
@@ -144,7 +144,7 @@ class _RestClient implements RestClient {
         _setStreamType<HealthTipDetails>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'blog_details/${id}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = HealthTipDetails.fromJson(_result.data!);
     return value;
@@ -159,7 +159,7 @@ class _RestClient implements RestClient {
         _setStreamType<Treatments>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/get-specialty',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Treatments.fromJson(_result.data!);
     return value;
@@ -189,7 +189,7 @@ class _RestClient implements RestClient {
         _setStreamType<Appointments>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'appointments',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Appointments.fromJson(_result.data!);
     return value;
@@ -205,7 +205,7 @@ class _RestClient implements RestClient {
         _setStreamType<Medicinedetails>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'medicine_details/${id}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Medicinedetails.fromJson(_result.data!);
     return value;
@@ -220,7 +220,7 @@ class _RestClient implements RestClient {
         _setStreamType<Bookappointments>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'book_appointment',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Bookappointments.fromJson(_result.data!);
     return value;
@@ -235,7 +235,7 @@ class _RestClient implements RestClient {
         _setStreamType<Checkotp>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'check_otp',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Checkotp.fromJson(_result.data!);
     return value;
@@ -250,7 +250,7 @@ class _RestClient implements RestClient {
         _setStreamType<Timeslot>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/get-doctor-slots',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Timeslot.fromJson(_result.data!);
     return value;
@@ -265,7 +265,7 @@ class _RestClient implements RestClient {
         _setStreamType<AddAddress>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/post-address',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = AddAddress.fromJson(_result.data!);
     return value;
@@ -280,7 +280,7 @@ class _RestClient implements RestClient {
         _setStreamType<ShowAddress>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/get-address/${id}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ShowAddress.fromJson(_result.data!);
     return value;
@@ -295,7 +295,7 @@ class _RestClient implements RestClient {
         _setStreamType<Plans>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/get-plans',
-                queryParameters: queryParameters, )
+              queryParameters: queryParameters, )
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Plans.fromJson(_result.data!);
     return value;
@@ -311,7 +311,7 @@ class _RestClient implements RestClient {
         _setStreamType<DeleteAddress>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'delete_address/${id}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DeleteAddress.fromJson(_result.data!);
     return value;
@@ -326,7 +326,7 @@ class _RestClient implements RestClient {
         _setStreamType<UserDetail>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/profile-details/${p}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = UserDetail.fromJson(_result.data!);
     return value;
@@ -341,7 +341,7 @@ class _RestClient implements RestClient {
         _setStreamType<DetailSetting>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'setting',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DetailSetting.fromJson(_result.data!);
     return value;
@@ -356,7 +356,7 @@ class _RestClient implements RestClient {
         _setStreamType<pharamacy>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'pharamacies',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = pharamacy.fromJson(_result.data!);
     return value;
@@ -372,7 +372,7 @@ class _RestClient implements RestClient {
         _setStreamType<PharamaciesDetails>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'pharmacy_details/${id}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = PharamaciesDetails.fromJson(_result.data!);
     return value;
@@ -388,7 +388,7 @@ class _RestClient implements RestClient {
         _setStreamType<BookMedicine>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'book_medicine',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BookMedicine.fromJson(_result.data!);
     return value;
@@ -404,7 +404,7 @@ class _RestClient implements RestClient {
         _setStreamType<ReviewAppointment>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'add_review',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ReviewAppointment.fromJson(_result.data!);
     return value;
@@ -420,7 +420,7 @@ class _RestClient implements RestClient {
         _setStreamType<CancelAppointment>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'cancel_appointment',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CancelAppointment.fromJson(_result.data!);
     return value;
@@ -435,7 +435,7 @@ class _RestClient implements RestClient {
         _setStreamType<MedicineOrderModel>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'medicines',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MedicineOrderModel.fromJson(_result.data!);
     return value;
@@ -450,7 +450,7 @@ class _RestClient implements RestClient {
         _setStreamType<UpdateProfile>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/profile-update',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = UpdateProfile.fromJson(_result.data!);
     return value;
@@ -466,7 +466,7 @@ class _RestClient implements RestClient {
         _setStreamType<MedicineOrderDetails>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'single_medicine/${id}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = MedicineOrderDetails.fromJson(_result.data!);
     return value;
@@ -481,7 +481,7 @@ class _RestClient implements RestClient {
         _setStreamType<DisplayOffer>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'offers',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = DisplayOffer.fromJson(_result.data!);
     return value;
@@ -497,7 +497,7 @@ class _RestClient implements RestClient {
         _setStreamType<TreatmentWishDoctor>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/treatment-wise-doctor',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = TreatmentWishDoctor.fromJson(_result.data!);
     return value;
@@ -512,7 +512,7 @@ class _RestClient implements RestClient {
         _setStreamType<UpdateUserImage>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/profile-photo-update',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = UpdateUserImage.fromJson(_result.data!);
     return value;
@@ -527,7 +527,7 @@ class _RestClient implements RestClient {
         _setStreamType<UserNotification>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'user_notification',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = UserNotification.fromJson(_result.data!);
     return value;
@@ -542,7 +542,7 @@ class _RestClient implements RestClient {
         _setStreamType<Banners>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/get-banner',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Banners.fromJson(_result.data!);
     return value;
@@ -558,7 +558,7 @@ class _RestClient implements RestClient {
         _setStreamType<FavoriteDoctor>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'add_bookmark/${id}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = FavoriteDoctor.fromJson(_result.data!);
     return value;
@@ -573,7 +573,7 @@ class _RestClient implements RestClient {
         _setStreamType<ShowFavoriteDoctor>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'faviroute_doctor',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ShowFavoriteDoctor.fromJson(_result.data!);
     return value;
@@ -588,7 +588,7 @@ class _RestClient implements RestClient {
         _setStreamType<ForgotPassword>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'forgot_password',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ForgotPassword.fromJson(_result.data!);
     return value;
@@ -603,7 +603,7 @@ class _RestClient implements RestClient {
         _setStreamType<ApplyOffer>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'check_offer',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ApplyOffer.fromJson(_result.data!);
     return value;
@@ -618,7 +618,7 @@ class _RestClient implements RestClient {
         _setStreamType<ChangePasswords>(
             Options(method: 'POST', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'doctor_change_password',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ChangePasswords.fromJson(_result.data!);
     return value;
@@ -635,7 +635,7 @@ class _RestClient implements RestClient {
         _setStreamType<ResendOtp>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'resendOtp/${id}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = ResendOtp.fromJson(_result.data!);
     return value;
@@ -651,7 +651,7 @@ class _RestClient implements RestClient {
         _setStreamType<prescription>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'prescription/${id}',
-                    queryParameters: queryParameters, data: _data)
+                queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = prescription.fromJson(_result.data!);
     return value;
@@ -680,7 +680,7 @@ class _RestClient implements RestClient {
         _setStreamType<M_familymember>(
             Options(method: 'GET', headers: _headers, extra: _extra)
                 .compose(_dio.options, 'api/get-familymember/${id}',
-                queryParameters: queryParameters, )
+              queryParameters: queryParameters, )
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = M_familymember.fromJson(_result.data!);
     return value;

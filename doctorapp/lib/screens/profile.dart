@@ -1362,7 +1362,7 @@ class _profile extends State<profile> {
                             state: _currentStep >= 2 ? StepState.complete : StepState.disabled,
                           ),
                         ],
-                        controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
+                       /* controlsBuilder: (BuildContext context, {VoidCallback? onStepContinue, VoidCallback? onStepCancel}) {
                           return Row(
                             mainAxisSize: MainAxisSize.max,
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -1370,8 +1370,8 @@ class _profile extends State<profile> {
                               SizedBox(),
                               SizedBox(),
                             ],
-                          );
-                        },
+                          );*/
+
                       ),
                     ),
                   ],

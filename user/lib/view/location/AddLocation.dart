@@ -133,7 +133,7 @@ class _AddLocationState extends State<AddLocation> {
           child: Column(
             children: [
               Expanded(
-                flex: 5,
+                flex: 4,
                 child: Stack(
                   children: [
                     GoogleMap(
@@ -405,12 +405,12 @@ class _AddLocationState extends State<AddLocation> {
     };*/
     Map<String, dynamic> body = {
       "user_id":SharedPreferenceHelper.getInt(Preferences.userid).toString(),
-      "city":"jaipur kota",
-      "state":"Rajasthan",
+      "city":_textFullAddress.text,
+      "state":_textFullAddress.text,
       "country":"India",
       "pincode":"333308",
-      "address": "Suncity",
-      "subject": "Suncity",
+      "address": _textAddressLable.text,
+      "subject": _textAddressLable.text,
       "latitude_coordinate": '28.77',
       "longitude_coordinate": '77.28',
     };

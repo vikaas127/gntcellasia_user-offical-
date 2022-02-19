@@ -60,9 +60,9 @@ abstract class RestClient {
   Future<log_in> loginRequest(@Body() body);
 
   @GET(Apis.verify)
-  Future<verifyphone> verifyRequest(@Body() body,String int);
+  Future<verifyphone> verifyRequest(@Body() body,);
   @POST(Apis.verify)
-  Future<Submitotp> SubmitOTpRequest(@Body() body,String Phn);
+  Future<Submitotp> SubmitOTpRequest(@Body() body);
 //updateProfile
  // @POST(Apis.update_profile)
  // Future<Submitotp> SubmitOTpRequest(@Body() body,String Phn);

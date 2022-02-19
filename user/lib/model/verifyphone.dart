@@ -1,15 +1,24 @@
 class verifyphone {
-  String? oTP;
+  String? response;
+  int? status;
+  String? msg;
+  String? otp;
 
-  verifyphone({this.oTP});
+  verifyphone({this.response, this.status, this.msg, this.otp});
 
   verifyphone.fromJson(Map<String, dynamic> json) {
-    oTP = json['OTP'];
+    response = json['response'];
+    status = json['status'];
+    msg = json['msg'];
+    otp = json['otp'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['OTP'] = this.oTP;
+    data['response'] = this.response;
+    data['status'] = this.status;
+    data['msg'] = this.msg;
+    data['otp'] = this.otp;
     return data;
   }
 }
