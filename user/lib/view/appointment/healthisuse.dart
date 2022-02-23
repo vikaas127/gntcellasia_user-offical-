@@ -59,7 +59,7 @@ class HealthisseState extends State<Healthisse> {
       inAsyncCall: _loadding,
       opacity: 0.5,
       progressIndicator: SpinKitFadingCircle(
-        color: Palette.blue,
+        color: Palette.primary,
         size: 50.0,
       ),
       child: Scaffold(
@@ -247,7 +247,7 @@ class HealthisseState extends State<Healthisse> {
                                     imageUrl: '${Apis.baseUrlImages}${_searchResult[index].primaryImage!}',
                                     fit: BoxFit.fitHeight,
                                     placeholder: (context, url) => SpinKitFadingCircle(
-                                      color: Palette.blue,
+                                      color: Palette.primary,
                                     ),
                                     errorWidget: (context, url, error) =>
                                         Image.asset("assets/images/no_image.jpg",   fit: BoxFit.fitHeight,),
@@ -278,7 +278,7 @@ class HealthisseState extends State<Healthisse> {
                             lineLength: double.infinity,
                             lineThickness: 1.0,
                             dashLength: 2.0,
-                            dashColor: Palette.blue,
+                            dashColor: Palette.primary,
                             dashRadius: 1.0,
                             dashGapLength: 3.0,
                             dashGapColor: Palette.transparent,
@@ -337,7 +337,7 @@ class HealthisseState extends State<Healthisse> {
                                   placeholder: (context, url) =>
                                   // CircularProgressIndicator(),
                                   SpinKitFadingCircle(
-                                    color: Palette.blue,
+                                    color: Palette.primary,
                                   ),
                                   errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",fit: BoxFit.fitHeight),
                                 ):Image.asset("assets/images/no_image.jpg",fit: BoxFit.fitHeight,),
@@ -367,7 +367,7 @@ class HealthisseState extends State<Healthisse> {
                             lineLength: double.infinity,
                             lineThickness: 1.0,
                             dashLength: 2.0,
-                            dashColor: Palette.blue,
+                            dashColor: Palette.primary,
                             dashRadius: 1.0,
                             dashGapLength: 3.0,
                             dashGapColor: Palette.transparent,

@@ -39,6 +39,7 @@ class _SignInState extends State<SignIn> {
   String? deviceToken = "";
   int? verify = 0;
   int? id = 0;
+  String _initialSelection = 'US';
   @override
   void initState() {
     // TODO: implement initState
@@ -138,7 +139,7 @@ class _SignInState extends State<SignIn> {
                                       ),
                                       controller: _phoneCode,
                                       decoration: InputDecoration(fillColor: Colors.orange,
-                                        hintText: '+91',
+                                        hintText: '',
                                         border: InputBorder.none,
                                         hintStyle: TextStyle(
                                             fontSize: width * 0.04,
@@ -340,7 +341,7 @@ Map<String, String> body={
             msg: '${response.otp}',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Palette.blue,
+            backgroundColor: Palette.primary,
             textColor: Palette.white,
           );
         });
@@ -353,7 +354,7 @@ Map<String, String> body={
           msg: '${response.oTP}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Palette.blue,
+          backgroundColor: Palette.primary,
           textColor: Palette.white,
         );
         });

@@ -60,7 +60,7 @@ class _TreatmentState extends State<Treatment> {
       inAsyncCall: _loadding,
       opacity: 0.5,
       progressIndicator: SpinKitFadingCircle(
-        color: Palette.blue,
+        color: Palette.primary,
         size: 50.0,
       ),
       child: Scaffold(
@@ -244,7 +244,7 @@ class _TreatmentState extends State<Treatment> {
                                             imageUrl: '${Apis.baseUrlImages}${_searchResult[index].primaryImage!}',
                                             fit: BoxFit.fitHeight,
                                             placeholder: (context, url) => SpinKitFadingCircle(
-                                              color: Palette.blue,
+                                              color: Palette.primary,
                                             ),
                                             errorWidget: (context, url, error) =>
                                                 Image.asset("assets/images/no_image.jpg",  fit: BoxFit.fitHeight,),
@@ -274,7 +274,7 @@ class _TreatmentState extends State<Treatment> {
                                       lineLength: double.infinity,
                                       lineThickness: 1.0,
                                       dashLength: 2.0,
-                                      dashColor: Palette.blue,
+                                      dashColor: Palette.primary,
                                       dashRadius: 1.0,
                                       dashGapLength: 3.0,
                                       dashGapColor: Palette.transparent,
@@ -334,7 +334,7 @@ class _TreatmentState extends State<Treatment> {
                                             placeholder: (context, url) =>
                                             // CircularProgressIndicator(),
                                             SpinKitFadingCircle(
-                                              color: Palette.blue,
+                                              color: Palette.primary,
                                             ),
                                             errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",  fit: BoxFit.fitHeight,),
                                           ):Image.asset("assets/images/no_image.jpg",  fit: BoxFit.fitHeight,),
@@ -342,12 +342,16 @@ class _TreatmentState extends State<Treatment> {
                                         ),),
                                         Container(
                                           margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-                                          child: Text(
-                                            treatmentlist[index].name!,
-                                            style: TextStyle(fontWeight: FontWeight.bold,
-                                              fontSize: width * 0.055,
-                                              color: Palette.dark_grey,
-                                            ),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                treatmentlist[index].name!,maxLines: 1,overflow: TextOverflow.fade,
+                                                style: TextStyle(fontWeight: FontWeight.bold,
+                                                  fontSize: width * 0.055,
+                                                  color: Palette.dark_grey,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -364,7 +368,7 @@ class _TreatmentState extends State<Treatment> {
                                       lineLength: double.infinity,
                                       lineThickness: 1.0,
                                       dashLength: 2.0,
-                                      dashColor: Palette.blue,
+                                      dashColor: Palette.primary,
                                       dashRadius: 1.0,
                                       dashGapLength: 3.0,
                                       dashGapColor: Palette.transparent,

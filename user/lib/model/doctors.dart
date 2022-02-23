@@ -37,7 +37,7 @@ class Doctorslist {
   String? dob;
   String? occupation;
   String? about;
-  Null? workExperience;
+  String? workExperience;
   String? description;
   String? specialties;
   int? specialtyId;
@@ -49,12 +49,12 @@ class Doctorslist {
   String? city;
   String? state;
   String? country;
-  Null? pincode;
+  int? pincode;
   String? latitudeCoordinate;
   String? longitudeCoordinate;
   int? verification;
   String? verificationText;
-  Null? createdBy;
+  String? createdBy;
   String? createdAt;
   bool? status;
 

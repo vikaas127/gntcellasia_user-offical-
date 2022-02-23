@@ -52,7 +52,7 @@ class _OtpPageState extends State<OtpPage> {
             msg: '${response.otp}',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Palette.blue,
+            backgroundColor: Palette.primary,
             textColor: Palette.white,
           );
         });
@@ -65,7 +65,7 @@ class _OtpPageState extends State<OtpPage> {
           msg: '${response.oTP}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Palette.blue,
+          backgroundColor: Palette.primary,
           textColor: Palette.white,
         );
         });
@@ -125,7 +125,7 @@ late String Phone;
             msg: '${response.msg}',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Palette.blue,
+            backgroundColor: Palette.primary,
             textColor: Palette.white,
           );
         });
@@ -137,7 +137,7 @@ late String Phone;
             msg: '${response.msg}',
             toastLength: Toast.LENGTH_LONG,
             gravity: ToastGravity.BOTTOM,
-            backgroundColor: Palette.blue,
+            backgroundColor: Palette.primary,
             textColor: Palette.white,
           );
         });

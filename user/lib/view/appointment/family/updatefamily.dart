@@ -153,7 +153,7 @@ class UpdateFamilymember_state extends State<UpdateFamilymember>{
               msg: '${response.message}',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
-              backgroundColor: Palette.blue,
+              backgroundColor: Palette.primary,
               textColor: Palette.white,
             );
             Navigator.push(
@@ -211,7 +211,7 @@ class UpdateFamilymember_state extends State<UpdateFamilymember>{
                       shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
                       boxShadow: [
                         new BoxShadow(
-                          color: Palette.blue,
+                          color: Palette.primary,
                           blurRadius: 1.0,
                         ),
                       ],
@@ -244,7 +244,7 @@ class UpdateFamilymember_state extends State<UpdateFamilymember>{
                                     backgroundImage: imageProvider,
                                   ),
                                 ),
-                                placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                 errorWidget: (context, url, error) => ClipRRect(
                                   borderRadius: BorderRadius.circular(50),
                                   child: Image.asset("assets/images/no_image.jpg"),

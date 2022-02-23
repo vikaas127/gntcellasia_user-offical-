@@ -47,7 +47,7 @@ class _DoctordetailState extends State<Doctordetail> with
   List<Tab> tabList = [];
   TabController? _tabController;
   List< EducationDetail>  educationaldetail=[];
-  int? id = 0;
+  int? id = 1;
   String? name = "";
   String? expertise = "";
   String? appointmentFees = "";
@@ -77,7 +77,7 @@ class _DoctordetailState extends State<Doctordetail> with
   String pass_BookTime = "";
   String pass_BookID = "";
   String? Booking_Id = "";
-  List<Slots> timelist = [];
+  List<Slot> timelist = [];
   late DateTime _firstTimeSelected;
 
 void initState() {
@@ -148,11 +148,11 @@ void initState() {
     });
     try {
       response = await RestClient(Retro_Api().Dio_Data()).timeslot(body);
-      print(response.slots.toString());
+      print(response.data![0].slot.toString());
       if (response.status == 200) {
         setState(() {
           _loadding = false;
-          timelist.addAll(response.slots!);
+          timelist.addAll(response.data![0].slot!);
         });
       }
     } catch (error, stacktrace) {
@@ -200,7 +200,7 @@ void initState() {
                  child: Image.asset('assets/images/bookmark.png',width: 20,height:20),
                ),
                InkWell(onTap: (){
-                 Share.share('http://brtechgeeks.pythonanywhere.com/api/doctors/{$id}');
+                 Share.share('${Apis.baseUrl}/{$id}');
                },
                  child: Padding(
                    padding: const EdgeInsets.all(8.0),
@@ -210,7 +210,7 @@ void initState() {
              ],
              backgroundColor: Colors.white,
               pinned: true,floating: true,
-              expandedHeight: height*0.395,
+              expandedHeight: height*0.383 ,
 
               flexibleSpace:FlexibleSpaceBar(
                   background:
@@ -226,60 +226,42 @@ void initState() {
                     child: Container(
                       child: Column(
                         children: [
-                          SizedBox(height: height*0.045,),
+                          SizedBox(height: height*0.122,),
                           Container(
-                            margin: EdgeInsets.only(top: height * 0.0170),
+
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                /*   GestureDetector(
-                                onTap: () {
-                                  launch("tel:$mobileNo");
-                                },
-                                child: Container(
-                                  child: SvgPicture.asset(
-                                    'assets/icons/call.svg',
-                                  ),
-                                ),
-                              ),*/
+
                                 Container(
                                   width: width * 0.20,
                                   height: width * 0.20,
                                   child: CachedNetworkImage(
                                     alignment: Alignment.center,
-                                    imageUrl: '${Apis.baseUrl}$fullImage',
+                                    imageUrl: '${Apis.baseUrlImages}$fullImage',
                                     imageBuilder: (context, imageProvider) => CircleAvatar(
-                                       radius:50 ,
-                                        backgroundColor: Palette.blue,
+                                       radius:45 ,
+                                        backgroundColor: Palette.primary,
                                       child: CircleAvatar(
-                                        radius: 50,
+                                        radius: 45,
                                         backgroundImage: imageProvider,
                                       ),
                                     ),
                                     placeholder: (context, url) =>
                                     // CircularProgressIndicator(),
-                                    SpinKitFadingCircle(color: Palette.blue),
+                                    SpinKitFadingCircle(color: Palette.primary),
                                     errorWidget: (context, url, error) =>ClipRRect(
                                       borderRadius: BorderRadius.circular(38.0),
                                       child:
-                                        Image.asset("assets/images/no_image.jpg"),),
+                                        Image.asset("assets/images/nodoctor.png"),),
                                   ),
                                 ),
-                                /*    GestureDetector(
-                                onTap: () {
-                                  launch("sms:$mobileNo");
-                                },
-                                child: Container(
-                                  child: SvgPicture.asset(
-                                    'assets/icons/msg.svg',
-                                  ),
-                                ),
-                              ),*/
+
                               ],
                             ),
                           ),
                           Container(
-                            margin: EdgeInsets.only(top: width * 0.04),
+                            margin: EdgeInsets.only(top: width * 0.03),
                             child: Text(
                               '$name',
                               style: Theme.of(context).textTheme.headline1
@@ -290,14 +272,14 @@ void initState() {
                             child: Text(
                               '$treatmentname',
                               style: TextStyle(
-                                fontSize: width * 0.04,
+                                fontSize: width * 0.03,
                                 color: Palette.grey,
                               ),
                             ),
                           ),
                           Container(
                             // height: 150,
-                            margin: EdgeInsets.only(top: height * 0.02),
+
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
@@ -310,18 +292,19 @@ void initState() {
                                         getTranslated(context, doctorDetail_doctorExperience)
                                             .toString(),
                                         style: TextStyle(
-                                            fontSize: width * 0.035,
-                                            color: Palette.dark_blue,
-                                            fontWeight: FontWeight.bold),
+                                            fontSize: width * 0.032,
+                                            color: Palette.grey,
+                                            fontWeight: FontWeight.normal),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
-                                        '$experience  ' +
+                                        '$experience' +
                                             getTranslated(context, doctorDetail_year).toString(),
                                         style: TextStyle(
-                                          fontSize: width * 0.035,
-                                          color: Palette.dark_blue,
+                                          fontSize: width * 0.032,
+                                          color: Palette.black,
+                                            fontWeight: FontWeight.bold
                                         ),
                                       ),
                                     ),
@@ -334,17 +317,17 @@ void initState() {
                                       child: Text(
                                         getTranslated(context, doctorDetail_appointmentFees).toString(),
                                         style: TextStyle(
-                                            fontSize: width * 0.035,
-                                            color: Palette.dark_blue,
-                                            fontWeight: FontWeight.bold),
+                                            fontSize: width * 0.032,
+                                            color: Palette.grey,
+                                            fontWeight: FontWeight.normal),
                                       ),
                                     ),
                                     Container(
                                       child: Text(
                                         SharedPreferenceHelper.getString(Preferences.currency_symbol).toString() + '$appointmentFees',
                                         style: TextStyle(
-                                            fontSize: width * 0.035,
-                                            color: Palette.dark_blue,
+                                            fontSize: width * 0.032,
+                                            color: Palette.black,
                                             fontWeight: FontWeight.bold
                                         ),
                                       ),
@@ -358,7 +341,7 @@ void initState() {
                                       child: Text(
                                         getTranslated(context, doctorDetail_appoipatient).toString(),
                                         style: TextStyle(
-                                          fontSize: width * 0.035,
+                                          fontSize: width * 0.032,
                                           color: Palette.grey,
                                         ),
                                       ),
@@ -366,8 +349,8 @@ void initState() {
                                     Container(
                                       child: Text('$appointmentFees',
                                         style: TextStyle(
-                                            fontSize: width * 0.035,
-                                            color: Palette.dark_blue,
+                                            fontSize: width * 0.032,
+                                            color: Palette.black,
                                             fontWeight: FontWeight.bold
 
                                         ),
@@ -391,7 +374,7 @@ void initState() {
                                       Row(
                                         children: [
                                           SvgPicture.asset(
-                                            'assets/icons/hart.svg',
+                                            'assets/icons/star.svg',color: Color(0xffFA7327),
                                           ),
                                           Padding(
                                             padding: EdgeInsets.only(
@@ -413,17 +396,26 @@ void initState() {
                             ),
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 4),
                             child: Row(
                               children: [
                                 Expanded(flex: 1,
                                   child: GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      setState(() {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Bookappointment( widget.id),
+                                          ),
+                                        );
+                                      });
+                                    },
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(4.0),
                                       child: Container(
                                      //   width: width*0.40,
-                                        height: 40,
+                                        height: 35,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
                                             colors: [
@@ -468,12 +460,21 @@ void initState() {
 
                                 Expanded(flex: 1,
                                   child: GestureDetector(
-                                    onTap: () {},
+                                    onTap: () {
+                                      setState(() {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => Bookappointment( widget.id),
+                                          ),
+                                        );
+                                      });
+                                    },
                                     child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.all(4.0),
                                       child: Container(
                                        // width: width*0.40,
-                                        height: 40,
+                                        height: 35,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
                                             colors: [
@@ -531,16 +532,21 @@ void initState() {
             ),
             SliverPersistentHeader(pinned: true,
               delegate: _SliverAppBarDelegate(
-                TabBar(
-                  indicator:BoxDecoration(color: Colors.black12,
+                TabBar(labelPadding: EdgeInsets.all(0) ,indicatorPadding:  EdgeInsets.all(5),
+                  indicator:
+                  BoxDecoration(color: Colors.black12,
                       borderRadius: BorderRadius.all(
-                          Radius.circular(25.0) //                 <--- border radius here
+                          Radius.circular(15.0) //                 <--- border radius here
                       ),
 
                       border: Border.all(color: Colors.grey)
                   ),
 
-                  labelStyle: TextStyle(fontSize: 10,fontWeight: FontWeight.bold),
+                  labelStyle: TextStyle(fontSize: 13,fontWeight: FontWeight.bold,
+
+                      color: Color(0xFFc9c9c9),
+                     ),
+
                   labelColor: Palette.primary,
                   controller: _tabController,
                   indicatorSize: TabBarIndicatorSize.tab,
@@ -554,7 +560,7 @@ void initState() {
               inAsyncCall: _loadding,
               opacity: 0.5,
               progressIndicator: SpinKitFadingCircle(
-                color: Palette.blue,
+                color: Palette.primary,
                 size: 50.0,
               ),
               child:new TabBarView(
@@ -740,11 +746,11 @@ void initState() {
                                             padding: const EdgeInsets.all(8.0),
                                             child: Column(
                                               children: [
-                                                Text("${hosiptaldetail[1].name!.substring(0,4 ).trim()}",
+                                                Text("${hosiptaldetail[0].name!.substring(0,4 ).trim()}",
                                                   style:Theme.of(context).textTheme.headline1
 
                                                 ),
-                                                Text("${hosiptaldetail[1].address!.trim()}",
+                                                Text("${hosiptaldetail[0].address!.trim()}",
                                                   style:TextStyle(
 
                                                       color: Colors.grey,fontSize: 10,fontWeight: FontWeight.bold)
@@ -801,7 +807,7 @@ void initState() {
                               // New date selected
                               setState(() {
                                 New_Date = DateUtilforpass().formattedDate(date);
-                                TimeSlot(New_Date);
+                               TimeSlot(New_Date);
                               });
                             },
                           ),
@@ -835,7 +841,7 @@ void initState() {
                                             onTap: () {
                                               setState(() {
                                                 selectTime =
-                                                    timelist[index].startAt;
+                                                    timelist[index].slotTime;
                                               });
                                             },
                                             child: Container(
@@ -843,7 +849,7 @@ void initState() {
                                               width: width * 0.25,
                                               child: Card(
                                                 color: selectTime ==
-                                                    timelist[index].startAt
+                                                    timelist[index].slotTime
                                                     ? Color(0xff2C9085)
                                                     : Palette.dash_line,
                                                 shape: RoundedRectangleBorder(
@@ -853,13 +859,13 @@ void initState() {
                                                 child: Column(
                                                   children: [
                                                     Container(
-                                                      padding: EdgeInsets.all(10),
+                                                      padding: EdgeInsets.all(2),
                                                       child: Text(
-                                                        timelist[index].startAt!,
+                                                        timelist[index].slotTime!,
                                                         style: TextStyle(
                                                           color: selectTime ==
                                                               timelist[index]
-                                                                  .startAt
+                                                                  .slotTime
                                                               ? Palette.white
                                                               : Color(0xff2C9085),),
                                                       ),
@@ -1112,7 +1118,7 @@ void initState() {
                               child: Text(
                                 getTranslated(context, doctorDetail_review).toString(),
                                 style: TextStyle(
-                                    fontSize: width * 0.04, color: Palette.dark_blue),
+                                    fontSize: width * 0.04, color: Palette.primary),
                               ),
                             ),
                           ),
@@ -1145,14 +1151,13 @@ void initState() {
                                                 shape: BoxShape.circle,
                                                 boxShadow: [
                                                   new BoxShadow(
-                                                    color: Palette.blue,
+                                                    color: Palette.primary,
                                                     blurRadius: 1.0,
                                                   ),
                                                 ]),
-                                            child: CachedNetworkImage(
+                                          /*  child: CachedNetworkImage(
                                               alignment: Alignment.center,
-                                              imageUrl:
-                                              reviews[index].user!.image!,
+                                              imageUrl: reviews[index].user!.image!,
                                               imageBuilder:
                                                   (context, imageProvider) =>
                                                   CircleAvatar(
@@ -1170,7 +1175,7 @@ void initState() {
                                                   Image.asset(
                                                     "assets/images/no_image.jpg",
                                                   ),
-                                            ),
+                                            ),*/
                                           ),
                                         ),
                                         title: Column(
@@ -1205,7 +1210,7 @@ void initState() {
                                             rating: reviews[index].rate!.toDouble(),
                                             itemBuilder: (context, index) => Icon(
                                               Icons.star,
-                                              color: Palette.blue,
+                                              color: Palette.primary,
                                             ),
                                             itemCount: 5,
                                             itemSize: width * 0.04,
@@ -1238,7 +1243,7 @@ void initState() {
                     child: Text(
                       getTranslated(context, doctorDetail_noReview).toString(),
                       // "No Review",
-                      style: TextStyle(fontSize: width * 0.04, color: Palette.dark_blue),
+                      style: TextStyle(fontSize: width * 0.04, color: Palette.primary),
                     ),
                   ),
                 ],
@@ -1275,7 +1280,7 @@ void initState() {
 
                         child: Text(
                           getTranslated(context, doctorDetail_bookAppointment).toString(),
-                          style: TextStyle(fontSize: width * 0.04, color: Palette.white),
+                          style: TextStyle(fontSize: width * 0.03, color: Palette.white),
                           textAlign: TextAlign.center,
                         ),
                         onPressed: () {
@@ -1321,6 +1326,8 @@ void initState() {
     });
     try {
       response = await RestClient(Retro_Api2().Dio_Data2()).doctoedetailRequest(id);
+     print(response.status);
+      print("response.status");
       if (response.status == 200) {
         setState(
           () {
@@ -1333,6 +1340,7 @@ void initState() {
             desc = response.data!.doctor![0].description;
             expertise = response.data!.expertise!.name;
             fullImage = response.data!.doctor![0].photo;
+            print(fullImage);
             treatmentname = response.data!.treatmentdata!.name;
             reviews.addAll(response.data!.reviews!);
 

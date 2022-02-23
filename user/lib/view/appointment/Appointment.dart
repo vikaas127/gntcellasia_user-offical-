@@ -60,7 +60,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
       inAsyncCall: _loadding,
       opacity: 0.5,
       progressIndicator: SpinKitFadingCircle(
-        color: Palette.blue,
+        color: Palette.primary,
         size: 50.0,
       ),
       child: DefaultTabController(
@@ -85,7 +85,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                     ),
                     centerTitle: true,
                     backgroundColor: Palette.white,
-                    foregroundColor: Palette.blue,
+                    foregroundColor: Palette.primary,
                     title: Text(
                       getTranslated(context, appointment_title).toString(),
                       style: TextStyle(fontSize: 18, color: Palette.dark_blue, fontWeight: FontWeight.bold),
@@ -93,7 +93,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                     pinned: true,
                     floating: true,
                     snap: true,
-                    shadowColor: Palette.blue,
+                    shadowColor: Palette.primary,
                     bottom: TabBar(
                       tabs: <Tab>[
                         Tab(
@@ -102,7 +102,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                             // 'Pending\nAppointment',
                             style: TextStyle(
                               fontSize: 15,
-                              color: Palette.blue,
+                              color: Palette.primary,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -112,7 +112,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                             getTranslated(context, appointment_title_tab2).toString(),
                             style: TextStyle(
                               fontSize: 15,
-                              color: Palette.blue,
+                              color: Palette.primary,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -122,7 +122,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                             getTranslated(context, appointment_title_tab3).toString(),
                             style: TextStyle(
                               fontSize: 15,
-                              color: Palette.blue,
+                              color: Palette.primary,
                             ),
                             textAlign: TextAlign.center,
                           ),
@@ -184,7 +184,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                                 getTranslated(context, appointment_bookingID).toString(),
                                                                 style: TextStyle(
                                                                     fontSize: width * 0.035,
-                                                                    color: Palette.blue,
+                                                                    color: Palette.primary,
                                                                     fontWeight: FontWeight.bold),
                                                               ),
                                                             ),
@@ -226,7 +226,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                                   shape: BoxShape.circle,
                                                                   boxShadow: [
                                                                     new BoxShadow(
-                                                                      color: Palette.blue,
+                                                                      color: Palette.primary,
                                                                       blurRadius: 1.0,
                                                                     ),
                                                                   ],
@@ -242,7 +242,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                                       backgroundImage: imageProvider,
                                                                     ),
                                                                   ),
-                                                                  placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                                                  placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                                                   errorWidget: (context, url, error) =>
                                                                       Image.asset("assets/images/no_image.jpg"),
                                                                 ),
@@ -313,7 +313,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                                       getTranslated(context, appointment_cancelAppointment).toString(),
                                                                       style: TextStyle(
                                                                         fontSize: width * 0.04,
-                                                                        color: Palette.blue,
+                                                                        color: Palette.primary,
                                                                       ),
                                                                     ),
                                                                     value: 1,
@@ -536,7 +536,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                                 getTranslated(context, appointment_bookingID).toString(),
                                                                 style: TextStyle(
                                                                     fontSize: width * 0.035,
-                                                                    color: Palette.blue,
+                                                                    color: Palette.primary,
                                                                     fontWeight: FontWeight.bold),
                                                               ),
                                                             ),
@@ -578,7 +578,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                                   shape: BoxShape.circle,
                                                                   boxShadow: [
                                                                     new BoxShadow(
-                                                                      color: Palette.blue,
+                                                                      color: Palette.primary,
                                                                       blurRadius: 1.0,
                                                                     ),
                                                                   ],
@@ -594,7 +594,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                                       backgroundImage: imageProvider,
                                                                     ),
                                                                   ),
-                                                                  placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                                                  placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                                                   errorWidget: (context, url, error) =>
                                                                       Image.asset("assets/images/no_image.jpg"),
                                                                 ),
@@ -663,7 +663,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                                       getTranslated(context, appointment_cancelAppointment).toString(),
                                                                       style: TextStyle(
                                                                         fontSize: width * 0.04,
-                                                                        color: Palette.blue,
+                                                                        color: Palette.primary,
                                                                       ),
                                                                     ),
                                                                     value: 1,
@@ -906,7 +906,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                           child: Text(
                                                             getTranslated(context, appointment_bookingID).toString(),
                                                             style: TextStyle(
-                                                                fontSize: width * 0.035, color: Palette.blue, fontWeight: FontWeight.bold),
+                                                                fontSize: width * 0.035, color: Palette.primary, fontWeight: FontWeight.bold),
                                                           ),
                                                         ),
                                                         Text(
@@ -950,7 +950,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                               shape: BoxShape.circle,
                                                               boxShadow: [
                                                                 new BoxShadow(
-                                                                  color: Palette.blue,
+                                                                  color: Palette.primary,
                                                                   blurRadius: 1.0,
                                                                 ),
                                                               ],
@@ -966,7 +966,7 @@ class _AppointmentState extends State<Appointment> with SingleTickerProviderStat
                                                                   backgroundImage: imageProvider,
                                                                 ),
                                                               ),
-                                                              placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                                              placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                                               errorWidget: (context, url, error) =>
                                                                   Image.asset("assets/images/no_image.jpg"),
                                                             ),

@@ -177,8 +177,8 @@ class _DashBoardState extends State<DashBoard> {
         inAsyncCall: _loadding,
         opacity: 0.5,
         progressIndicator: SpinKitFadingCircle(
-          color: Palette.blue,
-          size: 50.0,
+          color: Palette.white,
+          size: 0.0,
         ),
         child: GestureDetector(
           onTap: () {
@@ -270,7 +270,7 @@ class _DashBoardState extends State<DashBoard> {
                                     children: [
                                       Text(
                                         getTranslated(context, home_viewAll).toString(),
-                                        style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
+                                        style: TextStyle(fontSize: width * 0.035, color: Palette.primary),
                                       )
                                     ],
                                   ),
@@ -329,7 +329,7 @@ class _DashBoardState extends State<DashBoard> {
                                                                 getTranslated(context, home_bookingId).toString(),
                                                                 style: TextStyle(
                                                                     fontSize: 14,
-                                                                    color: index % 2 == 0 ? Palette.white : Palette.blue,
+                                                                    color: index % 2 == 0 ? Palette.white : Palette.primary,
                                                                     fontWeight: FontWeight.bold),
                                                               ),
                                                             ),
@@ -366,7 +366,7 @@ class _DashBoardState extends State<DashBoard> {
                                                                 height: 40,
                                                                 decoration: new BoxDecoration(shape: BoxShape.circle, boxShadow: [
                                                                   new BoxShadow(
-                                                                    color: Palette.blue,
+                                                                    color: Palette.primary,
                                                                     blurRadius: 1.0,
                                                                   ),
                                                                 ]),
@@ -382,7 +382,7 @@ class _DashBoardState extends State<DashBoard> {
                                                                     ),
                                                                   ),
                                                                   placeholder: (context, url) =>
-                                                                      SpinKitFadingCircle(color: Palette.blue),
+                                                                      SpinKitFadingCircle(color: Palette.primary),
                                                                   errorWidget: (context, url, error) =>
                                                                       Image.asset("assets/images/no_image.jpg"),
                                                                 ),
@@ -557,7 +557,7 @@ class _DashBoardState extends State<DashBoard> {
                                       children: [
                                         Text(
                                           getTranslated(context, home_viewAll).toString(),
-                                          style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
+                                          style: TextStyle(fontSize: width * 0.035, color: Palette.primary),
                                         )
                                       ],
                                     ),
@@ -619,7 +619,7 @@ class _DashBoardState extends State<DashBoard> {
                                                             alignment: Alignment.center,
                                                             imageUrl: _searchResult[index].fullImage!,
                                                             fit: BoxFit.fitHeight,
-                                                            placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                                            placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                                             errorWidget: (context, url, error) =>
                                                                 Image.asset("assets/images/no_image.jpg"),
                                                           ),
@@ -658,7 +658,7 @@ class _DashBoardState extends State<DashBoard> {
                                                                         .toString(),
                                                                     toastLength: Toast.LENGTH_SHORT,
                                                                     gravity: ToastGravity.BOTTOM,
-                                                                    backgroundColor: Palette.blue,
+                                                                    backgroundColor: Palette.primary,
                                                                     textColor: Palette.white,
                                                                   );
                                                                 },
@@ -770,7 +770,7 @@ class _DashBoardState extends State<DashBoard> {
                                                             imageUrl: doctorlist[index].fullImage!,
                                                             fit: BoxFit.fitHeight,
                                                             placeholder: (context, url) =>
-                                                                SpinKitFadingCircle(color: Palette.blue),
+                                                                SpinKitFadingCircle(color: Palette.primary),
                                                             errorWidget: (context, url, error) =>
                                                                 Image.asset("assets/images/no_image.jpg"),
                                                           ),
@@ -811,7 +811,7 @@ class _DashBoardState extends State<DashBoard> {
                                                                         .toString(),
                                                                     toastLength: Toast.LENGTH_SHORT,
                                                                     gravity: ToastGravity.BOTTOM,
-                                                                    backgroundColor: Palette.blue,
+                                                                    backgroundColor: Palette.primary,
                                                                     textColor: Palette.white,
                                                                   );
                                                                 },
@@ -929,7 +929,7 @@ class _DashBoardState extends State<DashBoard> {
                                       children: [
                                         Text(
                                           getTranslated(context, home_viewAll).toString(),
-                                          style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
+                                          style: TextStyle(fontSize: width * 0.035, color: Palette.primary),
                                         )
                                       ],
                                     ),
@@ -978,7 +978,7 @@ class _DashBoardState extends State<DashBoard> {
                                                 placeholder: (context, url) =>
                                                 // CircularProgressIndicator(),
                                                 SpinKitFadingCircle(
-                                                  color: Palette.blue,
+                                                  color: Palette.primary,
                                                 ),
                                                 errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg"),
                                               ),
@@ -1225,7 +1225,7 @@ class _DashBoardState extends State<DashBoard> {
                                                                 fit: BoxFit.fill,
                                                                 height: height * 0.12,
                                                                 width: width * 0.25,
-                                                                placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                                                placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                                                 errorWidget: (context, url, error) => Image.asset("images/no_image.png"),
                                                               ),
                                                             ),
@@ -1398,7 +1398,7 @@ class _DashBoardState extends State<DashBoard> {
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Palette.blue,
+          backgroundColor: Palette.primary,
           textColor: Palette.white,
         );
         doctorlist.clear();

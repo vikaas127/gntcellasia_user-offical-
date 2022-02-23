@@ -197,7 +197,7 @@ class _TreatmentSpecialistState extends State<TreatmentSpecialist> {
         inAsyncCall: _loadding,
         opacity: 0.5,
         progressIndicator: SpinKitFadingCircle(
-          color: Palette.blue,
+          color: Palette.primary,
           size: 50.0,
         ),
         child: SingleChildScrollView(
@@ -282,18 +282,18 @@ class _TreatmentSpecialistState extends State<TreatmentSpecialist> {
                                                                         ),
                                                                         child: _searchResult[index].photo!=null ?CachedNetworkImage(
                                                                           alignment: Alignment.center,
-                                                                          imageUrl:'${Apis.baseUrl}${  _searchResult[index].photo!}'
+                                                                          imageUrl:'${Apis.baseUrlImages}${  _searchResult[index].photo!}'
 
                                                                           ,fit: BoxFit.fill,
                                                                           placeholder: (context, url) =>
                                                                               SpinKitFadingCircle(
-                                                                                  color: Palette.blue),
+                                                                                  color: Palette.primary),
                                                                           errorWidget: (context, url,
                                                                               error) =>
                                                                               Image.asset(
-                                                                                  "assets/images/no_image.jpg"),
+                                                                                  "assets/images/nodoctor.png"),
                                                                         ):Image.asset(
-                                                                            "assets/images/no_image.jpg"),
+                                                                            "assets/images/nodoctor.png"),
                                                                       ),
                                                                     ),
                                                                     Align(
@@ -750,18 +750,18 @@ crossAxisAlignment: CrossAxisAlignment.center,
                                                                         ),
                                                                         child: treatmentSpecialistList[index].photo!=null ?CachedNetworkImage(
                                                                           alignment: Alignment.center,
-                                                                          imageUrl:'${Apis.baseUrl}${  treatmentSpecialistList[index].photo!}'
+                                                                          imageUrl:'${Apis.baseUrlImages}${  treatmentSpecialistList[index].photo!}'
 
                                                                           ,fit: BoxFit.fill,
                                                                           placeholder: (context, url) =>
                                                                               SpinKitFadingCircle(
-                                                                                  color: Palette.blue),
+                                                                                  color: Palette.primary),
                                                                           errorWidget: (context, url,
                                                                               error) =>
                                                                               Image.asset(
-                                                                                  "assets/images/no_image.jpg"),
+                                                                                  "assets/images/nodoctor.png"),
                                                                         ):Image.asset(
-                                                                            "assets/images/no_image.jpg"),
+                                                                            "assets/images/nodoctor.png"),
                                                                       ),
                                                                     ),
                                                                     Align(

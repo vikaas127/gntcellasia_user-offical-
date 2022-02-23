@@ -519,7 +519,7 @@ class _signupState extends State<signup> {
               msg: '${response.msg}',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
-              backgroundColor: Palette.blue,
+              backgroundColor: Palette.primary,
               textColor: Palette.white,
             );
             Navigator.pushNamed(context, 'Home');
@@ -552,7 +552,7 @@ class _signupState extends State<signup> {
               msg: '$msg',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
-              backgroundColor: Palette.blue,
+              backgroundColor: Palette.primary,
               textColor: Palette.white,
             );
           });
@@ -591,7 +591,7 @@ class _signupState extends State<signup> {
           msg: getTranslated(context, signUp_successFully_toast).toString() + " " + '${response.data!.name}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Palette.blue,
+          backgroundColor: Palette.primary,
           textColor: Palette.white,
         );
       });
@@ -612,9 +612,9 @@ class _signupState extends State<signup> {
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: ColorScheme.light(
-              primary: Palette.blue,
+              primary: Palette.primary,
               onPrimary: Palette.white,
-              surface: Palette.blue,
+              surface: Palette.primary,
               onSurface: Palette.light_black,
             ),
             dialogBackgroundColor: Palette.white,

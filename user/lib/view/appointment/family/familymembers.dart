@@ -44,7 +44,7 @@ class FamilymembersState extends State<Familymembers> {
   String? treatmentSpecialist = "";
   TextEditingController _search = TextEditingController();
   List<Data> _searchResult = [];
-
+  String? SelectMember = "";
   _TreatmentSpecialistState(int? id) {
     this.id = id;
   }
@@ -74,17 +74,17 @@ class FamilymembersState extends State<Familymembers> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
 
-      body: ModalProgressHUD(
+      body:fmemberList.isNotEmpty == true?  ModalProgressHUD(
         inAsyncCall: _loadding,
         opacity: 0.5,
         progressIndicator: SpinKitFadingCircle(
-          color: Palette.blue,
+          color: Palette.primary,
           size: 50.0,
         ),
         child:    Container(
 
 
-          child:fmemberList.isNotEmpty? ListView(
+          child:fmemberList.isNotEmpty==true? ListView(
             scrollDirection: Axis.horizontal,
 
             children: [
@@ -103,90 +103,104 @@ class FamilymembersState extends State<Familymembers> {
                     children: [
                       InkWell(
                         onTap: () {
-
+                          setState(() {
+                            SelectMember =
+                                fmemberList[index].name;
+                          });
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Container(color: Colors.white,
-                            height: width * 0.25,
-                            width: width * 0.20,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
 
-                                Row(crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Container(
+                          height: width * 0.26 ,
+                          width: width * 0.20,
+                          child:   Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Card(
+                                color: SelectMember ==
+                                    fmemberList[index].name
+                                    ? Color(0xff2C9085)
+                                    : Palette.dash_line,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                  BorderRadius.circular(32.0),
+                                ),child:
+                              Padding(
+                                padding: const EdgeInsets.all(3.0),
+                                child: Container(
+
+                                  height: 45.0,
+                                  width: 45.0,
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(35),
+                                    ),
+                                    child: fmemberList[index].photo!=null ?
+                                    CachedNetworkImage(
+                                      alignment: Alignment.center,
+                                      imageUrl:'${Apis.baseUrlImages}${fmemberList[index].photo!}'
+
+                                      ,fit: BoxFit.fill,
+                                      placeholder: (context, url) =>
+                                          SpinKitFadingCircle(
+                                              color: Palette.primary),
+                                      errorWidget: (context, url,
+                                          error) =>
+                                          Image.asset(
+                                              "assets/images/no_image.jpg"),
+                                    ):
+                                    Image.asset(
+                                        "assets/images/no_image.jpg"),
+                                  ),
+                                ),
+                              ),),
+                              SizedBox(height: 2,),
+                              Container(
+
+                                child:   Column(crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        children: [
-                                          Container(
-                                            margin:
-                                            EdgeInsets.only(top: 0),
-                                            width: width * 0.15,
-                                            height: width * 0.15,
-                                            child: ClipRRect(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(35),
-                                              ),
-                                              child: fmemberList[index].photo!=null ?
-                                              CachedNetworkImage(
-                                                alignment: Alignment.center,
-                                                imageUrl:'${Apis.baseUrl}${  fmemberList[index].photo!}'
-
-                                                ,fit: BoxFit.fill,
-                                                placeholder: (context, url) =>
-                                                    SpinKitFadingCircle(
-                                                        color: Palette.blue),
-                                                errorWidget: (context, url,
-                                                    error) =>
-                                                    Image.asset(
-                                                        "assets/images/no_image.jpg"),
-                                              ):
-                                              Image.asset(
-                                                  "assets/images/no_image.jpg"),
-                                            ),
-                                          ),
-                                          SizedBox(height: 5,),
-                                          Container(
-                                            margin: EdgeInsets.only(top: width * 0.02,left: width*0.02),
-                                            child:   Column(crossAxisAlignment: CrossAxisAlignment.center,
-                                              children: [
-                                                Center(
-                                                  child: Text(
-                                                    fmemberList[index].name!.toString().toUpperCase(),
-                                                    style: Theme.of(context).textTheme.headline2
-                                                  ),
-                                                ),
-
-
-
-                                              ],
-                                            ),
-                                          ),
-
-
-                                        ],
+                                    Center(
+                                      child: Text(
+                                          fmemberList[index].name!.toString().toUpperCase(),
+                                          style: TextStyle(color: SelectMember ==
+                                              fmemberList[index].name
+                                              ? Palette.primary
+                                              : Palette.grey,fontSize: 13,fontWeight: FontWeight.bold)
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Text(
+                                          fmemberList[index].relation!.toString().toUpperCase(),
+                                          style: TextStyle(color: Palette.grey,fontSize: 10,fontWeight: FontWeight.bold)
                                       ),
                                     ),
 
 
+
                                   ],
                                 ),
+                              ),
 
-                              ],
-                            ),
+
+
+                            ],
                           ),
                         ),
-                      )
+                      ),
                     ],
                   )
                       : Center(
-                    child: Text(
-                      getTranslated(context,
-                          treatmentSpecialist_treatmentNotAvailable)
-                          .toString(),
+                    child: Column(
+                      children: [
+                        //assets/images/nodata.png
+                        Image.asset(
+                        "assets/images/nodata.png"),
+
+                        Text(
+                          getTranslated(context,
+                              treatmentSpecialist_treatmentNotAvailable)
+                              .toString(),
+                        ),
+                      ],
                     ),
                   );
                 },
@@ -204,9 +218,45 @@ class FamilymembersState extends State<Familymembers> {
                 ),
               ),
             ],
-          ):Container(child:Center(child: Text("No Members Please Add",style: TextStyle(fontSize: 12,color: Colors.grey),))),
+          ):Container(child:
+          Column(
+            children: [
+              //assets/images/nodata.png
+              Image.asset(
+                  "assets/images/nodata.png",height: 70,width: 70,),
+
+              Text(
+                getTranslated(context,
+                    treatmentSpecialist_treatmentNotAvailable)
+                    .toString(),
+              ),
+            ],
+          ),
+          ),
         ),
-      ),
+      ):
+    Container(child:
+    Center(child: Column(
+    children: [
+    //assets/images/nodata.png
+
+    Image.asset(
+    'assets/images/nodata.png',
+    width: height*0.10,
+    height: height*0.10,
+    fit: BoxFit.cover,
+    ),
+    Text("No Member found",textAlign: TextAlign.center, style: TextStyle(
+    color: Colors.black,
+    fontFamily: 'Open Sans',
+    fontSize: 10,
+    letterSpacing: 0,
+    fontWeight: FontWeight.bold,
+    height: 1
+    ),),
+    ],
+    )))
+
     );
   }
   Future<BaseModel<M_familymember>> callApiFamilyMembers() async {

@@ -111,10 +111,12 @@ class _RestClient implements RestClient {
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Doctordetails>(
             Options(method: 'GET', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'v1/api/doctors/{$id}',
+                .compose(_dio.options, 'v1/api/doctors/1/',
                 queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Doctordetails.fromJson(_result.data!);
+    print("data");
+    print(value.data.toString());
     return value;
   }
 
@@ -248,8 +250,8 @@ class _RestClient implements RestClient {
     final _data = body;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<Timeslot>(
-            Options(method: 'POST', headers: _headers, extra: _extra)
-                .compose(_dio.options, 'api/get-doctor-slots',
+            Options(method: 'GET', headers: _headers, extra: _extra)
+                .compose(_dio.options, 'v1/api/doctor-slot/1/',
                 queryParameters: queryParameters, data: _data)
                 .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = Timeslot.fromJson(_result.data!);

@@ -69,7 +69,7 @@ class _BookSuccessState extends State<BookSuccess> {
                         children: [
                           Text(
                             getTranslated(context, bookSuccess_text).toString(),
-                            style: TextStyle(fontSize: width * 0.053, color: Palette.blue),
+                            style: TextStyle(fontSize: width * 0.053, color: Palette.primary),
                             textAlign: TextAlign.center,
                           )
                         ],
@@ -81,7 +81,7 @@ class _BookSuccessState extends State<BookSuccess> {
                       margin: EdgeInsets.only(top: width * 0.06),
                       child: Card(
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-                        color: Palette.blue,
+                        color: Palette.primary,
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -114,7 +114,7 @@ class _BookSuccessState extends State<BookSuccess> {
                           ),
                           Text(
                             ' ' + '$pass_BookID',
-                            style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
+                            style: TextStyle(fontSize: width * 0.035, color: Palette.primary),
                           ),
                         ],
                       ),

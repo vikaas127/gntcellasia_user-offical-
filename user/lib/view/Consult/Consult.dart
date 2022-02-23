@@ -199,7 +199,7 @@ class _ConsultState extends State<Consult> {
         inAsyncCall: _loadding,
         opacity: 0.5,
         progressIndicator: SpinKitFadingCircle(
-          color: Palette.blue,
+          color: Palette.primary,
           size: 50.0,
         ),
         child: GestureDetector(
@@ -362,7 +362,7 @@ class _ConsultState extends State<Consult> {
                                                                       getTranslated(context, home_bookingId).toString(),
                                                                       style: TextStyle(
                                                                           fontSize: 14,
-                                                                          color: index % 2 == 0 ? Palette.white : Palette.blue,
+                                                                          color: index % 2 == 0 ? Palette.white : Palette.primary,
                                                                           fontWeight: FontWeight.bold),
                                                                     ),
                                                                   ),
@@ -399,7 +399,7 @@ class _ConsultState extends State<Consult> {
                                                                       height: 40,
                                                                       decoration: new BoxDecoration(shape: BoxShape.circle, boxShadow: [
                                                                         new BoxShadow(
-                                                                          color: Palette.blue,
+                                                                          color: Palette.primary,
                                                                           blurRadius: 1.0,
                                                                         ),
                                                                       ]),
@@ -415,7 +415,7 @@ class _ConsultState extends State<Consult> {
                                                                           ),
                                                                         ),
                                                                         placeholder: (context, url) =>
-                                                                            SpinKitFadingCircle(color: Palette.blue),
+                                                                            SpinKitFadingCircle(color: Palette.primary),
                                                                         errorWidget: (context, url, error) =>
                                                                             Image.asset("assets/images/no_image.jpg"),
                                                                       ),
@@ -626,7 +626,7 @@ class _ConsultState extends State<Consult> {
                                             placeholder: (context, url) =>
                                             // CircularProgressIndicator(),
                                             SpinKitFadingCircle(
-                                              color: Palette.blue,
+                                              color: Palette.primary,
                                             ),
                                             errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",fit: BoxFit.fill,),
                                           ):Image.asset("assets/images/no_image.jpg",fit: BoxFit.fill,),
@@ -729,7 +729,7 @@ class _ConsultState extends State<Consult> {
                                       children: [
                                         Text(
                                           getTranslated(context, home_viewAll).toString(),
-                                          style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
+                                          style: TextStyle(fontSize: width * 0.035, color: Palette.primary),
                                         )
                                       ],
                                     ),
@@ -791,7 +791,7 @@ class _ConsultState extends State<Consult> {
                                                                   alignment: Alignment.center,
                                                                   imageUrl: _searchResult[index].fullImage!,
                                                                   fit: BoxFit.fitHeight,
-                                                                  placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                                                  placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                                                   errorWidget: (context, url, error) =>
                                                                       Image.asset("assets/images/no_image.jpg"),
                                                                 ),
@@ -830,7 +830,7 @@ class _ConsultState extends State<Consult> {
                                                                                     .toString(),
                                                                                 toastLength: Toast.LENGTH_SHORT,
                                                                                 gravity: ToastGravity.BOTTOM,
-                                                                                backgroundColor: Palette.blue,
+                                                                                backgroundColor: Palette.primary,
                                                                                 textColor: Palette.white,
                                                                               );
                                                                             },
@@ -942,7 +942,7 @@ class _ConsultState extends State<Consult> {
                                                                       imageUrl: doctorlist[index].fullImage!,
                                                                       fit: BoxFit.fitHeight,
                                                                       placeholder: (context, url) =>
-                                                                          SpinKitFadingCircle(color: Palette.blue),
+                                                                          SpinKitFadingCircle(color: Palette.primary),
                                                                       errorWidget: (context, url, error) =>
                                                                           Image.asset("assets/images/no_image.jpg"),
                                                                     ),
@@ -983,7 +983,7 @@ class _ConsultState extends State<Consult> {
                                                                                             .toString(),
                                                                                         toastLength: Toast.LENGTH_SHORT,
                                                                                         gravity: ToastGravity.BOTTOM,
-                                                                                        backgroundColor: Palette.blue,
+                                                                                        backgroundColor: Palette.primary,
                                                                                         textColor: Palette.white,
                                                                                       );
                                                                                     },
@@ -1133,7 +1133,7 @@ class _ConsultState extends State<Consult> {
                                             placeholder: (context, url) =>
                                             // CircularProgressIndicator(),
                                             SpinKitFadingCircle(
-                                              color: Palette.blue,
+                                              color: Palette.primary,
                                             ),
                                             errorWidget: (context, url, error) => Image.asset("assets/images/treatment_dmy.png", fit: BoxFit.fill,),
                                           ):Image.asset("assets/images/treatment_dmy.png", fit: BoxFit.fill,),
@@ -1287,7 +1287,7 @@ class _ConsultState extends State<Consult> {
                                                                 fit: BoxFit.fill,
                                                                 height: height * 0.12,
                                                                 width: width * 0.25,
-                                                                placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                                                placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                                                 errorWidget: (context, url, error) => Image.asset("images/no_image.png"),
                                                               ),
                                                             ),
@@ -1469,7 +1469,7 @@ class _ConsultState extends State<Consult> {
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Palette.blue,
+          backgroundColor: Palette.primary,
           textColor: Palette.white,
         );
         doctorlist.clear();

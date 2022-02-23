@@ -79,7 +79,7 @@ class RecomendedSpecialistState extends State<RecomendedSpecialist> {
         inAsyncCall: _loadding,
         opacity: 0.5,
         progressIndicator: SpinKitFadingCircle(
-          color: Palette.blue,
+          color: Palette.primary,
           size: 50.0,
         ),
         child:    Container(
@@ -142,13 +142,13 @@ class RecomendedSpecialistState extends State<RecomendedSpecialist> {
                                               ,fit: BoxFit.fill,
                                               placeholder: (context, url) =>
                                                   SpinKitFadingCircle(
-                                                      color: Palette.blue),
+                                                      color: Palette.primary),
                                               errorWidget: (context, url,
                                                   error) =>
                                                   Image.asset(
-                                                      "assets/images/no_image.jpg"),
+                                                      "assets/images/nodoctor.png"),
                                             ):Image.asset(
-                                                "assets/images/no_image.jpg"),
+                                                "assets/images/nodoctor.png"),
                                           ),
                                         ),
                                         SizedBox(height: 5,),

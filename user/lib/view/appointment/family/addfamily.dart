@@ -128,13 +128,21 @@ class AddFamilymember_state extends State<AddFamilymember>{
 
      Map<String, dynamic> body =
        {
-         "user_id": SharedPreferenceHelper.getInt(Preferences.userid),
-         "name": patient_name.text,
-         "mobile":phone_no.text ,
-         "email": "rani@mailinator.com",
-         "sex": "female",
-         "dob": null,
-         "address": patient_address.text
+
+           "user_id": SharedPreferenceHelper.getInt(Preferences.userid),
+           "name": patient_name.text,
+           "mobile":phone_no.text ,
+           "email": "rani@mailinator.com",
+           "sex": "female",
+           "dob": "2022-02-22",
+           "blood_relationship": "Sister",
+           "address": patient_address.text
+
+
+
+
+
+
        };
 
 
@@ -153,7 +161,7 @@ class AddFamilymember_state extends State<AddFamilymember>{
                msg: '${response.message}',
                toastLength: Toast.LENGTH_SHORT,
                gravity: ToastGravity.BOTTOM,
-               backgroundColor: Palette.blue,
+               backgroundColor: Palette.primary,
                textColor: Palette.white,
              );
              Navigator.push(
@@ -238,7 +246,7 @@ class AddFamilymember_state extends State<AddFamilymember>{
                      shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
                      boxShadow: [
                        new BoxShadow(
-                         color: Palette.blue,
+                         color: Palette.primary,
                          blurRadius: 1.0,
                        ),
                      ],
@@ -271,7 +279,7 @@ class AddFamilymember_state extends State<AddFamilymember>{
                                    backgroundImage: imageProvider,
                                  ),
                                ),
-                               placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                               placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                errorWidget: (context, url, error) => ClipRRect(
                                  borderRadius: BorderRadius.circular(50),
                                  child: Image.asset("assets/images/no_image.jpg"),

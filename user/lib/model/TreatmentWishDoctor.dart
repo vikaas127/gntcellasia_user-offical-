@@ -37,9 +37,9 @@ class Doctorslist {
   String? dob;
   String? occupation;
   String? about;
-  Null? workExperience;
+  String? workExperience;
   String? description;
-  Null? specialties;
+  String? specialties;
   int? specialtyId;
   String? language;
   String? bloodGroup;

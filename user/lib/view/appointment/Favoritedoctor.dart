@@ -41,7 +41,7 @@ class _FavoritedoctorState extends State<Favoritedoctor> {
       inAsyncCall: _loadding,
       opacity: 0.5,
       progressIndicator: SpinKitFadingCircle(
-        color:  Palette.blue,
+        color:  Palette.primary,
         size: 50.0,
       ),
       child: Scaffold(
@@ -117,10 +117,10 @@ class _FavoritedoctorState extends State<Favoritedoctor> {
                                                             fit: BoxFit.fill,
                                                             placeholder: (context, url) =>
                                                                 SpinKitFadingCircle(
-                                                                    color:  Palette.blue),
+                                                                    color:  Palette.primary),
                                                             errorWidget: (context, url, error) =>
                                                                 Image.asset(
-                                                                    "assets/images/no_image.jpg"),
+                                                                    "assets/images/nodoctor.png"),
                                                           ),
                                                         ),
                                                       ),
@@ -261,7 +261,7 @@ class _FavoritedoctorState extends State<Favoritedoctor> {
               msg: '${response.msg}',
               toastLength: Toast.LENGTH_SHORT,
               gravity: ToastGravity.BOTTOM,
-              backgroundColor:  Palette.blue,
+              backgroundColor:  Palette.primary,
               textColor:  Palette.white,
             );
           });

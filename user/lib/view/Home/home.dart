@@ -206,10 +206,10 @@ class _HomeState extends State<Home> {
       onWillPop: onWillPop,
       child: ModalProgressHUD(
         inAsyncCall: _loadding,
-        opacity: 0.5,
+        opacity: 0.6,
         progressIndicator: SpinKitFadingCircle(
-          color: Palette.blue,
-          size: 50.0,
+          color: Palette.primary,
+          size: 100.0,
         ),
         child: GestureDetector(
           onTap: () {
@@ -238,7 +238,7 @@ class _HomeState extends State<Home> {
                                       shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
                                       boxShadow: [
                                         new BoxShadow(
-                                          color: Palette.blue,
+                                          color: Palette.primary,
                                           blurRadius: 1.0,
                                         ),
                                       ],
@@ -254,7 +254,7 @@ class _HomeState extends State<Home> {
                                           backgroundImage: imageProvider,
                                         ),
                                       ),
-                                      placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                      placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                       errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg"),
                                     ),
                                   ),
@@ -764,7 +764,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             appBar: PreferredSize(
-              preferredSize: Size(width, height*0.17),
+              preferredSize: Size(width, height*0.19),
               child: SafeArea(
                 top: true,
                 child: Container(
@@ -1016,7 +1016,7 @@ class _HomeState extends State<Home> {
                                           children: [
                                             Text(
                                               getTranslated(context, home_viewAll).toString(),
-                                              style: TextStyle(fontSize: width * 0.035, color: Palette.blue),
+                                              style: TextStyle(fontSize: width * 0.035, color: Palette.primary),
                                             )
                                           ],
                                         ),
@@ -1075,7 +1075,7 @@ class _HomeState extends State<Home> {
                                                                       getTranslated(context, home_bookingId).toString(),
                                                                       style: TextStyle(
                                                                           fontSize: 14,
-                                                                          color: index % 2 == 0 ? Palette.white : Palette.blue,
+                                                                          color: index % 2 == 0 ? Palette.white : Palette.primary,
                                                                           fontWeight: FontWeight.bold),
                                                                     ),
                                                                   ),
@@ -1112,7 +1112,7 @@ class _HomeState extends State<Home> {
                                                                       height: 40,
                                                                       decoration: new BoxDecoration(shape: BoxShape.circle, boxShadow: [
                                                                         new BoxShadow(
-                                                                          color: Palette.blue,
+                                                                          color: Palette.primary,
                                                                           blurRadius: 1.0,
                                                                         ),
                                                                       ]),
@@ -1128,7 +1128,7 @@ class _HomeState extends State<Home> {
                                                                           ),
                                                                         ),
                                                                         placeholder: (context, url) =>
-                                                                            SpinKitFadingCircle(color: Palette.blue),
+                                                                            SpinKitFadingCircle(color: Palette.primary),
                                                                         errorWidget: (context, url, error) =>
                                                                             Image.asset("assets/images/no_image.jpg"),
                                                                       ),
@@ -1386,7 +1386,7 @@ class _HomeState extends State<Home> {
                                             placeholder: (context, url) =>
                                             // CircularProgressIndicator(),
                                             SpinKitFadingCircle(
-                                              color: Palette.blue,
+                                              color: Palette.primary,
                                             ),
                                             errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",fit: BoxFit.fitHeight,height: 140,),
                                           ):Image.asset("assets/images/no_image.jpg",
@@ -1553,7 +1553,7 @@ class _HomeState extends State<Home> {
                                             placeholder: (context, url) =>
                                             // CircularProgressIndicator(),
                                             SpinKitFadingCircle(
-                                              color: Palette.blue,
+                                              color: Palette.primary,
                                             ),
                                             errorWidget: (context, url, error) => Image.asset(
                                               "assets/images/treatment_dmy.png", fit: BoxFit.fitHeight,height: 140,),
@@ -1820,7 +1820,7 @@ class _HomeState extends State<Home> {
                                                                 fit: BoxFit.fill,
                                                                 height: height * 0.12,
                                                                 width: width * 0.25,
-                                                                placeholder: (context, url) => SpinKitFadingCircle(color: Palette.blue),
+                                                                placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
                                                                 errorWidget: (context, url, error) => Image.asset("images/no_image.png"),
                                                               ),
                                                             ),
@@ -2016,7 +2016,7 @@ class _HomeState extends State<Home> {
           msg: '${response.msg}',
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
-          backgroundColor: Palette.blue,
+          backgroundColor: Palette.primary,
           textColor: Palette.white,
         );
         doctorlist.clear();

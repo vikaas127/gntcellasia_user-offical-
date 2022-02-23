@@ -82,7 +82,7 @@ class _ShowLocationState extends State<ShowLocation> {
   Widget build(BuildContext context) {
     double width;
     double height;
-
+    Show_Address.isNotEmpty == true?_loadding=false:_loadding=true;
     width = MediaQuery.of(context).size.width;
     height = MediaQuery.of(context).size.height;
     return Scaffold(floatingActionButton: FloatingActionButton(onPressed: (){
@@ -122,17 +122,17 @@ class _ShowLocationState extends State<ShowLocation> {
         ),
       ) ,),
 
-      body: ModalProgressHUD(
+      body:Show_Address.isNotEmpty == true? ModalProgressHUD(
         inAsyncCall: _loadding,
         opacity: 0.5,
         progressIndicator: SpinKitFadingCircle(
-          color: Palette.blue,
+          color: Palette.primary,
           size: 50.0,
         ),
         child: Container(
           height: height * 1,
 
-          child: Show_Address.length != 0
+          child: Show_Address.isNotEmpty == true
               ? ListView(
                   scrollDirection: Axis.vertical,
                   children: [
@@ -182,7 +182,7 @@ class _ShowLocationState extends State<ShowLocation> {
                                         ),
                                 ),
                                 Container(
-                                  margin: EdgeInsets.only(left: 15, top: 5, right: 15),
+                                  margin: EdgeInsets.only(left: 10, top: 5, right: 10),
                                   child: Row(
                                     children: [
                                       Container(
@@ -279,7 +279,27 @@ class _ShowLocationState extends State<ShowLocation> {
                   ),
                 ),
         ),
-      ),
+      ):
+      Container(child: Center(child: Column(
+        children: [
+          //assets/images/nodata.png
+          SizedBox(height: height*0.25,),
+          Image.asset(
+            'assets/images/nodata.png',
+            width: height*0.20,
+            height: height*0.20,
+            fit: BoxFit.cover,
+          ),
+          Text("No  Location Added",textAlign: TextAlign.center, style: TextStyle(
+              color: Colors.black,
+              fontFamily: 'Open Sans',
+              fontSize: 16,
+              letterSpacing: 0,
+              fontWeight: FontWeight.bold,
+              height: 1
+          ),),
+        ],
+      )),),
     );
   }
 
@@ -298,6 +318,7 @@ class _ShowLocationState extends State<ShowLocation> {
         });
       }
     } catch (error, stacktrace) {
+
       print("Exception occur: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }

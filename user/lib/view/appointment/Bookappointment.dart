@@ -144,7 +144,7 @@ class _BookappointmentState extends State<Bookappointment> {
   File? _Proimage2;
   final picker = ImagePicker();
 
-  List<Slots> timelist = [];
+  List<Slot> timelist = [];
 
   DateTime? _selectedDate;
   late DateTime _firstTimeSelected;
@@ -318,28 +318,29 @@ List<plans.Data> _plist=[];
 
                   child: Row(crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(flex: 1,
+                      Expanded(flex: 2,
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 18.0,right: 8,top: 30),
+                          padding: const EdgeInsets.only(left: 10.0,right: 20,top: 30),
                           child: Container(
 
 
                             child: GestureDetector(
-                              child: Icon(Icons.arrow_back),
+                              child: Icon(Icons.arrow_back_ios_outlined,size: 24,),
                               onTap: () {
-                                Navigator.pop(context);
+                                setState(() {
+                                  Navigator.pop(context);
+                                });
+
 
                               },
                             ),
                           ),
                         ),
                       ),
-                      Expanded(flex: 7,
-                        child: Container(
-
-                          child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+                      Expanded(flex: 6,
+                        child: Row(crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Container(
+                              Container(width: 50,
                                 child: Column(crossAxisAlignment: CrossAxisAlignment.start,
 
                                   children: [SizedBox(height: 20,),
@@ -348,7 +349,7 @@ List<plans.Data> _plist=[];
                                       height: width * 0.12,
                                       child: CachedNetworkImage(
                                         alignment: Alignment.center,
-                                        imageUrl: '${Apis.baseUrl}$fullImage',
+                                        imageUrl: '${Apis.baseUrlImages}$fullImage',
                                         imageBuilder: (context, imageProvider) => CircleAvatar(
                                           radius: 45,
                                           backgroundColor: Palette.image_circle,
@@ -358,92 +359,85 @@ List<plans.Data> _plist=[];
                                           ),
                                         ),
                                         placeholder: (context, url) =>
-                                            SpinKitPulse(color: Palette.blue),
+                                            SpinKitPulse(color: Palette.primary),
                                         errorWidget: (context, url, error) =>ClipRRect(
                                           borderRadius: BorderRadius.circular(28.0),
                                           child:
-                                            Image.asset("assets/images/no_image.jpg"),),
+                                            Image.asset("assets/images/nodoctor.png"),),
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 4),
-                                child: Container(
-
-
-                                  child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        alignment: AlignmentDirectional.topStart,
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              '${hospitalName?.toUpperCase()}',
-                                              style: TextStyle(
-                                                  fontSize: width * 0.027, color: Palette.dark_blue),
-                                              overflow: TextOverflow.ellipsis,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        alignment: AlignmentDirectional.topStart,
-                                        margin: EdgeInsets.only(top: width * 0.01),
-                                        child: Column(crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              '${name?.toUpperCase()}',
-                                              style: TextStyle(fontWeight: FontWeight.bold,
-                                                  fontSize: width * 0.028, color: Palette.black),
-                                              overflow: TextOverflow.ellipsis,
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                      Container(
-                                        child: Row(
-                                          children: [
-                                            Container(
-                                              margin: EdgeInsets.only(top: width * 0.01),
-                                              child: Column(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/icons/location1.svg',
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                            Container(
-                                              width: width * 0.5,
-                                              alignment: AlignmentDirectional.topStart,
-                                              margin: EdgeInsets.only(top: width * 0.01, left: width * 0.02,right: width * 0.02),
-                                              child: Column(
-                                                children: [
-                                                  Text(
-                                                    '$hospitalAddress',
-                                                    style: TextStyle(
-                                                      fontSize: width * 0.03,
-                                                      color: Palette.grey,
-                                                    ),
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow.ellipsis,
-                                                  )
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
+                              Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Container(width: 160,
+                                    alignment: AlignmentDirectional.topStart,
+                                    child: Column(
+                                      children: [
+                                        Text(
+                                          '${hospitalName?.toUpperCase()}',
+                                          style: TextStyle(
+                                              fontSize: width * 0.027, color: Palette.dark_blue),
+                                          overflow: TextOverflow.ellipsis,
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                  Container(width: 160,
+                                    alignment: AlignmentDirectional.topStart,
+                                    margin: EdgeInsets.only(top: width * 0.01),
+                                    child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${name?.toUpperCase()}',
+                                          style: TextStyle(fontWeight: FontWeight.bold,
+                                              fontSize: width * 0.028, color: Palette.black),
+                                          overflow: TextOverflow.ellipsis,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(width: 160,
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          margin: EdgeInsets.only(top: width * 0.01),
+                                          child: Column(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/icons/location1.svg',
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+
+                                          alignment: AlignmentDirectional.topStart,
+                                          margin: EdgeInsets.only(top: width * 0.01, left: width * 0.02,right: width * 0.02),
+                                          child: Column(
+                                            children: [
+                                              Text(
+                                                '$hospitalAddress',
+                                                style: TextStyle(
+                                                  fontSize: width * 0.03,
+                                                  color: Palette.grey,
+                                                ),
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
 
                             ],
                           ),
-                        ),
+
                       ),
                       Expanded(flex: 1,
                         child: Padding(
@@ -471,17 +465,18 @@ List<plans.Data> _plist=[];
             child: Container(
               child: Form(
                 key: _formkey,
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                child: ListView(scrollDirection: Axis.vertical,shrinkWrap: true,
+               //   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(10.0),
                       child: Text('Book a video consultation for',style: Theme.of(context).textTheme.headline1)),
-                    Container(height: 103,
+                    Container(height: 123,
                       child: Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(left: 18.0,bottom: 40,right: 5),
-                            child: Container(height: 114,
+                            padding: const EdgeInsets.only(left: 18.0,bottom: 0,right: 5),
+                            child: Container(height: 123,
                               child: InkWell(onTap: (){
                                 Navigator.push(
                                   context,
@@ -492,12 +487,20 @@ List<plans.Data> _plist=[];
                                   ),
                                 );
                               },
-                                child: Container( child:SvgPicture.asset(
-                                  'assets/icons/addmember.svg',
-                                  height: 60.0,
-                                  width: 60.0,
-                                  allowDrawingOutsideViewBox: true,
-                                ),),
+                                child: Column(
+                                  children: [
+                                    SizedBox(height: 10,),
+                                    Container( child:SvgPicture.asset(
+                                      'assets/icons/addmember.svg',
+                                      height: 50.0,
+                                      width: 50.0,
+                                      allowDrawingOutsideViewBox: true,
+                                    ),),
+                                    SizedBox(height: 10,),
+                                    Text("Add New ",style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),),
+                                    Text("Member ",style: TextStyle(fontSize: 10),)
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -508,7 +511,7 @@ List<plans.Data> _plist=[];
                     Divider(thickness: 1.5,),
                     DatePicker(
                       DateTime.now(),
-                      height:54,width:100,
+                      height:60,width:100,
                       dayTextStyle:TextStyle(fontSize: 0) ,
                       dateTextStyle: TextStyle(fontSize: 12),
                       initialSelectedDate: DateTime.now(),
@@ -570,7 +573,7 @@ List<plans.Data> _plist=[];
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Image.asset(
-                                    'assets/icons/img.png',
+                                    'assets/images/nodoctor.png',
                                   ),
                                 ),
                                 Padding(
@@ -623,7 +626,7 @@ List<plans.Data> _plist=[];
                                             onTap: () {
                                               setState(() {
                                                 selectTime =
-                                                    timelist[index].startAt;
+                                                    timelist[index].slotTime;
                                               });
                                             },
                                             child: Container(
@@ -631,7 +634,7 @@ List<plans.Data> _plist=[];
                                               width: width * 0.3,
                                               child: Card(
                                                 color: selectTime ==
-                                                    timelist[index].startAt
+                                                    timelist[index].slotTime
                                                     ? Color(0xff2C9085)
                                                     : Palette.dash_line,
                                                 shape: RoundedRectangleBorder(
@@ -643,11 +646,11 @@ List<plans.Data> _plist=[];
                                                     Container(
                                                       padding: EdgeInsets.all(10),
                                                       child: Text(
-                                                        timelist[index].startAt!,
+                                                        timelist[index].slotTime!,
                                                         style: TextStyle(
                                                             color: selectTime ==
                                                                 timelist[index]
-                                                                    .startAt
+                                                                    .slotTime
                                                                 ? Palette.white
                                                                 : Color(0xff2C9085)),
                                                       ),
@@ -1839,7 +1842,7 @@ List<plans.Data> _plist=[];
       if (response.status == 200) {
         setState(() {
           _loadding = false;
-          timelist.addAll(response.slots!);
+          timelist.addAll(response.data![0].slot!);
         });
       }
     } catch (error, stacktrace) {
@@ -1927,9 +1930,9 @@ List<plans.Data> _plist=[];
         return Theme(
           data: ThemeData.dark().copyWith(
             colorScheme: ColorScheme.light(
-              primary: Palette.blue,
+              primary: Palette.primary,
               onPrimary: Palette.white,
-              surface: Palette.blue,
+              surface: Palette.primary,
               onSurface: Palette.black,
             ),
             dialogBackgroundColor: Palette.white,
