@@ -78,41 +78,51 @@ class _IntroState extends State<Intro> {
           margin: EdgeInsets.symmetric(vertical: 16),
           child: Column(crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(decoration: BoxDecoration(
-              gradient: LinearGradient(colors:[Color(0xff2C9085),Color(0xff38AF8D)] ),),
-                width: 303,
-                height: 48,
+              InkWell(onTap: (){
+                setState(() {
+                  slideIndex++;
+                  controller.animateToPage(slideIndex, duration: Duration(milliseconds: 400), curve: Curves.linear);
 
-                child: Stack(
-                    children: <Widget>[
-                      Positioned(
-                          top: 5,
-                          left: 125,
-                          child: Container(
-                            decoration: BoxDecoration(
 
-                            ),
-                            padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
+                });
 
-                              children: <Widget>[
-                                Text('Next', textAlign: TextAlign.center, style: TextStyle(
-                                    color: Color.fromRGBO(255, 255, 255, 1),
-                                    fontFamily: 'Open Sans',
-                                    fontSize: 16,
-                                    letterSpacing: 0,
-                                    fontWeight: FontWeight.normal,
-                                    height: 1
-                                ),),
+              },
+                child: Container(decoration: BoxDecoration(
+                gradient: LinearGradient(colors:[Color(0xff2C9085),Color(0xff38AF8D)] ),),
+                  width: 303,
+                  height: 48,
 
-                              ],
-                            ),
-                          )
-                      ),
-                    ]
-                )
+                  child: Stack(
+                      children: <Widget>[
+                        Positioned(
+                            top: 5,
+                            left: 125,
+                            child: Container(
+                              decoration: BoxDecoration(
+
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+
+                                children: <Widget>[
+                                  Text('Next', textAlign: TextAlign.center, style: TextStyle(
+                                      color: Color.fromRGBO(255, 255, 255, 1),
+                                      fontFamily: 'Open Sans',
+                                      fontSize: 16,
+                                      letterSpacing: 0,
+                                      fontWeight: FontWeight.normal,
+                                      height: 1
+                                  ),),
+
+                                ],
+                              ),
+                            )
+                        ),
+                      ]
+                  )
             ),
+              ),
               SizedBox(height:h*0.05 ,),
               Center(
                 child: Container(

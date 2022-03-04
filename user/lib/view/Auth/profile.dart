@@ -93,15 +93,12 @@ class _profileState extends State<profile> {
       ),
       child: Scaffold(
 
-        body: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
-          },
-          child: SingleChildScrollView(
-            child: Center(
-              child: Column(
-                children: [//image
-                  Positioned(top: size.height*0.05,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [//image
+               Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Image.asset(
                       "assets/images/intro_header.png",
                       height: size.height * 0.10,
@@ -109,384 +106,385 @@ class _profileState extends State<profile> {
                       fit: BoxFit.fitWidth,
                     ),
                   ),
-                  Container(
-                    width: width * 1.57,
-                    height: height * 0.03,),
-                  Container(
-                    decoration: new BoxDecoration(
-                      shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
-                      boxShadow: [
-                        new BoxShadow(
-                          color: Palette.primary,
-                          blurRadius: 1.0,
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 105,
-                          width: 105,
-                          child: Stack(
-                            clipBehavior: Clip.none,
-                            fit: StackFit.expand,
-                            children: [
-                              _Proimage != null
-                                  ? ClipRRect(
-                                borderRadius: BorderRadius.circular(50),
-                                child: Image.file(
-                                  _Proimage!,
-                                  fit: BoxFit.cover,
-                                ),
-                              )
-                                  : CachedNetworkImage(
-                                alignment: Alignment.center,
-                                imageUrl: '${Apis.baseUrlImagesprofile}${image}',
-                                imageBuilder: (context, imageProvider) => CircleAvatar(
-                                  radius: 60,
-                                  backgroundColor: Palette.white,
-                                  child: CircleAvatar(
-                                    radius: 40,
-                                    backgroundImage: imageProvider,
-                                  ),
-                                ),
-                                placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
-                                errorWidget: (context, url, error) => ClipRRect(
-                                  borderRadius: BorderRadius.circular(50),
-                                  child: Image.asset("assets/images/no_image.jpg"),
-                                ),
-                                height: 105,
-                                width: 105,
-                                fit: BoxFit.fitHeight,
-                              ),
-                              Positioned(
-                                top: 70,
-                                left: 75,
-                                child: GestureDetector(
-                                  onTap: () {
-                                    _ChooseProfileImage();
-                                  },
-                                  child: CircleAvatar(
-                                    backgroundColor: Palette.dark_grey,
-                                    radius: 18,
-                                    child: SvgPicture.asset(
-                                      'assets/icons/camera.svg',
 
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                Container(
+                  width: width * 1.57,
+                  height: height * 0.03,),
+                Container(
+                  decoration: new BoxDecoration(
+                    shape: BoxShape.circle, // BoxShape.circle or BoxShape.retangle
+                    boxShadow: [
+                      new BoxShadow(
+                        color: Palette.primary,
+                        blurRadius: 1.0,
+                      ),
+                    ],
                   ),
-                  Form(
-                    key: formkey,
-                    child: Container(
-                      margin: EdgeInsets.only(top: size.height * 0.02),
-                      width: width * 0.9,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-// full name
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Container(height: 55,
-                              margin: EdgeInsets.only(
-                                  top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                              // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                              decoration: BoxDecoration(
-                                  color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
-                              child: TextFormField(
-                                controller: _name,
-                                keyboardType: TextInputType.text,
-                                inputFormatters: [
-                                  FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]'))
-                                ],
-                                textCapitalization: TextCapitalization.words,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  color: Palette.dark_blue,
-                                ),
-                                decoration: InputDecoration(suffixIcon:
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SvgPicture.asset(
-                                    'assets/icons/profile.svg',height: 10,width: 10,
-
-                                  ),
-                                ),
-
-                                  label: Text("Full Name"),
-                                  border: new OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  hintText: getTranslated(context, signUp_userName_hint).toString(),
-                                  hintStyle: TextStyle(
-                                    fontSize: width * 0.04,
-                                    color: Palette.dark_grey,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                validator: (String? value) {
-                                  value!.trim();
-                                  if (value.isEmpty) {
-                                    return getTranslated(context, signUp_userName_validator1).toString();
-                                  } else if (value.trim().length < 1) {
-                                    return getTranslated(context, signUp_userName_validator2).toString();
-                                  }
-                                  return null;
-                                },
-                                onSaved: (String? name) {},
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 105,
+                        width: 105,
+                        child: Stack(
+                          clipBehavior: Clip.none,
+                          fit: StackFit.expand,
+                          children: [
+                            _Proimage != null
+                                ? ClipRRect(
+                              borderRadius: BorderRadius.circular(50),
+                              child: Image.file(
+                                _Proimage!,
+                                fit: BoxFit.cover,
                               ),
-                            ),
-                          ),
-//gender
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 4),
-                            child: Container(height: 55,
-                              margin: EdgeInsets.only(
-                                  top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                              // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                              decoration: BoxDecoration(
-                                  color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
-                              child: DropdownButtonFormField(
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Palette.dark_blue,
+                            )
+                                : CachedNetworkImage(
+                              alignment: Alignment.center,
+                              imageUrl: '${Apis.baseUrlImagesprofile}${image}',
+                              imageBuilder: (context, imageProvider) => CircleAvatar(
+                                radius: 60,
+                                backgroundColor: Palette.white,
+                                child: CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: imageProvider,
                                 ),
-                                decoration: InputDecoration(
-                                  label: Text("Gender"),
-                                  border: new OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  hintText: getTranslated(context, signUp_selectGender_hint).toString(),
-                                  hintStyle: TextStyle(
-                                      fontSize: 15,
-                                      color: Palette.dark_grey,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                value: _selectGender,
-                                isExpanded: true,
-                                iconSize: 25,
-                                onSaved: (dynamic value) {
-                                  setState(
-                                        () {
-                                      _selectGender = value;
-                                    },
-                                  );
-                                },
-                                onChanged: (dynamic newValue) {
-                                  setState(
-                                        () {
-                                      _selectGender = newValue;
-                                    },
-                                  );
-                                },
-                                validator: (dynamic value) => value == null ? getTranslated(context, signUp_selectGender_validator).toString() : null,
-                                items: gender.map(
-                                      (location) {
-                                    return DropdownMenuItem<String>(
-                                      child: new Text(
-                                        location,
-                                        style: TextStyle(
-                                          fontSize: 14,
-                                          color: Palette.dark_blue,
-                                        ),
-                                      ),
-                                      value: location,
-                                    );
-                                  },
-                                ).toList(),
                               ),
+                              placeholder: (context, url) => SpinKitFadingCircle(color: Palette.primary),
+                              errorWidget: (context, url, error) => ClipRRect(
+                                borderRadius: BorderRadius.circular(50),
+                                child: Image.asset("assets/images/no_image.jpg"),
+                              ),
+                              height: 105,
+                              width: 105,
+                              fit: BoxFit.fitHeight,
                             ),
-                          ),
-                          //calender
-                          Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Container(height: 55,
-                              margin: EdgeInsets.only(
-                                  top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                              //padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                              decoration: BoxDecoration(
-                                  color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
-                              child: TextFormField(
-                                textCapitalization: TextCapitalization.words,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Palette.dark_blue,
-                                ),
-                                controller: _dateOfBirth,
-                                decoration: InputDecoration(suffixIcon:    Padding(
-                                  padding: const EdgeInsets.all(10.0),
-                                  child: SvgPicture.asset(
-                                    'assets/icons/calender.svg',height: 10,width: 10,
-
-                                  ),
-                                ),
-                                  label: Text("Date of Birth"),
-                                  border: new OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  hintText: getTranslated(context, signUp_birthDate_hint).toString(),
-
-                                  hintStyle: TextStyle(
-                                      fontSize: width * 0.04,
-                                      color: Palette.dark_grey,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                validator: (String? value) {
-                                  if (value!.isEmpty) {
-                                    return getTranslated(context, signUp_birthDate_validator1).toString();
-                                  }
-                                  return null;
-                                },
+                            Positioned(
+                              top: 70,
+                              left: 75,
+                              child: GestureDetector(
                                 onTap: () {
-                                  _selectDate(context);
+                                  _ChooseProfileImage();
                                 },
-                              ),
-                            ),
-                          ),
-                          //email
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 4.0,horizontal: 4),
-                            child: Container(height: 55,
-                              margin: EdgeInsets.only(
-                                  top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                              // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
-                              decoration: BoxDecoration(
-                                  color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
-                              child: TextFormField(
-                                controller: _email,
-                                keyboardType: TextInputType.text,
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Palette.dark_blue,
-                                ),
-                                decoration: InputDecoration(suffixIcon:  Padding(
-                                  padding: const EdgeInsets.all(10.0),
+                                child: CircleAvatar(
+                                  backgroundColor: Palette.dark_grey,
+                                  radius: 18,
                                   child: SvgPicture.asset(
-                                    'assets/icons/email.svg',height: 10,width: 10,
+                                    'assets/icons/camera.svg',
 
                                   ),
                                 ),
-                                  label: Text("Email"),
-                                  border: new OutlineInputBorder(
-                                    borderRadius: new BorderRadius.circular(15.0),
-                                    borderSide: new BorderSide(),
-                                  ),
-                                  hintText: getTranslated(context, signUp_email_hint).toString(),
-                                  hintStyle: TextStyle(
-                                      fontSize: 14,
-                                      color: Palette.dark_grey,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                validator: (String? value) {
-                                  if (value!.isEmpty) {
-                                    return getTranslated(context, signUp_email_validator1).toString();
-                                  }
-                                  if (!RegExp(
-                                      r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-                                      .hasMatch(value)) {
-                                    return getTranslated(context, signUp_email_validator1).toString();
-                                  }
-                                  return null;
-                                },
-                                onSaved: (String? name) {},
                               ),
                             ),
-                          ),
-//phone code
-                          Container(
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Form(
+                  key: formkey,
+                  child: Container(
+                    margin: EdgeInsets.only(top: size.height * 0.02),
+                    width: width * 0.9,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+// full name
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(height: 55,
                             margin: EdgeInsets.only(
                                 top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
-                            // padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                            // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
                             decoration: BoxDecoration(
                                 color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
-                            child:  Row(
-                              children: [
-                                Container(
-                                  width: width * 0.23,
-                                  height: 55,
-                                  // margin: EdgeInsets.symmetric(horizontal: 9),
-                                  child: TextFormField(
+                            child: TextFormField(
+                              controller: _name,
+                              keyboardType: TextInputType.text,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.allow(RegExp('[a-zA-Z ]'))
+                              ],
+                              textCapitalization: TextCapitalization.words,
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Palette.dark_blue,
+                              ),
+                              decoration: InputDecoration(suffixIcon:
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SvgPicture.asset(
+                                  'assets/icons/profile.svg',height: 10,width: 10,
 
-                                    textAlign: TextAlign.center,
-                                    textAlignVertical: TextAlignVertical.bottom,
-                                    readOnly: true,
-                                    style: TextStyle(fontSize: 16, color: Palette.dark_blue, fontWeight: FontWeight.bold),
-                                    controller: _phoneCode,
-                                    decoration: InputDecoration(
-
-                                      hintText: '+91',
-                                      label: Text("india"),
-                                      border: new OutlineInputBorder(
-                                        borderRadius: new BorderRadius.circular(15.0),
-                                        borderSide: new BorderSide(),
-                                      ),
-                                      hintStyle: TextStyle(
-                                        fontSize: 12,
-                                        color: Palette.dark_grey1,
-                                      ),
-                                    ),
-                                    onTap: () {
-                                      showCountryPicker(
-                                        context: context,
-                                        //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
-                                        exclude: <String>['KN', 'MF'],
-                                        //Optional. Shows phone code before the country name.
-                                        showPhoneCode: true,
-                                        onSelect: (Country country) {
-                                          _phoneCode.text = "+" + country.phoneCode;
-                                        },
-                                        // Optional. Sets the theme for the country list picker.
-                                        countryListTheme: CountryListThemeData(
-                                          // Optional. Sets the border radius for the bottomsheet.
-                                          borderRadius: BorderRadius.only(
-                                            topLeft: Radius.circular(40.0),
-                                            topRight: Radius.circular(40.0),
-                                          ),
-                                          // Optional. Styles the search field.
-                                          inputDecoration: InputDecoration(   border: InputBorder.none,
-                                            labelText: getTranslated(context, profile_phoneCode_search).toString(),
-                                            // 'Search',
-                                            hintText: getTranslated(context, profile_phoneCode_hint).toString(),
-                                            // 'Start typing to search',
-                                            prefixIcon: const Icon(Icons.search),
-
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  ),
                                 ),
-                                Container(
-                                  width: width * 0.57,
-                                  height: 55,
-                                  child: TextFormField(
-                                    readOnly: true,
-                                    textAlignVertical: TextAlignVertical.bottom,
+                              ),
 
-                                    style: TextStyle(fontSize: 16, color: Palette.dark_blue, letterSpacing: 0.5, fontWeight: FontWeight.bold),
-                                    controller: _phoneNo,
-                                    decoration: InputDecoration(suffixIcon: Icon(Icons.phone,color: Palette.light_blue,),
-                                      hintText: getTranslated(context, profile_phoneNo_hint).toString(),
-                                      hintStyle: TextStyle(
+                                label: Text("Full Name"),
+                                border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                                hintText: getTranslated(context, signUp_userName_hint).toString(),
+                                hintStyle: TextStyle(
+                                  fontSize: width * 0.04,
+                                  color: Palette.dark_grey,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              validator: (String? value) {
+                                value!.trim();
+                                if (value.isEmpty) {
+                                  return getTranslated(context, signUp_userName_validator1).toString();
+                                } else if (value.trim().length < 1) {
+                                  return getTranslated(context, signUp_userName_validator2).toString();
+                                }
+                                return null;
+                              },
+                              onSaved: (String? name) {},
+                            ),
+                          ),
+                        ),
+//gender
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 4),
+                          child: Container(height: 55,
+                            margin: EdgeInsets.only(
+                                top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
+                            // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                            decoration: BoxDecoration(
+                                color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
+                            child: DropdownButtonFormField(
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: Palette.dark_blue,
+                              ),
+                              decoration: InputDecoration(
+                                label: Text("Gender"),
+                                border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                                hintText: getTranslated(context, signUp_selectGender_hint).toString(),
+                                hintStyle: TextStyle(
+                                    fontSize: 15,
+                                    color: Palette.dark_grey,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              value: _selectGender,
+                              isExpanded: true,
+                              iconSize: 25,
+                              onSaved: (dynamic value) {
+                                setState(
+                                      () {
+                                    _selectGender = value;
+                                  },
+                                );
+                              },
+                              onChanged: (dynamic newValue) {
+                                setState(
+                                      () {
+                                    _selectGender = newValue;
+                                  },
+                                );
+                              },
+                              validator: (dynamic value) => value == null ? getTranslated(context, signUp_selectGender_validator).toString() : null,
+                              items: gender.map(
+                                    (location) {
+                                  return DropdownMenuItem<String>(
+                                    child: new Text(
+                                      location,
+                                      style: TextStyle(
                                         fontSize: 14,
-                                        color: Palette.dark_grey1,
-                                      ),
-                                      label: Text("Phone no"),
-                                      border: new OutlineInputBorder(
-                                        borderRadius: new BorderRadius.circular(15.0),
-                                        borderSide: new BorderSide(),
+                                        color: Palette.dark_blue,
                                       ),
                                     ),
-                                    /* validator: (String? value) {
+                                    value: location,
+                                  );
+                                },
+                              ).toList(),
+                            ),
+                          ),
+                        ),
+                        //calender
+                        Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: Container(height: 55,
+                            margin: EdgeInsets.only(
+                                top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
+                            //padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                            decoration: BoxDecoration(
+                                color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
+                            child: TextFormField(
+                              textCapitalization: TextCapitalization.words,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Palette.dark_blue,
+                              ),
+                              controller: _dateOfBirth,
+                              decoration: InputDecoration(suffixIcon:    Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: SvgPicture.asset(
+                                  'assets/icons/calender.svg',height: 10,width: 10,
+
+                                ),
+                              ),
+                                label: Text("Date of Birth"),
+                                border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                                hintText: getTranslated(context, signUp_birthDate_hint).toString(),
+
+                                hintStyle: TextStyle(
+                                    fontSize: width * 0.04,
+                                    color: Palette.dark_grey,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              validator: (String? value) {
+                                if (value!.isEmpty) {
+                                  return getTranslated(context, signUp_birthDate_validator1).toString();
+                                }
+                                return null;
+                              },
+                              onTap: () {
+                                _selectDate(context);
+                              },
+                            ),
+                          ),
+                        ),
+                        //email
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 4.0,horizontal: 4),
+                          child: Container(height: 55,
+                            margin: EdgeInsets.only(
+                                top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
+                            // padding: EdgeInsets.symmetric(horizontal: 15, vertical: 2),
+                            decoration: BoxDecoration(
+                                color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
+                            child: TextFormField(
+                              controller: _email,
+                              keyboardType: TextInputType.text,
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Palette.dark_blue,
+                              ),
+                              decoration: InputDecoration(suffixIcon:  Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: SvgPicture.asset(
+                                  'assets/icons/email.svg',height: 10,width: 10,
+
+                                ),
+                              ),
+                                label: Text("Email"),
+                                border: new OutlineInputBorder(
+                                  borderRadius: new BorderRadius.circular(15.0),
+                                  borderSide: new BorderSide(),
+                                ),
+                                hintText: getTranslated(context, signUp_email_hint).toString(),
+                                hintStyle: TextStyle(
+                                    fontSize: 14,
+                                    color: Palette.dark_grey,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              validator: (String? value) {
+                                if (value!.isEmpty) {
+                                  return getTranslated(context, signUp_email_validator1).toString();
+                                }
+                                if (!RegExp(
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    .hasMatch(value)) {
+                                  return getTranslated(context, signUp_email_validator1).toString();
+                                }
+                                return null;
+                              },
+                              onSaved: (String? name) {},
+                            ),
+                          ),
+                        ),
+//phone code
+                        Container(
+                          margin: EdgeInsets.only(
+                              top: size.height * 0.01, left: width * 0.05, right: width * 0.05),
+                          // padding: EdgeInsets.symmetric(horizontal: 12, vertical: 2),
+                          decoration: BoxDecoration(
+                              color: Palette.dark_white, borderRadius: BorderRadius.circular(10)),
+                          child:  Row(
+                            children: [
+                              Container(
+                                width: width * 0.23,
+                                height: 55,
+                                // margin: EdgeInsets.symmetric(horizontal: 9),
+                                child: TextFormField(
+
+                                  textAlign: TextAlign.center,
+                                  textAlignVertical: TextAlignVertical.bottom,
+                                  readOnly: true,
+                                  style: TextStyle(fontSize: 16, color: Palette.dark_blue, fontWeight: FontWeight.bold),
+                                  controller: _phoneCode,
+                                  decoration: InputDecoration(
+
+                                    hintText: '+91',
+                                    label: Text("india"),
+                                    border: new OutlineInputBorder(
+                                      borderRadius: new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                    hintStyle: TextStyle(
+                                      fontSize: 12,
+                                      color: Palette.dark_grey1,
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    showCountryPicker(
+                                      context: context,
+                                      //Optional.  Can be used to exclude(remove) one ore more country from the countries list (optional).
+                                      exclude: <String>['KN', 'MF'],
+                                      //Optional. Shows phone code before the country name.
+                                      showPhoneCode: true,
+                                      onSelect: (Country country) {
+                                        _phoneCode.text = "+" + country.phoneCode;
+                                      },
+                                      // Optional. Sets the theme for the country list picker.
+                                      countryListTheme: CountryListThemeData(
+                                        // Optional. Sets the border radius for the bottomsheet.
+                                        borderRadius: BorderRadius.only(
+                                          topLeft: Radius.circular(40.0),
+                                          topRight: Radius.circular(40.0),
+                                        ),
+                                        // Optional. Styles the search field.
+                                        inputDecoration: InputDecoration(   border: InputBorder.none,
+                                          labelText: getTranslated(context, profile_phoneCode_search).toString(),
+                                          // 'Search',
+                                          hintText: getTranslated(context, profile_phoneCode_hint).toString(),
+                                          // 'Start typing to search',
+                                          prefixIcon: const Icon(Icons.search),
+
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Container(
+                                width: width * 0.57,
+                                height: 55,
+                                child: TextFormField(
+                                  readOnly: true,
+                                  textAlignVertical: TextAlignVertical.bottom,
+
+                                  style: TextStyle(fontSize: 16, color: Palette.dark_blue, letterSpacing: 0.5, fontWeight: FontWeight.bold),
+                                  controller: _phoneNo,
+                                  decoration: InputDecoration(suffixIcon: Icon(Icons.phone,color: Palette.light_blue,),
+                                    hintText: getTranslated(context, profile_phoneNo_hint).toString(),
+                                    hintStyle: TextStyle(
+                                      fontSize: 14,
+                                      color: Palette.dark_grey1,
+                                    ),
+                                    label: Text("Phone no"),
+                                    border: new OutlineInputBorder(
+                                      borderRadius: new BorderRadius.circular(15.0),
+                                      borderSide: new BorderSide(),
+                                    ),
+                                  ),
+                                  /* validator: (String? value) {
                                           if (value!.isEmpty) {
                                             return getTranslated(context, profile_phoneNo_validation1).toString();
                                           }
@@ -495,11 +493,11 @@ class _profileState extends State<profile> {
                                           }
                                           return null;
                                         },*/
-                                  ),
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
+                        ),
 
 
 
@@ -514,12 +512,11 @@ class _profileState extends State<profile> {
 
 
 
-                        ],
-                      ),
+                      ],
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

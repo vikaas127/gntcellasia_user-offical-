@@ -35,7 +35,7 @@ class _AllPharamacyState extends State<AllPharamacy> {
     // TODO: implement initState
     super.initState();
     _getAddress();
-    CallApiPharamacies();
+   // CallApiPharamacies();
   }
 
   _getAddress() async {
@@ -58,103 +58,115 @@ class _AllPharamacyState extends State<AllPharamacy> {
         preferredSize: Size(width, 110),
         child: SafeArea(
           top: true,
-          child: Container(
-            child: Column(
-              children: [
-                Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            margin: EdgeInsets.only(top: height * 0.01, left: width * 0.03,right: width * 0.03),
-                            height: height * 0.03,
-                            width: width * 0.05,
-                            child: SvgPicture.asset(
-                              'assets/icons/location.svg',
+          child: Center(
+            child: Container(
+              child: Column(
+                children: [
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              margin: EdgeInsets.only(top: height * 0.01, left: width * 0.03,right: width * 0.03),
+                              height: height * 0.03,
+                              width: width * 0.05,
+                              child: SvgPicture.asset(
+                                'assets/icons/location.svg',
+                              ),
                             ),
-                          ),
-                          Row(
-                            children: [
-                              Container(
-                                width: width * 0.3,
-                                margin: EdgeInsets.only(top: height * 0.01, left: width * 0.03,right: width * 0.03),
-                                child: _Address == null || _Address == ""
-                                    ? Text(
-                                  getTranslated(context, selectAddress).toString(),
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: width * 0.04,
-                                    fontWeight: FontWeight.bold,
-                                    color:  Palette.dark_blue,
-                                  ),
-                                )
-                                    : Text(
-                                  '$_Address',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    fontSize: width * 0.04,
-                                    fontWeight: FontWeight.bold,
-                                    color:  Palette.dark_blue,
+                            Row(
+                              children: [
+                                Container(
+                                  width: width * 0.3,
+                                  margin: EdgeInsets.only(top: height * 0.01, left: width * 0.03,right: width * 0.03),
+                                  child: _Address == null || _Address == ""
+                                      ? Text(
+                                    getTranslated(context, selectAddress).toString(),
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: width * 0.04,
+                                      fontWeight: FontWeight.bold,
+                                      color:  Palette.dark_blue,
+                                    ),
+                                  )
+                                      : Text(
+                                    '$_Address',
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontSize: width * 0.04,
+                                      fontWeight: FontWeight.bold,
+                                      color:  Palette.dark_blue,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(top: height * 0.01, right: width * 0.02,left: width * 0.02),
-                        child: GestureDetector(
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            size: 25,
-                          ),
-                          onTap: () {
-                            Navigator.pushNamed(context, 'Home');
-                          },
+                              ],
+                            ),
+                          ],
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(
-                      left: width * 0.05, right: width * 0.05, top: 10),
-                  child: Card(
-                    color: Palette.white,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: Container(
-                      width: width * 1,
-                      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
-                      child: TextField(
-                        textAlign: TextAlign.left,
-                        textCapitalization: TextCapitalization.words,
-                        onChanged: onSearchTextChanged,
-                        decoration: InputDecoration(
-                          hintText: getTranslated(context, allPharamacy_searchPharamacy).toString(),
-                          hintStyle: TextStyle(
-                            fontSize: width * 0.04,
-                            color:  Palette.dark_blue,
+                        Container(
+                          margin: EdgeInsets.only(top: height * 0.01, right: width * 0.02,left: width * 0.02),
+                          child: GestureDetector(
+                            child: Icon(
+                              Icons.arrow_back_ios,
+                              size: 25,
+                            ),
+                            onTap: () {
+                              Navigator.pushNamed(context, 'Dashboard');
+                            },
                           ),
-                          suffixIcon: Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: SvgPicture.asset(
-                              'assets/icons/SearchIcon.svg',
-                              height: 15,
-                              width: 15,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    margin:
+                    EdgeInsets.only(left: width * 0.05, right: width * 0.05, top: height * 0.005),
+                    child: Column(
+                      children: [
+                        Container(height: 50,
+                          width: width * 1,
+                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                          child: TextField(
+                            textCapitalization: TextCapitalization.words,
+                            onChanged: onSearchTextChanged,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              filled: true,
+
+                              //  fillColor: Color(0xFFACE5EE),
+                              fillColor: Colors.grey[300],
+                              hintText:   "Search Products"
+                                  .toString(),
+                              hintStyle:  TextStyle(
+                                  color: Color.fromRGBO(103, 123, 138, 1),
+                                  fontFamily: 'Open Sans',
+                                  fontSize: 14,
+                                  letterSpacing: 0,
+                                  fontWeight: FontWeight.normal,
+                                  height: 1
+                              ),
+                              prefixIcon: Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: SvgPicture.asset(
+                                  'assets/icons/SearchIcon.svg',
+                                  height: 14,
+                                  width: 14,
+                                ),
+                              ),
+
                             ),
                           ),
-                          border: InputBorder.none,
                         ),
-                      ),
+
+                      ],
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -314,13 +326,19 @@ class _AllPharamacyState extends State<AllPharamacy> {
                     )
                   : Container(
                       alignment: AlignmentDirectional.center,
-                      child: Text(
-                        getTranslated(context, allPharamacy_pharmacyNotFound).toString(),
-                        // 'Pharmacy Not Found.',
-                        style: TextStyle(
-                            fontSize: width * 0.04,
-                            color:  Palette.grey,
-                            fontWeight: FontWeight.bold),
+                      child: Column(
+                        children: [
+                          //assets/images/pharmacy.png
+                          Image.asset("assets/images/pharmacy.png",height: 100,width: 100,),
+                          Text(
+                            getTranslated(context, allPharamacy_pharmacyNotFound).toString(),
+                            // 'Pharmacy Not Found.',
+                            style: TextStyle(
+                                fontSize: width * 0.04,
+                                color:  Palette.grey,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                     )
               : pharamacies.length != null && pharamacies.length != 0
@@ -464,17 +482,25 @@ class _AllPharamacyState extends State<AllPharamacy> {
                         );
                       },
                     )
-                  : Container(
-                      alignment: AlignmentDirectional.center,
-                      child: Text(
-                        getTranslated(context, allPharamacy_pharmacyNotFound).toString(),
-                        // 'Pharmacy Not Found.',
-                        style: TextStyle(
-                            fontSize: width * 0.04,
-                            color:  Palette.grey,
-                            fontWeight: FontWeight.bold),
-                      ),
-                    ),
+                  : Center(
+                    child: Container(
+            alignment: AlignmentDirectional.center,
+            child: Column(
+              children: [
+                //assets/images/pharmacy.png
+                Image.asset("assets/images/pharmacy.png",height: 100,width: 100,),
+                Text(
+                    getTranslated(context, allPharamacy_pharmacyNotFound).toString(),
+                    // 'Pharmacy Not Found.',
+                    style: TextStyle(
+                        fontSize: width * 0.04,
+                        color:  Palette.grey,
+                        fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ),
+                  )
         ),
       ),
     );

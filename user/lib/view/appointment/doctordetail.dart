@@ -221,9 +221,7 @@ void initState() {
                   fit: BoxFit.fitWidth,
                 ),
               ),
-                    child:   Expanded(
-                    flex: 3,
-                    child: Container(
+                    child:  Container(
                       child: Column(
                         children: [
                           SizedBox(height: height*0.122,),
@@ -240,8 +238,8 @@ void initState() {
                                     alignment: Alignment.center,
                                     imageUrl: '${Apis.baseUrlImages}$fullImage',
                                     imageBuilder: (context, imageProvider) => CircleAvatar(
-                                       radius:45 ,
-                                        backgroundColor: Palette.primary,
+                                      radius:45 ,
+                                      backgroundColor: Palette.primary,
                                       child: CircleAvatar(
                                         radius: 45,
                                         backgroundImage: imageProvider,
@@ -253,7 +251,7 @@ void initState() {
                                     errorWidget: (context, url, error) =>ClipRRect(
                                       borderRadius: BorderRadius.circular(38.0),
                                       child:
-                                        Image.asset("assets/images/nodoctor.png"),),
+                                      Image.asset("assets/images/nodoctor.png"),),
                                   ),
                                 ),
 
@@ -263,8 +261,8 @@ void initState() {
                           Container(
                             margin: EdgeInsets.only(top: width * 0.03),
                             child: Text(
-                              '$name',
-                              style: Theme.of(context).textTheme.headline1
+                                '$name',
+                                style: Theme.of(context).textTheme.headline1
                             ),
                           ),
                           Container(
@@ -302,8 +300,8 @@ void initState() {
                                         '$experience' +
                                             getTranslated(context, doctorDetail_year).toString(),
                                         style: TextStyle(
-                                          fontSize: width * 0.032,
-                                          color: Palette.black,
+                                            fontSize: width * 0.032,
+                                            color: Palette.black,
                                             fontWeight: FontWeight.bold
                                         ),
                                       ),
@@ -414,7 +412,7 @@ void initState() {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Container(
-                                     //   width: width*0.40,
+                                        //   width: width*0.40,
                                         height: 35,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -473,7 +471,7 @@ void initState() {
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Container(
-                                       // width: width*0.40,
+                                        // width: width*0.40,
                                         height: 35,
                                         decoration: BoxDecoration(
                                           gradient: LinearGradient(
@@ -496,7 +494,7 @@ void initState() {
                                         child: Center(
                                           child: Row(crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
-                                           //   assets/images/lock.png
+                                              //   assets/images/lock.png
                                               Padding(
                                                 padding: const EdgeInsets.symmetric(horizontal: 8.0),
                                                 child: Image.asset('assets/images/lock.png',width: 17,height:17),
@@ -522,7 +520,6 @@ void initState() {
                         ],
                       ),
                     ),
-                  ) ,
 
               )
 

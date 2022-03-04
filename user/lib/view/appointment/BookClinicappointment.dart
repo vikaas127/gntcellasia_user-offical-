@@ -40,25 +40,24 @@ import '../../model/DetailSetting.dart';
 import '../../model/apply_offer.dart';
 import '../../model/bookappointments.dart';
 import '../payment/razorpay_payment.dart';
-import 'BookClinicappointment.dart';
 import 'RecommendedDoctors.dart';
 import 'family/addfamily.dart';
 import 'family/familymembers.dart';
 
 enum SingingCharacter { Paypal, Razorpay, Stripe, FlutterWave, PayStack, COD }
 
-class Bookappointment extends StatefulWidget {
+class BookClinicappointment extends StatefulWidget {
   int? id;
 
-  Bookappointment(int? id) {
+  BookClinicappointment(int? id) {
     this.id = id;
   }
 
   @override
-  _BookappointmentState createState() => _BookappointmentState(id);
+  _BookClinicappointmentState createState() => _BookClinicappointmentState(id);
 }
 
-class _BookappointmentState extends State<Bookappointment> {
+class _BookClinicappointmentState extends State<BookClinicappointment> {
   bool _loadding = false;
 
   late PlatformFile file;
@@ -141,21 +140,17 @@ class _BookappointmentState extends State<Bookappointment> {
   String reportImage = "";
   String reportImage1 = "";
   String reportImage2 = "";
-  File? _Proimage;
-  File? _Proimage1;
-  File? _Proimage2;
+
   final picker = ImagePicker();
 
   List<Slot> timelist = [];
 
-  DateTime? _selectedDate;
-  late DateTime _firstTimeSelected;
+
 
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  final GlobalKey<FormState> _Step1 = GlobalKey<FormState>();
-  final GlobalKey<FormState> _Step2 = GlobalKey<FormState>();
 
-  final GlobalKey<FormState> _offerFormKey = GlobalKey<FormState>();
+
+
 
   List<String> AppointmentFor = [];
   String? Select_Appointmentfor;
@@ -182,7 +177,7 @@ class _BookappointmentState extends State<Bookappointment> {
   DateTime? todayDate;
   double prAmount = 0;
 List<plans.Data> _plist=[];
-  _BookappointmentState(int? id) {
+  _BookClinicappointmentState(int? id) {
     this.id = id;
   }
 
@@ -217,19 +212,7 @@ List<plans.Data> _plist=[];
     return BaseModel()..data = response;
   }
 
-  _pass_DateTime() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    setState(
-      () {
-        pass_BookDate = '$New_Dateuser';
-        pass_BookTime = '$selectTime';
-        pass_BookID = '$Booking_Id';
-        prefs.setString('BookDate', pass_BookDate);
-        prefs.setString('BookTime', pass_BookTime);
-        prefs.setString('BookID', pass_BookID);
-      },
-    );
-  }
+
 
   var publicKey = SharedPreferenceHelper.getString(Preferences.payStack_public_key);
   final plugin = PaystackPlugin();
@@ -242,7 +225,7 @@ List<plans.Data> _plist=[];
     _doctordetail();
     _getdetail();
     selectedRadio = 0;
-   // _detailsetting();
+
     callforPlans();
     Future.delayed(Duration.zero, () {
       AppointmentFor = [
@@ -252,33 +235,7 @@ List<plans.Data> _plist=[];
       Drugeffects = [getTranslated(context, Yes).toString(), getTranslated(context, No).toString()];
     });
 
-    // RazorPay //
-    _razorpay = Razorpay();
-    _razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    _razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    _razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
 
-    // PayStack //
-    plugin.initialize(
-        publicKey: SharedPreferenceHelper.getString(Preferences.payStack_public_key)!);
-    todayDate = DateTime.now();
-    _firstTimeSelected = DateTime.now();
-    date
-      ..text = DateFormat('dd-MM-yyyy').format(_firstTimeSelected)
-      ..selection = TextSelection.fromPosition(
-        TextPosition(offset: date.text.length, affinity: TextAffinity.upstream),
-      );
-    var temp = '$_firstTimeSelected';
-    // Date Formate  dispaly user
-    New_Dateuser = DateUtil().formattedDate(DateTime.parse(temp));
-    // // Date Formate pass Api
-    New_Date = DateUtilforpass().formattedDate(DateTime.parse(temp));
-
-    date.text = New_Dateuser;
-
-    setState(() {
-      TimeSlot();
-    });
   }
 
   setSelectedRadio(int val) {
@@ -293,6 +250,10 @@ List<plans.Data> _plist=[];
     super.dispose();
     _razorpay.clear();
   }
+  Map<String, bool> values = {
+    'Pay Online': true,
+    'Pay at Clinic': false,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -441,17 +402,7 @@ List<plans.Data> _plist=[];
                           ),
 
                       ),
-                      Expanded(flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 20.0,right: 10),
-                          child: SvgPicture.asset(
-                            'assets/icons/call.svg',
-                            height: 30.0,
-                            width: 30.0,
-                            allowDrawingOutsideViewBox: true,
-                          ),
-                        ),
-                      ),
+
 
                     ],
                   ),
@@ -470,222 +421,425 @@ List<plans.Data> _plist=[];
                 child: ListView(scrollDirection: Axis.vertical,shrinkWrap: true,
                //   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text('Book a video consultation for',style: Theme.of(context).textTheme.headline1)),
-                    Container(height: 123,
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(left: 18.0,bottom: 0,right: 5),
-                            child: Container(height: 123,
-                              child: InkWell(onTap: (){
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => AddFamilymember(
 
-                                    ),
-                                  ),
-                                );
-                              },
-                                child: Column(
-                                  children: [
-                                    SizedBox(height: 10,),
-                                    Container( child:SvgPicture.asset(
-                                      'assets/icons/addmember.svg',
-                                      height: 50.0,
-                                      width: 50.0,
-                                      allowDrawingOutsideViewBox: true,
-                                    ),),
-                                    SizedBox(height: 10,),
-                                    Text("Add New ",style: TextStyle(fontSize: 13,fontWeight: FontWeight.bold),),
-                                    Text("Member ",style: TextStyle(fontSize: 10),)
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Container(height: 103,width: width-110, child: Familymembers( )),
-                        ],
-                      ),
-                    ),
-                    Divider(thickness: 1.5,),
-                    DatePicker(
-                      DateTime.now(),
-                      height:60,width:100,
-                      dayTextStyle:TextStyle(fontSize: 0) ,
-                      dateTextStyle: TextStyle(fontSize: 12),
-                      initialSelectedDate: DateTime.now(),
-                      selectionColor: Color(0xff2C9085),
-                      selectedTextColor: Colors.white,
-                      deactivatedColor: Colors.black12,
-                      onDateChange: (date) {
+                    Container(
+                      height: width * 0.38,
+                      width: width * 0.92,
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
 
-                        // New date selected
-                        setState(() {
-                          New_Date = DateUtilforpass().formattedDate(date);
-                          TimeSlot();
-                        });
-                      },
-                    ),
-                    Divider(thickness: 1.5,),
-                    Container(height: height*0.44,
-                      child: ListView(shrinkWrap: true,
-
-                        scrollDirection: Axis.vertical,
-                        children: [
-
-                          /*     Container(
-                              height: width * 0.1,
-                              width: width * 1,
-                              margin: EdgeInsets.only(top: width * 0.02),
-                              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
-                              decoration: BoxDecoration(
-                                  color: Palette.dash_line,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Padding(
-                                padding: const EdgeInsets.only(top: 12),
-                                child: TextFormField(
-                                  focusNode: AlwaysDisabledFocusNode(),
-                                  controller: date,
-                                  decoration: InputDecoration(
-                                    border: InputBorder.none,
-                                    hintText: getTranslated(context, bookAppointment_appointmentDate_hint).toString(),
-                                    hintStyle: TextStyle(
-                                        fontSize: width * 0.038, color: Palette.dark_blue),
-                                  ),
-                                  onTap: () {
-                                    _selectDate(context);
-                                  },
-                                  validator: (String? value) {
-                                    if (value!.isEmpty) {
-                                      return getTranslated(context, bookAppointment_appointmentDate_validator).toString();
-                                    }
-                                    return null;
-                                  },
-                                ),
-                              ),
-                            ),*/
-                          // // if(date.text != null)
-                          Container(height: 40,width: width,
-
-                            child: Row(crossAxisAlignment: CrossAxisAlignment.start,
+                            Row(crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Image.asset(
-                                    'assets/images/nodoctor.png',
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("Morning",style: Theme.of(context).textTheme.headline1,),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Text("(8.00 to 11.59)",style: Theme.of(context).textTheme.headline3,),
-                                )
-                              ],
-                            ),
-                          ),
-                          Container(
-                            child: 0 < timelist.length
-                                ? Column(
-                              children: [
-                                /*  Container(
-                                    alignment: AlignmentDirectional.center,
-                                    margin: EdgeInsets.only(top: width * 0.05),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          getTranslated(context, bookAppointment_appointmentTime_title).toString(),
-                                          style: TextStyle(
-                                              fontSize: width * 0.04,
-                                              color: Palette.dark_blue),
-                                        )
-                                      ],
-                                    ),
-                                  ),*/
-                                Container(
-                                  margin: EdgeInsets.only(top: width * 0.04),
-                                  child: GridView.builder(
-                                    itemCount: timelist.length,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisSpacing: 5,
-                                      mainAxisSpacing: 5,
-                                      crossAxisCount: 3,
-                                      childAspectRatio: 2.2,
-                                    ),
-                                    itemBuilder: (context, index) {
-                                      return Column(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      Stack(
                                         children: [
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {
-                                                selectTime =
-                                                    timelist[index].slotTime;
-                                              });
-                                            },
-                                            child: Container(
-                                              height: 50,
-                                              width: width * 0.3,
-                                              child: Card(
-                                                color: selectTime ==
-                                                    timelist[index].slotTime
-                                                    ? Color(0xff2C9085)
-                                                    : Palette.dash_line,
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                  BorderRadius.circular(10.0),
+                                          Container(
+                                            margin:
+                                            EdgeInsets.only(top: width * 0.01),
+                                            width: width * 0.18,
+                                            height: width * 0.18,
+                                            child: ClipRRect(
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(35),
+                                              ),
+                                              child: fullImage!=null ?CachedNetworkImage(
+                                                alignment: Alignment.center,
+                                                imageUrl:'${Apis.baseUrlImages}$fullImage'
+
+                                                ,fit: BoxFit.fill,
+                                                placeholder: (context, url) =>
+                                                    SpinKitFadingCircle(
+                                                        color: Palette.primary),
+                                                errorWidget: (context, url,
+                                                    error) =>
+                                                    Image.asset(
+                                                        "assets/images/nodoctor.png"),
+                                              ):Image.asset(
+                                                  "assets/images/nodoctor.png"),
+                                            ),
+                                          ),
+                                          Align(
+                                            alignment: Alignment.bottomCenter,
+                                            child:  Padding(
+                                              padding: const EdgeInsets.only(top: 45.0,left: 50),
+                                              child: Container(
+                                                decoration: BoxDecoration(color: Colors.white,
+                                                  border: Border.all(color: Colors.white),
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(65.0) //                 <--- border radius here
+                                                  ),
                                                 ),
-                                                child: Column(
+                                                // margin: EdgeInsets.symmetric(vertical: width * 0.005),
+                                                child:     Padding(
+                                                  padding: const EdgeInsets.all(5.0),
+                                                  child: SvgPicture.asset(
+                                                    'assets/icons/videocal.svg',height: 10,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      SizedBox(height: 5,),
+                                      Container(
+                                        child: Column(
+                                          children: [
+                                            Container(decoration: BoxDecoration(
+                                              border: Border.all(color: Colors.grey),
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(5.0) //                 <--- border radius here
+                                              ),
+                                            ),
+                                              margin: EdgeInsets.symmetric(vertical: width * 0.005),
+                                              child:   Padding(
+                                                padding: const EdgeInsets.all(4.0),
+                                                child: Row(
                                                   children: [
-                                                    Container(
-                                                      padding: EdgeInsets.all(10),
+                                                    SvgPicture.asset(
+                                                      'assets/icons/star.svg',
+                                                    ),
+                                                    Padding(
+                                                      padding: EdgeInsets.only(
+                                                          left: width * 0.028, right: width * 0.028),
                                                       child: Text(
-                                                        timelist[index].slotTime!,
+                                                        '4.5',
                                                         style: TextStyle(
-                                                            color: selectTime ==
-                                                                timelist[index]
-                                                                    .slotTime
-                                                                ? Palette.white
-                                                                : Color(0xff2C9085)),
+                                                            fontSize: width * 0.035,
+                                                            fontWeight: FontWeight.bold
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
                                             ),
-                                          )
-                                        ],
-                                      );
-                                    },
+
+                                          ],
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
-                              ],
-                            )
-                                : Container(
-                              height: height * 0.4,
-                              width: MediaQuery.of(context).size.width,
-                              child: Center(
-                                child: Text(
-                                  getTranslated(context, bookAppointment_selectOtherDate).toString(),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: width * 0.04,
-                                      color: Palette.grey),
+                                Container(
+                                  margin: EdgeInsets.only(top: width * 0.02,left: width*0.02),
+                                  child:   Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Center(
+                                        child: Text(
+                                          hospitalName!,
+                                          textAlign: TextAlign.left, style: TextStyle(
+                                            color: Color.fromRGBO(9, 44, 76, 1),
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 17,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.bold,
+                                            height: 1),
+                                        ),
+                                      ),
+                                     Row(
+                                        children: [
+                                          Text(
+                                              name.toString(),
+                                              textAlign: TextAlign.left, style: TextStyle(
+                                                color: Color.fromRGBO(103, 123, 138, 1),
+                                                fontFamily: 'Open Sans',
+                                                fontSize: 12,
+                                                letterSpacing: 0,
+                                                fontWeight: FontWeight.normal,
+                                              )),
+                                          Text(
+                                              name
+                                                  .toString(),
+                                              textAlign: TextAlign.left, style: TextStyle(
+                                            color: Color.fromRGBO(103, 123, 138, 1),
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 12,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                          )),
+                                        ],
+                                      ),
+
+
+
+                                      Text(
+                                        name
+                                            .toString(),
+                                        style: TextStyle(
+                                            color: Color.fromRGBO(9, 44, 76, 1),
+                                            fontFamily: 'Open Sans',
+                                            fontSize: 12,
+                                            letterSpacing: 0,
+                                            fontWeight: FontWeight.normal,
+                                            height: 1
+                                        ),
+                                      ),
+
+                                      Container(
+                                        // height: 150,
+                                        margin: EdgeInsets.only(top: height * 0.02),
+                                        child: Row(
+                                          // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: [
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.symmetric(vertical: width * 0.005),
+                                                    child: Text(
+                                                      getTranslated(context, doctorDetail_doctorExperience)
+                                                          .toString(),
+                                                      textAlign: TextAlign.left, style: TextStyle(
+                                                        color: Color.fromRGBO(103, 123, 138, 1),
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 12,
+                                                        letterSpacing: 0,
+                                                        fontWeight: FontWeight.normal,
+                                                        height: 1
+                                                    ),),
+                                                  ),
+                                                  Container(
+                                                    child: Text(
+                                                      '8  ' +
+                                                          getTranslated(context, doctorDetail_year).toString(),
+                                                      textAlign: TextAlign.left, style: TextStyle(
+                                                        color: Color.fromRGBO(103, 123, 138, 1),
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 14,
+                                                        letterSpacing: 0,
+                                                        fontWeight: FontWeight.bold,
+                                                        height: 1
+                                                    ),
+                                                    ),
+                                                  ),],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.symmetric(vertical: width * 0.005),
+                                                    child: Text(
+                                                      getTranslated(context, doctorDetail_appointmentFees).toString(),
+                                                      textAlign: TextAlign.left, style: TextStyle(
+                                                        color: Color.fromRGBO(103, 123, 138, 1),
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 12,
+                                                        letterSpacing: 0,
+                                                        fontWeight: FontWeight.normal,
+                                                        height: 1),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    child: Text(
+                                                      SharedPreferenceHelper.getString(Preferences.currency_symbol).toString() + 'Fees',
+                                                      textAlign: TextAlign.left, style: TextStyle(
+                                                        color: Color.fromRGBO(103, 123, 138, 1),
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 14,
+                                                        letterSpacing: 0,
+                                                        fontWeight: FontWeight.bold,
+                                                        height: 1),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                              child: Column(
+                                                children: [
+                                                  Container(
+                                                    margin: EdgeInsets.symmetric(vertical: width * 0.005),
+                                                    child: Text(
+                                                      getTranslated(context, doctorDetail_appoipatient).toString(),
+                                                      textAlign: TextAlign.left, style: TextStyle(
+                                                        color: Color.fromRGBO(103, 123, 138, 1),
+                                                        fontFamily: 'Open Sans',
+                                                        fontSize: 12,
+                                                        letterSpacing: 0,
+                                                        fontWeight: FontWeight.normal,
+                                                        height: 1
+                                                    ),
+                                                    ),
+                                                  ),
+                                                  Container(
+                                                    child: Text('Fees',
+                                                      textAlign: TextAlign.left, style: TextStyle(
+                                                          color: Color.fromRGBO(103, 123, 138, 1),
+                                                          fontFamily: 'Open Sans',
+                                                          fontSize: 12,
+
+                                                          letterSpacing: 0,
+                                                          fontWeight: FontWeight.bold,
+                                                          height: 1),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+
+
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
+
+                              ],
                             ),
-                          ),
-                        ],
+
+                          ],
+                        ),
                       ),
                     ),
+
+                 Divider(height: 1,),
+                 //Clinic Detail
+                    Card(child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(child:
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/icons/hospital.svg',
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("In Clinic Appointment time"),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text("Today , 2:00 PM",style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text("in 5 hours 50 mintues "),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+
+                              Text("Kasper Multispeciality Clinic , Noida",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text("GentCellAsia",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Palette.primary)),
+                              Padding(
+                                padding: const EdgeInsets.all(4.0),
+                                child: Text("Appointment confirmed instantly",style: TextStyle(fontWeight: FontWeight.normal,fontSize: 13,color: Palette.black)),
+                              )
+                            ],
+                          ),
+                          SizedBox(height: 20,),
+
+                        ],
+                      ),),
+                    ),),
+                 //Offer
+                    Card(
+                      child: Container( height: 100,
+                        decoration:BoxDecoration(
+                          border: Border.all(
+                              width: 1.0
+                          ),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(5.0) //                 <--- border radius here
+                          ),
+                        ),
+                        child:Row(
+                          children: [
+                            //assets/icons/call.svg
+                            Expanded(flex:1,
+                              child:Image .asset(
+                                'assets/images/offer.png',height: 40,width: 40,
+                              ),
+                            ),
+                            Expanded(flex: 4,
+                              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Apply Coupon Code",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Palette.black)),
+                                  Text("Unlock offers with coupon codes"),
+                                ],
+                              ),
+                            ),
+                            Expanded(flex:2,
+                                child: Text("Apply ",style: TextStyle(fontSize: 20),)
+                            ),
+                          ],
+                        ) ,),
+                    ),
+                  //  offers
+                    Card(
+                      child: Container( height: 100,
+                        decoration:BoxDecoration(
+                          border: Border.all(
+                              width: 1.0
+                          ),
+                          borderRadius: BorderRadius.all(
+                              Radius.circular(5.0) //                 <--- border radius here
+                          ),
+                        ),
+                        child:Row(
+                          children: [
+                            //assets/icons/call.svg
+                            Expanded(flex:1,
+                              child: SvgPicture.asset(
+                                'assets/icons/profile.svg',
+                              ),
+                            ),
+                            Expanded(flex: 4,
+                              child: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text("Appointment for",style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,color: Palette.black)),
+                                  Text("Vikas Yadav"),
+                                ],
+                              ),
+                            ),
+                            Expanded(flex:2,
+                                child: Text("Change ",style: TextStyle(fontSize: 20),)
+                            ),
+                          ],
+                        ) ,),
+                    ),
+                    Divider(thickness: 1.5,),
+                    Card(
+                      child: ListView(shrinkWrap: true,
+                        scrollDirection: Axis.vertical,
+                        children: values.keys.map((String key) {
+                          return new CheckboxListTile(
+                            title: new Text(key,style: TextStyle(fontSize: 15,color: Colors.black),),
+                            value: values[key],
+                            onChanged: (bool ?value) {
+                              setState(() {
+                                values[key] = value!;
+                              });
+                            },
+                          );
+                        }).toList(),
+                      ),
+                    ),
+
+
 
                   ],
                 ),
@@ -708,11 +862,11 @@ List<plans.Data> _plist=[];
                     Expanded(flex: 1,
                       child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('SELECTED SLOT',
+                          Text('1000',
                             style: TextStyle(fontSize: width * 0.035, color: Palette.black,fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),
-                          Text('6.30 AM, Tomorrow',
+                          Text('View Bill',
                             style: TextStyle(fontSize: width * 0.025, color: Palette.black,fontWeight: FontWeight.bold),
                             textAlign: TextAlign.center,
                           ),
@@ -724,22 +878,33 @@ List<plans.Data> _plist=[];
                       child: ElevatedButton(
 
                         child: Text(
-                          "Confirm Appointment",
+                          " Pay & Confirm ",
                           style: TextStyle(fontSize: width * 0.03, color: Palette.white),
                           textAlign: TextAlign.center,
                         ),
                         onPressed: () {
-                          print("vias");
-                          setState(() {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => BookClinicappointment( widget.id),
-                              ),
-                            );
+                          setState(
+                                  () {
+                                    Navigator.push(
+                                        context,
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) => RazorpayPayment(
+                                    email: "vikas090497@gmail.com",
 
-                          });
+                                    apiKey: "rzp_test_hq1R5eUC8jskkB",
+                                    secretKey: "2aRGphmV230dyP1ZXRCDw97W",
 
+                                    currency: currency ?? "INR",
+                                    grandTotal: 2000,
+                                    cartId: "2",
+                                  ),
+                                ));
+
+                                //  openCheckout_razorpay();
+                                print('Razorpay');
+                              }
+
+                          );
     },
 
 
@@ -806,7 +971,7 @@ List<plans.Data> _plist=[];
         setState(() {
           Preferences.hideDialog(context);
           Booking_Id = response.data;
-          _pass_DateTime();
+
           Fluttertoast.showToast(
             msg: '${response.msg}',
             toastLength: Toast.LENGTH_SHORT,
@@ -824,92 +989,7 @@ List<plans.Data> _plist=[];
     }
     return BaseModel()..data = response;
   }
-  // RazorPay Code //
-  void openCheckout_razorpay() async {
-    var map = {
-      'key': SharedPreferenceHelper.getString(Preferences.razor_key),
-      'amount': 100,
-      'name': '$businessname',
-      'currency': SharedPreferenceHelper.getString(Preferences.currency_code),
-      'image': '$logo',
-      'description': '',
-      'send_sms_hash': 'true',
-      'prefill': {'contact': '$user_phoneno', 'email': '$user_email'},
-      'external': {
-        'wallets': ['paytm']
-      }
-    };
-    var options = map;
 
-    try {
-      _razorpay.open(options);
-    } catch (e) {
-      debugPrint('Error: e');
-    }
-  }
-  // RazorPay Success Method //
-  void _handlePaymentSuccess(PaymentSuccessResponse response) {
-   //  Fluttertoast.showToast(msg: "SUCCESS: " + response.paymentId, toastLength: Toast.LENGTH_SHORT);
-     Fluttertoast.showToast(msg: "SUCCESS: ", toastLength: Toast.LENGTH_SHORT);
-    Payment_Token = response.paymentId;
-    Payment_Token != "" && Payment_Token!.isNotEmpty
-        ? CallApiBook()
-        : Fluttertoast.showToast(msg: getTranslated(context, bookAppointment_paymentNotComplete_toast).toString(), toastLength: Toast.LENGTH_SHORT);
-  }
-  // RazorPay Error Method //
-  void _handlePaymentError(PaymentFailureResponse response) {
-    // Fluttertoast.showToast(
-    //     msg: "ERROR: " + response.code.toString() + " - " + response.message,
-    //     toastLength: Toast.LENGTH_SHORT);
-  }
-  // RazorPay Wallet Method //
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    // Fluttertoast.showToast(
-    //     msg: "EXTERNAL_WALLET: " + response.walletName, toastLength: Toast.LENGTH_SHORT);
-  }
-  // FlutterWave Code //
-  beginPayment() async {
-    final Flutterwave flutterwave = Flutterwave.forUIPayment(
-      context: this.context,
-      encryptionKey: SharedPreferenceHelper.getString(Preferences.flutterWave_encryption_key)!,
-      publicKey: SharedPreferenceHelper.getString(Preferences.flutterWave_key)!,
-      currency: SharedPreferenceHelper.getString(Preferences.currency_code)!,
-      // this.currency,
-      amount: "$newAppointmentFees" != "0.0" ? '$newAppointmentFees' : '$appointmentFees',
-      email: "$user_email",
-      fullName: "$user_name",
-      txRef: DateTime.now().toIso8601String(),
-      isDebugMode: true,
-      phoneNumber: "$user_phoneno",
-      acceptCardPayment: true,
-      acceptUSSDPayment: false,
-      acceptAccountPayment: false,
-      acceptFrancophoneMobileMoney: false,
-      acceptGhanaPayment: false,
-      acceptMpesaPayment: false,
-      acceptRwandaMoneyPayment: false,
-      acceptUgandaPayment: false,
-      acceptZambiaPayment: false,
-    );
-
-    try {
-      final ChargeResponse response = await flutterwave.initializeForUiPayments();
-      if (response == null) {
-        // user didn't complete the transaction. Payment wasn't successful.
-      } else {
-        final isSuccessful = checkPaymentIsSuccessful(response);
-        if (isSuccessful) {
-          // provide value to customer
-        } else {
-          // check message
-          print("response message ${response.message}");
-        }
-      }
-    } catch (error, stacktrace) {
-      // handleError(error);
-      print("error is ${stacktrace}");
-    }
-  }
 
   bool checkPaymentIsSuccessful(final ChargeResponse response) {
     Payment_Token = response.data!.flwRef;
@@ -960,33 +1040,10 @@ List<plans.Data> _plist=[];
     return 'ChargedFrom${platform}_${DateTime.now().millisecondsSinceEpoch}';
   }
 
-  // Call Doctor Time Api //
 
 
-  Future<BaseModel<Timeslot>> TimeSlot() async {
-    Timeslot response;
-    timelist.clear();
-    Map<String, dynamic> body = {
-      "doctor_id": id,
-      "date": New_Date,
-    };
-    setState(() {
-      _loadding = true;
-    });
-    try {
-      response = await RestClient(Retro_Api().Dio_Data()).timeslot(body);
-      if (response.status == 200) {
-        setState(() {
-          _loadding = false;
-          timelist.addAll(response.data![0].slot!);
-        });
-      }
-    } catch (error, stacktrace) {
-      print("Exception occur: $error stackTrace: $stacktrace");
-      return BaseModel()..setException(ServerError.withError(error: error));
-    }
-    return BaseModel()..data = response;
-  }
+
+
 
   // Call Doctor Detail Api //
   Future<BaseModel<ds.Doctordetails>> _doctordetail() async {
@@ -1055,152 +1112,9 @@ List<plans.Data> _plist=[];
     _currentStep > 0 ? setState(() => _currentStep -= 1) : null;
   }
 
-  // Select Date Method //
-  _selectDate(BuildContext context) async {
-    DateTime? newSelectedDate = await showDatePicker(
-      context: context,
-      initialDate: _selectedDate != null ? _selectedDate! : DateTime.now(),
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 366)),
-      builder: (BuildContext context, Widget? child) {
-        return Theme(
-          data: ThemeData.dark().copyWith(
-            colorScheme: ColorScheme.light(
-              primary: Palette.primary,
-              onPrimary: Palette.white,
-              surface: Palette.primary,
-              onSurface: Palette.black,
-            ),
-            dialogBackgroundColor: Palette.white,
-          ),
-          child: child!,
-        );
-      },
-    );
-    if (newSelectedDate != null) {
-      _selectedDate = newSelectedDate;
-      date..text = DateFormat('dd-MM-yyyy').format(_selectedDate!)..selection = TextSelection.fromPosition(
-          TextPosition(offset: date.text.length, affinity: TextAffinity.upstream),
-        );
-      var temp = '$_selectedDate';
-      // Date Formate  dispaly user
-      New_Dateuser = DateUtil().formattedDate(DateTime.parse(temp));
-      // Date Formate pass Api
-      New_Date = DateUtilforpass().formattedDate(DateTime.parse(temp));
-    }
-    TimeSlot();
-  }
 
-  // Select Image //
-  void _ProimgFromGallery() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(
-      () {
-        if (pickedFile != null) {
-          SharedPreferenceHelper.setString(Preferences.reportImage, pickedFile.path);
-          _Proimage = File(SharedPreferenceHelper.getString(Preferences.reportImage)!);
-          List<int> imageBytes = _Proimage!.readAsBytesSync();
-          reportImage = base64Encode(imageBytes);
-          if (reportImage != null) {
-            reportImages.add(reportImage);
-          }
-        } else {
-          print('No image selected.');
-        }
-      },
-    );
-  }
 
-  void _ProimgFromCamera() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        SharedPreferenceHelper.setString(Preferences.reportImage, pickedFile.path);
-        _Proimage = _Proimage = File(SharedPreferenceHelper.getString(Preferences.reportImage)!);
-        List<int> imageBytes = _Proimage!.readAsBytesSync();
-        reportImage = base64Encode(imageBytes);
-        if (reportImage != null) {
-          reportImages.add(reportImage);
-        }
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
 
-  // Select Image1 //
-  void _ProimgFromGallery1() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(
-      () {
-        if (pickedFile != null) {
-          SharedPreferenceHelper.setString(Preferences.reportImage1, pickedFile.path);
-          _Proimage1 = File(SharedPreferenceHelper.getString(Preferences.reportImage1)!);
-          List<int> imageBytes = _Proimage1!.readAsBytesSync();
-          reportImage1 = base64Encode(imageBytes);
-          if (reportImage1 != null) {
-            reportImages.add(reportImage1);
-          }
-        } else {
-          print('No image selected.');
-        }
-      },
-    );
-  }
-
-  void _ProimgFromCamera1() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        SharedPreferenceHelper.setString(Preferences.reportImage1, pickedFile.path);
-        _Proimage1 = _Proimage1 = File(SharedPreferenceHelper.getString(Preferences.reportImage1)!);
-        List<int> imageBytes = _Proimage1!.readAsBytesSync();
-        reportImage1 = base64Encode(imageBytes);
-        if (reportImage1 != null) {
-          reportImages.add(reportImage1);
-        }
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
-
-  // Select Image2 //
-  void _ProimgFromGallery2() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(
-      () {
-        if (pickedFile != null) {
-          SharedPreferenceHelper.setString(Preferences.reportImage2, pickedFile.path);
-          _Proimage2 = File(SharedPreferenceHelper.getString(Preferences.reportImage2)!);
-          List<int> imageBytes = _Proimage2!.readAsBytesSync();
-          reportImage2 = base64Encode(imageBytes);
-          if (reportImage2 != null) {
-            reportImages.add(reportImage2);
-          }
-        } else {
-          print('No image selected.');
-        }
-      },
-    );
-  }
-
-  void _ProimgFromCamera2() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        SharedPreferenceHelper.setString(Preferences.reportImage2, pickedFile.path);
-        _Proimage2 = _Proimage2 = File(SharedPreferenceHelper.getString(Preferences.reportImage2)!);
-        List<int> imageBytes = _Proimage2!.readAsBytesSync();
-        reportImage2 = base64Encode(imageBytes);
-        if (reportImage2 != null) {
-          reportImages.add(reportImage2);
-        }
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
 
   //  Offer //
 
@@ -1308,121 +1222,11 @@ List<plans.Data> _plist=[];
     return BaseModel()..data = response;
   }
 
-  // Image Function //
-  void _ChooseProfileImage() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return SafeArea(
-          child: Container(
-            child: new Wrap(
-              children: <Widget>[
-                new ListTile(
-                    leading: new Icon(Icons.photo_library),
-                    title: new Text(
-                      getTranslated(context, fromGallery).toString(),
-                    ),
-                    onTap: () {
-                      _ProimgFromGallery();
-                      Navigator.of(context).pop();
-                    }),
-                new ListTile(
-                  leading: new Icon(Icons.photo_camera),
-                  title: new Text(
-                    getTranslated(context, fromCamera).toString(),
-                  ),
-                  onTap: () {
-                    _ProimgFromCamera();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 
-  void _ChooseProfileImage1() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return SafeArea(
-          child: Container(
-            child: new Wrap(
-              children: <Widget>[
-                new ListTile(
-                    leading: new Icon(Icons.photo_library),
-                    title: new Text(
-                      getTranslated(context, fromGallery).toString(),
-                    ),
-                    onTap: () {
-                      _ProimgFromGallery1();
-                      Navigator.of(context).pop();
-                    }),
-                new ListTile(
-                  leading: new Icon(Icons.photo_camera),
-                  title: new Text(
-                    getTranslated(context, fromCamera).toString(),
-                  ),
-                  onTap: () {
-                    _ProimgFromCamera1();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
 
-  void _ChooseProfileImage2() {
-    showModalBottomSheet(
-      context: context,
-      builder: (BuildContext bc) {
-        return SafeArea(
-          child: Container(
-            child: new Wrap(
-              children: <Widget>[
-                new ListTile(
-                    leading: new Icon(Icons.photo_library),
-                    title: new Text(
-                      getTranslated(context, fromGallery).toString(),
-                    ),
-                    onTap: () {
-                      _ProimgFromGallery2();
-                      Navigator.of(context).pop();
-                    }),
-                new ListTile(
-                  leading: new Icon(Icons.photo_camera),
-                  title: new Text(
-                    getTranslated(context, fromCamera).toString(),
-                  ),
-                  onTap: () {
-                    _ProimgFromCamera2();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+
 }
 
-// Date Format  Dispaly user
-class DateUtil {
-  static const DATE_FORMAT = 'dd-MM-yyyy';
-
-  String formattedDate(DateTime dateTime) {
-    return DateFormat(DATE_FORMAT).format(dateTime);
-  }
-}
 
 // Date Format pass Api
 class DateUtilforpass {

@@ -37,6 +37,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../productsell/AllPharamacy.dart';
+
 
 class Home extends StatefulWidget {
   @override
@@ -772,15 +774,15 @@ class _HomeState extends State<Home> {
                     children: [
                       Container(
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             Column(
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(5.0),
+                                  padding: const EdgeInsets.all(2.0),
                                   child: Container(height:35,width:MediaQuery.of(context).size.width*0.35,
                                     //    padding: EdgeInsets.only(),
-                                    child: Image.asset("assets/icons/logo.png"),
+                                    child: Image.asset("assets/icons/logo.png",fit: BoxFit.fill,),
 
 
 
@@ -860,7 +862,7 @@ class _HomeState extends State<Home> {
                                 ),
                               ],
                             ),
-                      SizedBox(width: width*0.23,),
+                      SizedBox(width: width*0.26,),
                             Container(
                           //    padding: EdgeInsets.only(),
                               child: IconButton(
@@ -899,8 +901,21 @@ class _HomeState extends State<Home> {
                               textCapitalization: TextCapitalization.words,
                               onChanged: onSearchTextChanged,
                               decoration: InputDecoration(
+                                  focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                  ),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(25.0),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey,
+                                    width: 1.0,
+                                  ),
+                                ),
                                 border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                                  borderRadius: BorderRadius.circular(28.0),
                                 ),
                                 filled: true,
 
@@ -960,6 +975,7 @@ class _HomeState extends State<Home> {
                             itemBuilder: (context, index) {
                               return GestureDetector(
                                 onTap: () {
+                                  if(index==0 && index==4){
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
@@ -968,7 +984,26 @@ class _HomeState extends State<Home> {
                                       ),
                                     ),
                                   );
-                                },
+                                }else if(index==1){
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => AllPharamacy(
+
+                                        ),
+                                      ),
+                                    );
+                                  }else{
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => TreatmentSpecialist(
+                                          treatmentList[index].id,
+                                        ),
+                                      ),
+                                    );
+                                  }
+                                  },
                                 child: Container(height: 60,
 
                                   // color: Colors.teal,
@@ -1276,7 +1311,13 @@ class _HomeState extends State<Home> {
                       Divider(thickness: 2,color: Colors.grey,),
                       //  Common Health Issuse //
 
-                      Column(
+                Card(elevation: 4,
+                  shadowColor: Color(0xFFE0E0E0),
+                  shape:RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.transparent, width: 1),
+                    borderRadius: BorderRadius.circular(0),
+                  ),
+                  child:    Column(
                         children: [
                           Container(
                             child: Row(
@@ -1285,8 +1326,8 @@ class _HomeState extends State<Home> {
                                 Expanded(flex: 3,
                                   child: Container(
                                     margin: EdgeInsets.only(
-                                      left: width * 0.02,
-                                      top: width * 0.05,
+                                      left: width * 0.00,
+                                      top: width * 0.02,
                                       right: width * 0.02,
                                     ),
                                     alignment: AlignmentDirectional.topStart,
@@ -1316,7 +1357,7 @@ class _HomeState extends State<Home> {
                                     child: Container(
                                       margin: EdgeInsets.only(
                                         right: width * 0.0,
-                                        top: width * 0.06,
+                                        top: width * 0.02,
                                         left: width * 0.04,
                                       ),
                                       alignment: AlignmentDirectional.topEnd,
@@ -1363,246 +1404,264 @@ class _HomeState extends State<Home> {
                                       ),
                                     );
                                   },
-                                  child: Container(
-                                    margin: const EdgeInsets.all(6.0),
-                                    padding: const EdgeInsets.all(0.0),
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10) ,
-                                        border: Border.all(color: Colors.grey)
-                                    ),
+
                                     // color: Colors.teal,
-                                    child: Stack(
+                                    child: Card(elevation: 6,
+                                      shadowColor: Color(0xFFE0E0E0),
+                                      shape:RoundedRectangleBorder(
+                                        side: BorderSide(color: Colors.transparent, width: 1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Stack(
 
-                                      children: [
-                                        Container(
-                                          height: 125,
-                                          alignment: AlignmentDirectional.center,
+                                        children: [
+                                          Container(
+                                            height: 125,
+                                            alignment: AlignmentDirectional.center,
 
-                                          child:ClipRRect(
-                                            borderRadius: BorderRadius.circular(18.0),child:
-                                          healthmentList[index].primaryImage!=null?CachedNetworkImage(height: 125,
-                                            alignment: Alignment.center,
-                                            imageUrl: '${Apis.baseUrlImages}${healthmentList[index].primaryImage!}',
-                                            fit: BoxFit.fitWidth,
-                                            placeholder: (context, url) =>
-                                            // CircularProgressIndicator(),
-                                            SpinKitFadingCircle(
-                                              color: Palette.primary,
-                                            ),
-                                            errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",fit: BoxFit.fitHeight,height: 140,),
-                                          ):Image.asset("assets/images/no_image.jpg",
-                                            fit: BoxFit.fitHeight,height: 140,),
+                                            child:ClipRRect(
+                                              borderRadius: BorderRadius.circular(18.0),child:
+                                            healthmentList[index].primaryImage!=null?CachedNetworkImage(height: 125,
+                                              alignment: Alignment.center,
+                                              imageUrl: '${Apis.baseUrlImages}${healthmentList[index].primaryImage!}',
+                                              fit: BoxFit.fitWidth,
+                                              placeholder: (context, url) =>
+                                              // CircularProgressIndicator(),
+                                              SpinKitFadingCircle(
+                                                color: Palette.primary,
+                                              ),
+                                              errorWidget: (context, url, error) => Image.asset("assets/images/no_image.jpg",fit: BoxFit.fitHeight,height: 140,),
+                                            ):Image.asset("assets/images/no_image.jpg",
+                                              fit: BoxFit.fitHeight,height: 140,),
 
-                                        ),),
-                                        Align(alignment: Alignment.bottomCenter,
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(top: 8.0),
-                                            child: Container(decoration: BoxDecoration(
-                                              gradient: LinearGradient(
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter,
-                                                  colors: [Color.fromRGBO(8, 43, 76, 0),Color.fromRGBO(9, 44, 76, 0.8999999761581421)]
-                                              ),),
-                                              width: width,
-                                              height: 50,
-                                            //  margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(top: 18.0),
-                                                child: Text(
-                                                  healthmentList[index].name!,
-                                                  textAlign: TextAlign.center, style: TextStyle(
-                                                    color: Color.fromRGBO(255, 255, 255, 1),
-                                                    fontFamily: 'Open Sans',
-                                                    fontSize: 13,
-                                                    letterSpacing: 0,
-                                                    fontWeight: FontWeight.bold,
-                                                    height: 1
+                                          ),),
+                                          Align(alignment: Alignment.bottomCenter,
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(top: 8.0),
+                                              child: Container(decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(10.0),
+                                                gradient: LinearGradient(
+                                                    begin: Alignment.topCenter,
+                                                    end: Alignment.bottomCenter,
+                                                    colors: [Color.fromRGBO(8, 43, 76, 0),Color.fromRGBO(9, 44, 76, 0.8999999761581421)]
+                                                ),),
+                                                width: width,
+                                                height: 50,
+                                              //  margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                                child: Padding(
+                                                  padding: const EdgeInsets.only(top: 18.0),
+                                                  child: Text(
+                                                    healthmentList[index].name!,
+                                                    textAlign: TextAlign.center, style: TextStyle(
+                                                      color: Color.fromRGBO(255, 255, 255, 1),
+                                                      fontFamily: 'Open Sans',
+                                                      fontSize: 13,
+                                                      letterSpacing: 0,
+                                                      fontWeight: FontWeight.bold,
+                                                      height: 1
 
-                                                ),
-                                                  overflow: TextOverflow.ellipsis,
-                                                  maxLines: 1,
+                                                  ),
+                                                    overflow: TextOverflow.ellipsis,
+                                                    maxLines: 1,
 
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        )
-                                      ],
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
+
                                 );
                               },
                             ),
                           ),
                         ],
-                      ),
+                      ),),
                       Container(child: Image.asset("assets/images/adv.png")),
                       Container(child: Image.asset("assets/images/pharmacy.png")),
                       Container(child: Image.asset("assets/images/pharmacy.png")),
                       // Treatments  //
-                      Column(
-                        children: [
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Expanded(flex: 3,
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                      left: width * 0.02,
-                                      top: width * 0.05,
-                                      right: width * 0.02,
-                                    ),
-                                    alignment: AlignmentDirectional.topStart,
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          getTranslated(context, home_specialist).toString(),
-                                          textAlign: TextAlign.left, style: TextStyle(
-                                            color: Color.fromRGBO(9, 44, 76, 1),
-                                            fontFamily: 'Open Sans',
-                                            fontSize: 15,
-                                            letterSpacing: 0,
-                                            fontWeight: FontWeight.bold,
-                                            height: 1
-                                        ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Expanded(flex: 1,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      Navigator.pushNamed(context, 'Treatment');
-                                    },
+                      Card(elevation: 4,
+                        shadowColor: Color(0xFFE0E0E0),
+                        shape:RoundedRectangleBorder(
+                          side: BorderSide(color: Colors.transparent, width: 1),
+                          borderRadius: BorderRadius.circular(0),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Expanded(flex: 3,
                                     child: Container(
                                       margin: EdgeInsets.only(
-                                        right: width * 0.0,
-                                        top: width * 0.06,
-                                        left: width * 0.04,
+                                        left: width * 0.00,
+                                        top: width * 0.02,
+                                        right: width * 0.00,
                                       ),
-                                      alignment: AlignmentDirectional.topEnd,
+                                      alignment: AlignmentDirectional.topStart,
                                       child: Row(
                                         children: [
                                           Text(
-                                            getTranslated(context, home_viewAll).toString(),
-                                             textAlign: TextAlign.right, style: TextStyle(
-                                        color: Color.fromRGBO(44, 144, 133, 1),
-                                        fontFamily: 'Open Sans',
-                                        fontSize: 13,
-                                        letterSpacing: 0,
+                                            getTranslated(context, home_specialist).toString(),
+                                            textAlign: TextAlign.left, style: TextStyle(
+                                              color: Color.fromRGBO(9, 44, 76, 1),
+                                              fontFamily: 'Open Sans',
+                                              fontSize: 15,
+                                              letterSpacing: 0,
                                               fontWeight: FontWeight.bold,
-                                        height: 1
-                                    ),
+                                              height: 1
                                           ),
-                                          SizedBox(width: 5,),
-                                          SvgPicture.asset("assets/icons/Vector.svg",height: 15,width: 15,)
+                                          )
                                         ],
                                       ),
                                     ),
                                   ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10,),
-                          Container(
-                       //     height: 125,
-                            width: width,
-                            margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                            child:     GridView.builder( gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:  3),
-                              //  itemCount: 6 <= healthmentList.length ? 6 : healthmentList.length,
-                              itemCount: 6 <= treatmentList.length ? 6 : treatmentList.length,
-                              physics: NeverScrollableScrollPhysics(),
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemBuilder: (context, index) {
-                                return GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => TreatmentSpecialist(
-                                          treatmentList[index].id,
+                                  Expanded(flex: 1,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(context, 'Treatment');
+                                      },
+                                      child: Container(
+                                        margin: EdgeInsets.only(
+                                          right: width * 0.0,
+                                          top: width * 0.02,
+                                          left: width * 0.04,
+                                        ),
+                                        alignment: AlignmentDirectional.topEnd,
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              getTranslated(context, home_viewAll).toString(),
+                                               textAlign: TextAlign.right, style: TextStyle(
+                                          color: Color.fromRGBO(44, 144, 133, 1),
+                                          fontFamily: 'Open Sans',
+                                          fontSize: 12,
+                                          letterSpacing: 0,
+                                                fontWeight: FontWeight.bold,
+                                          height: 1
+                                      ),
+                                            ),
+                                            SizedBox(width: 5,),
+                                            SvgPicture.asset("assets/icons/Vector.svg",height: 15,width: 15,)
+                                          ],
                                         ),
                                       ),
-                                    );
-                                  },
-                                  child:       // Figma Flutter Generator NotfeelingwellWidget - INSTANCE
-
-                                  Container(  margin: const EdgeInsets.all(6.0),
-                                    padding: const EdgeInsets.all(0.0),
-
-                                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10) ,
-                                      border: Border.all(color: Colors.grey)),
-                                    // color: Colors.teal,
-                                    child: Stack(
-                                    //  mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          height: 140,
-                                          alignment: AlignmentDirectional.center,
-                                       //   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
-                                          child:ClipRRect(
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            child:
-                                            treatmentList[index].primaryImage!=null?CachedNetworkImage(height: 140,
-                                            alignment: Alignment.center,
-                                            imageUrl: '${Apis.baseUrlImages}${treatmentList[index].primaryImage!}',
-                                            fit: BoxFit.fitHeight,
-                                            placeholder: (context, url) =>
-                                            // CircularProgressIndicator(),
-                                            SpinKitFadingCircle(
-                                              color: Palette.primary,
-                                            ),
-                                            errorWidget: (context, url, error) => Image.asset(
-                                              "assets/images/treatment_dmy.png", fit: BoxFit.fitHeight,height: 140,),
-                                          ):Image.asset("assets/images/treatment_dmy.png", fit: BoxFit.fitHeight,height: 140,),
-
-                                        ),),
-                                Align(alignment: Alignment.bottomCenter,
-                                child: Padding(
-                                padding: const EdgeInsets.only(top: 18.0),
-                                child: Container(decoration: BoxDecoration(
-                                gradient: LinearGradient(
-                                                          begin: Alignment.topCenter,
-                                                          end: Alignment.bottomCenter,
-                                                          colors: [Color.fromRGBO(8, 43, 76, 0),Color.fromRGBO(9, 44, 76, 0.8999999761581421)]
-                                                      ),),
-                                width: width,
-                                height: 40,
-                                //  margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                                child: Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child:
-                                        Container(
-                                          width: 70,
-                                          height: 35,
-                                          margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
-                                          child: Text(
-                                            treatmentList[index].name!,
-                                            textAlign: TextAlign.center, style: TextStyle(
-                                              color: Color.fromRGBO(255, 255, 255, 1),
-                                              fontFamily: 'Open Sans',
-                                              fontSize: 13,
-                                              letterSpacing: 0,
-                                              fontWeight: FontWeight.bold,
-                                              height: 1
-
-                                            ),
-                                            overflow: TextOverflow.ellipsis,
-                                            maxLines: 1,
-
-                                          ),
-                                        )))))
-                                      ],
                                     ),
                                   ),
-                                );
-                              },
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                            SizedBox(height: 10,),
+                            Container(
+                         //     height: 125,
+                              width: width,
+                              margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                              child:     GridView.builder( gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount:  3),
+                                //  itemCount: 6 <= healthmentList.length ? 6 : healthmentList.length,
+                                itemCount: 6 <= treatmentList.length ? 6 : treatmentList.length,
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.vertical,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => TreatmentSpecialist(
+                                            treatmentList[index].id,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                    child:       // Figma Flutter Generator NotfeelingwellWidget - INSTANCE
+
+                                    Card(elevation: 4,
+                                      shadowColor: Color(0xFFE0E0E0),
+                                      shape:RoundedRectangleBorder(
+                                        side: BorderSide(color: Colors.transparent, width: 1),
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                      child: Stack(
+                                        //  mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Container(
+                                            padding: const EdgeInsets.all(0.0),
+
+                                            decoration: BoxDecoration(borderRadius: BorderRadius.circular(10) ,
+                                            ),
+                                            height: 140,
+                                            alignment: AlignmentDirectional.center,
+                                            //   margin: EdgeInsets.symmetric(horizontal: 10, vertical: 0),
+                                            child:ClipRRect(
+                                              borderRadius: BorderRadius.circular(10.0),
+                                              child:
+                                              treatmentList[index].primaryImage!=null?CachedNetworkImage(height: 140,
+                                                alignment: Alignment.center,
+                                                imageUrl: '${Apis.baseUrlImages}${treatmentList[index].primaryImage!}',
+                                                fit: BoxFit.fitHeight,
+                                                placeholder: (context, url) =>
+                                                // CircularProgressIndicator(),
+                                                SpinKitFadingCircle(
+                                                  color: Palette.primary,
+                                                ),
+                                                errorWidget: (context, url, error) => Image.asset(
+                                                  "assets/images/treatment_dmy.png", fit: BoxFit.fitHeight,height: 140,),
+                                              ):Image.asset("assets/images/treatment_dmy.png", fit: BoxFit.fitHeight,height: 140,),
+
+                                            ),
+                                          ),
+                                          Align(alignment: Alignment.bottomCenter,
+                                              child: Padding(
+                                                  padding: const EdgeInsets.only(top: 18.0),
+                                                  child: Container(
+                                                      decoration: BoxDecoration(
+                                                          borderRadius: BorderRadius.circular(10),
+                                                          gradient: LinearGradient(
+                                                        begin: Alignment.topCenter,
+                                                        end: Alignment.bottomCenter,
+                                                        colors: [Color.fromRGBO(8, 43, 76, 0),Color.fromRGBO(9, 44, 76, 0.8999999761581421)]
+                                                    ),),
+                                                      width: width,
+                                                      height: 40,
+                                                      //  margin: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                                                      child: Padding(
+                                                          padding: const EdgeInsets.only(top: 8.0),
+                                                          child:
+                                                          Container(
+                                                            width: 70,
+                                                            height: 35,
+                                                            margin: EdgeInsets.symmetric(horizontal: 0, vertical: 5),
+                                                            child: Text(
+                                                              treatmentList[index].name!,
+                                                              textAlign: TextAlign.center, style: TextStyle(
+                                                                color: Color.fromRGBO(255, 255, 255, 1),
+                                                                fontFamily: 'Open Sans',
+                                                                fontSize: 13,
+                                                                letterSpacing: 0,
+                                                                fontWeight: FontWeight.bold,
+                                                                height: 1
+
+                                                            ),
+                                                              overflow: TextOverflow.ellipsis,
+                                                              maxLines: 1,
+
+                                                            ),
+                                                          ))))
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
 
                       // Offer //
@@ -1873,7 +1932,14 @@ class _HomeState extends State<Home> {
                       ),*/
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(child: Image.asset("assets/images/homebottom.png")),
+                        child:  Card(elevation: 4,
+                          shadowColor: Color(0xFFE0E0E0),
+                          shape:RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.transparent, width: 1),
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                          child:
+                        Container(child: Image.asset("assets/images/homebottom.png"))),
                       )
                     ],
                   ),
@@ -2042,7 +2108,7 @@ class _HomeState extends State<Home> {
       });
     } catch (error, stacktrace) {
       print("Exception occur: $error stackTrace: $stacktrace");
-      return BaseModel()..setException(ServerError.withError(error: error));
+      return BaseModel()..setException(ServerError. withError(error: error));
     }
     return BaseModel()..data = response;
   }
