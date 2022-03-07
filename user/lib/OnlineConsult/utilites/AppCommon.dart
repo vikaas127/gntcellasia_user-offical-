@@ -1,8 +1,9 @@
 
 
-import 'package:dating_app/screens/Call/models/UserModel.dart';
-import 'package:dating_app/screens/Call/utilites/AppColors.dart';
-import 'package:dating_app/screens/Call/utilites/AppConstants.dart';
+
+import 'package:doctro/OnlineConsult/models/UserModel.dart';
+import 'package:doctro/OnlineConsult/utilites/AppColors.dart';
+import 'package:doctro/OnlineConsult/utilites/AppConstants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -13,7 +14,7 @@ import '../../../main.dart';
 Color getPrimaryColor() => Colors.black==true ? scaffoldSecondaryDark : primaryColor;
 
 extension SExt on String {
-  String get translate => appLocalizations!.translate(this);
+ // String get translate => appLocalizations!.translate(this);
 }
 
 Future<void> launchUrl(String url, {bool forceWebView = false}) async {

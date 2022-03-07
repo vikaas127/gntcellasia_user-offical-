@@ -1,5 +1,7 @@
 
-import 'package:dating_app/screens/Call/models/LogModel.dart';
+
+
+import 'package:doctro/OnlineConsult/models/LogModel.dart';
 
 import 'SqliteMethods.dart';
 

@@ -1,11 +1,12 @@
-import 'package:dating_app/screens/Call/AgoraVideoCallScreen.dart';
-import 'package:dating_app/screens/Call/AgoraVoiceCallScreen.dart';
-import 'package:dating_app/screens/Call/utilites/AppColors.dart';
-import 'package:dating_app/screens/Call/utilites/AppConstants.dart';
-import 'package:dating_app/screens/Call/utilites/Appwidgets.dart';
+
+import 'package:doctro/OnlineConsult/utilites/AppColors.dart';
+import 'package:doctro/OnlineConsult/utilites/AppConstants.dart';
+import 'package:doctro/OnlineConsult/utilites/Appwidgets.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../../main.dart';
+import 'AgoraVideoCallScreen.dart';
+import 'AgoraVoiceCallScreen.dart';
 import 'components/Permissions.dart';
 import 'localDB/LogRepository.dart';
 import 'models/CallModel.dart';

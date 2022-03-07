@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dating_app/screens/Call/models/CallModel.dart';
+
+import 'package:doctro/OnlineConsult/models/CallModel.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'BaseService.dart';

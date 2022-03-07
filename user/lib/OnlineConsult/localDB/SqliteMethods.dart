@@ -1,6 +1,7 @@
 import 'dart:io';
-import 'package:dating_app/screens/Call/models/LogModel.dart';
-import 'package:dating_app/screens/Call/utilites/AppConstants.dart';
+
+import 'package:doctro/OnlineConsult/models/LogModel.dart';
+import 'package:doctro/OnlineConsult/utilites/AppConstants.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';

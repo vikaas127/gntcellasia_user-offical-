@@ -1,9 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dating_app/datas/user.dart';
-import 'package:dating_app/models/user_model.dart';
-import 'package:dating_app/screens/Call/models/UserModel.dart';
-import 'package:dating_app/screens/Call/utilites/AppConstants.dart';
+
+import 'package:doctro/model/Docterdetail.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -20,7 +18,7 @@ class PickupLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<DocumentSnapshot>(
-      stream: callService.callStream(uid: usermoel!.userId),
+      stream: callService.callStream(uid: usermoel!.userId.toString()),
       builder: (context, snap) {
         if (snap.hasData && snap.data!.data() != null) {
           CallModel call = CallModel.fromJson(snap.data!.data() as Map<String, dynamic>);

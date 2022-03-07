@@ -1,16 +1,15 @@
 import 'dart:html';
-import 'package:dating_app/screens/Call/utilites/AppColors.dart';
-import 'package:dating_app/screens/Call/utilites/AppCommon.dart';
-import 'package:dating_app/screens/Call/utilites/AppConstants.dart';
-import 'package:dating_app/screens/Call/components/Permissions.dart';
 
-import 'package:dating_app/screens/Call/utilites/Appwidgets.dart';
-import 'package:dating_app/screens/Call/utilites/CallFunctions.dart';
+import 'package:doctro/OnlineConsult/utilites/AppColors.dart';
+import 'package:doctro/OnlineConsult/utilites/AppConstants.dart';
+import 'package:doctro/OnlineConsult/utilites/Appwidgets.dart';
+import 'package:doctro/OnlineConsult/utilites/CallFunctions.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'localDB/LogRepository.dart';
 import 'models/LogModel.dart';
 import 'models/UserModel.dart';
+import 'utilites/AppCommon.dart';
 
 
 class CallLogScreen extends StatefulWidget {
@@ -53,7 +52,7 @@ class _CallLogScreenState extends State<CallLogScreen> {
 
                 return InkWell(
                   onLongPress: () async {
-                    bool? res = await showConfirmDialog(context, 'log_confirmation'.translate);
+                    bool? res = await showConfirmDialog(context, 'log_confirmation');
                     if (res ?? false) {
                       LogRepository.deleteLogs(data.logId);
                       setState(() {});
@@ -96,13 +95,11 @@ class _CallLogScreenState extends State<CallLogScreen> {
                                     uid: getStringAsync(userId),
                                     oneSignalPlayerId: getStringAsync(playerId),
                                   );
-                                  return await Permissions.cameraAndMicrophonePermissionsGranted()
-                                      ? CallFunctions.dial(
-                                          context: context,
-                                          from: sender,
-                                          to: receiverData,
-                                        )
-                                      : {};
+                                  return CallFunctions.dial(
+                                    context: context,
+                                    from: sender,
+                                    to: receiverData,
+                                  );
                                 },
                               )
                             : IconButton(
@@ -118,13 +115,11 @@ class _CallLogScreenState extends State<CallLogScreen> {
                                     uid: getStringAsync(userId),
                                     oneSignalPlayerId: getStringAsync(playerId),
                                   );
-                                  return await Permissions.cameraAndMicrophonePermissionsGranted()
-                                      ? CallFunctions.dial(
-                                          context: context,
-                                          from: sender,
-                                          to: receiverData,
-                                        )
-                                      : {};
+                                  return CallFunctions.dial(
+                                    context: context,
+                                    from: sender,
+                                    to: receiverData,
+                                  );
                                 },
                               ),
                       ],

@@ -41,6 +41,9 @@ import 'package:doctro/view/payment/StripePaymentScreenMedicine.dart';
 import 'package:doctro/view/Notification/notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sqflite/sqflite.dart';
+import 'OnlineConsult/components/CallService.dart';
+import 'OnlineConsult/components/NotificationService.dart';
 import 'view/Companypolices/AboutUs.dart';
 
 import 'view/Companypolices/PrivacyPolicy.dart';
@@ -50,7 +53,10 @@ import 'localization/localization_constant.dart';
 import 'view/Consult/Consult.dart';
 import 'view/Dashboard/Dashboard.dart';
 import 'view/appointment/healthisuse.dart';
-
+CallService callService = CallService();
+NotificationService notificationService = NotificationService();
+//endregion
+Database? localDbInstance;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferenceHelper.init();

@@ -1,14 +1,15 @@
 import 'dart:math';
-import 'package:dating_app/screens/Call/AgoraVideoCallScreen.dart';
-import 'package:dating_app/screens/Call/AgoraVoiceCallScreen.dart';
-import 'package:dating_app/screens/Call/localDB/LogRepository.dart';
-import 'package:dating_app/screens/Call/models/CallModel.dart';
-import 'package:dating_app/screens/Call/models/LogModel.dart';
-import 'package:dating_app/screens/Call/models/UserModel.dart';
-import 'package:dating_app/screens/Call/utilites/AppConstants.dart';
+
+import 'package:doctro/OnlineConsult/localDB/LogRepository.dart';
+import 'package:doctro/OnlineConsult/models/CallModel.dart';
+import 'package:doctro/OnlineConsult/models/LogModel.dart';
+import 'package:doctro/OnlineConsult/models/UserModel.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../../../main.dart';
+import '../AgoraVideoCallScreen.dart';
+import '../AgoraVoiceCallScreen.dart';
+import 'AppConstants.dart';
 
 class CallFunctions {
   static dial({required context, required UserModel from, required UserModel to}) async {

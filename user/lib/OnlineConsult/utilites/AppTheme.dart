@@ -1,5 +1,6 @@
 
-import 'package:dating_app/screens/Call/utilites/AppColors.dart';
+
+import 'package:doctro/OnlineConsult/utilites/AppColors.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nb_utils/nb_utils.dart';
